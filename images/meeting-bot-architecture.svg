@@ -1,0 +1,157 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 750" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <filter id="shadow" x="-5%" y="-5%" width="115%" height="115%">
+      <feDropShadow dx="1" dy="1" stdDeviation="2" flood-opacity="0.15"/>
+    </filter>
+    <linearGradient id="cloudGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f0f7ff;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#e6f0fa;stop-opacity:1"/>
+    </linearGradient>
+    <linearGradient id="btnGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#006699"/>
+      <stop offset="100%" style="stop-color:#004D73"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1100" height="750" fill="#ffffff" rx="8"/>
+
+  <!-- Cloud boundary -->
+  <ellipse cx="500" cy="420" rx="440" ry="280" fill="url(#cloudGrad)" stroke="#006699" stroke-width="2" stroke-dasharray="8,4" opacity="0.6"/>
+  <text x="500" y="175" text-anchor="middle" font-size="16" font-weight="600" fill="#006699">Transparency Hub Infrastructure (Azure)</text>
+
+  <!-- Attendee.dev (external, top-right) -->
+  <rect x="820" y="60" width="160" height="70" rx="12" fill="#fff" stroke="#990066" stroke-width="2" filter="url(#shadow)"/>
+  <text x="900" y="90" text-anchor="middle" font-size="14" font-weight="600" fill="#990066">Attendee.dev</text>
+  <text x="900" y="108" text-anchor="middle" font-size="11" fill="#666">Bot Service Provider</text>
+
+  <!-- Meeting icon (top-right corner) -->
+  <rect x="920" y="150" width="100" height="65" rx="8" fill="#fff" stroke="#333" stroke-width="1.5" filter="url(#shadow)"/>
+  <rect x="930" y="158" width="80" height="45" rx="4" fill="#e8f5e9"/>
+  <text x="970" y="177" text-anchor="middle" font-size="9" fill="#2e7d32">Google Meet</text>
+  <text x="970" y="190" text-anchor="middle" font-size="9" fill="#2e7d32">Zoom / Teams</text>
+  <text x="970" y="228" text-anchor="middle" font-size="10" fill="#333">Bot joins as</text>
+  <text x="970" y="242" text-anchor="middle" font-size="9" font-weight="600" fill="#990066">'Transparencyhub</text>
+  <text x="970" y="254" text-anchor="middle" font-size="9" font-weight="600" fill="#990066">Notetaker'</text>
+
+  <!-- User -->
+  <g transform="translate(60, 380)">
+    <circle cx="30" cy="15" r="15" fill="#006699"/>
+    <path d="M5,50 Q5,35 30,35 Q55,35 55,50 L55,55 L5,55 Z" fill="#006699"/>
+    <text x="30" y="75" text-anchor="middle" font-size="13" font-weight="600" fill="#006699">Admin User</text>
+  </g>
+
+  <!-- Frontend SWA -->
+  <g transform="translate(230, 370)">
+    <rect width="130" height="70" rx="12" fill="#fff" stroke="#006699" stroke-width="2" filter="url(#shadow)"/>
+    <circle cx="65" cy="28" r="16" fill="none" stroke="#006699" stroke-width="2"/>
+    <line x1="49" y1="28" x2="81" y2="28" stroke="#006699" stroke-width="1.5"/>
+    <ellipse cx="65" cy="28" rx="16" ry="6" fill="none" stroke="#006699" stroke-width="1"/>
+    <text x="65" y="58" text-anchor="middle" font-size="12" font-weight="600" fill="#006699">Frontend SWA</text>
+  </g>
+
+  <!-- Azure Functions -->
+  <g transform="translate(460, 350)">
+    <rect width="150" height="80" rx="12" fill="#fff" stroke="#006699" stroke-width="2" filter="url(#shadow)"/>
+    <path d="M60,15 L75,30 L65,30 L90,50 L75,50 L85,65 L55,40 L68,40 L50,22 Z" fill="#006699" transform="translate(5,-2) scale(0.7)"/>
+    <text x="75" y="55" text-anchor="middle" font-size="12" font-weight="600" fill="#006699">Azure Functions</text>
+    <text x="75" y="70" text-anchor="middle" font-size="10" fill="#666">(Durable)</text>
+  </g>
+
+  <!-- SQL Database -->
+  <rect x="700" y="370" width="130" height="60" rx="12" fill="#fff" stroke="#006699" stroke-width="2" filter="url(#shadow)"/>
+  <ellipse cx="765" cy="385" rx="25" ry="8" fill="none" stroke="#006699" stroke-width="2"/>
+  <rect x="740" y="385" width="50" height="20" fill="#fff" stroke="#006699" stroke-width="2"/>
+  <line x1="740" y1="405" x2="790" y2="405" stroke="none"/>
+  <ellipse cx="765" cy="405" rx="25" ry="8" fill="none" stroke="#006699" stroke-width="2"/>
+  <text x="765" y="425" text-anchor="middle" font-size="11" font-weight="600" fill="#006699">PostgreSQL</text>
+
+  <!-- Blob Storage -->
+  <rect x="460" y="550" width="150" height="60" rx="12" fill="#fff" stroke="#006699" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="500" y="562" width="10" height="22" rx="2" fill="#006699"/>
+  <rect x="514" y="562" width="10" height="22" rx="2" fill="#006699"/>
+  <rect x="528" y="562" width="10" height="22" rx="2" fill="#006699"/>
+  <text x="535" y="600" text-anchor="middle" font-size="11" font-weight="600" fill="#006699">Azure Blob Storage</text>
+
+  <!-- Gemini AI -->
+  <rect x="230" y="550" width="140" height="60" rx="12" fill="#fff" stroke="#990066" stroke-width="2" filter="url(#shadow)"/>
+  <text x="300" y="577" text-anchor="middle" font-size="20">✨</text>
+  <text x="300" y="600" text-anchor="middle" font-size="11" font-weight="600" fill="#990066">Google Gemini AI</text>
+
+  <!-- ===== ARROWS & LABELS ===== -->
+
+  <!-- User → Frontend -->
+  <line x1="120" y1="410" x2="225" y2="410" stroke="#333" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+  <text x="172" y="400" text-anchor="middle" font-size="10" fill="#333">Create event</text>
+  <text x="172" y="412" text-anchor="middle" font-size="10" fill="#333">+ enable recording</text>
+
+  <!-- Frontend → Azure Functions -->
+  <line x1="365" y1="400" x2="455" y2="395" stroke="#333" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+  <text x="410" y="388" text-anchor="middle" font-size="10" fill="#333">Schedule bot</text>
+
+  <!-- Azure Functions → Attendee.dev (bot join request) -->
+  <line x1="580" y1="360" x2="820" y2="100" stroke="#990066" stroke-width="1.5" marker-end="url(#arrowhead2)" stroke-dasharray="6,3"/>
+  <text x="720" y="215" text-anchor="middle" font-size="10" fill="#990066">Bot join request</text>
+  <text x="720" y="228" text-anchor="middle" font-size="10" fill="#990066">(join_at + meeting_url)</text>
+
+  <!-- Attendee.dev → Meeting -->
+  <line x1="900" y1="130" x2="940" y2="150" stroke="#333" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+
+  <!-- Attendee.dev → Azure Functions (webhook: transcript/recording) -->
+  <path d="M820,110 Q650,140 580,350" fill="none" stroke="#990066" stroke-width="1.5" marker-end="url(#arrowhead2)" stroke-dasharray="6,3"/>
+  <text x="680" y="280" text-anchor="middle" font-size="10" fill="#990066">Webhook callback</text>
+  <text x="680" y="293" text-anchor="middle" font-size="10" fill="#990066">(transcript + recording URLs)</text>
+
+  <!-- Azure Functions → SQL (transcript stored) -->
+  <line x1="610" y1="395" x2="695" y2="395" stroke="#333" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+  <text x="653" y="388" text-anchor="middle" font-size="10" fill="#333">Bot status</text>
+  <text x="653" y="412" text-anchor="middle" font-size="10" fill="#333">+ metadata</text>
+
+  <!-- Azure Functions → Blob (recording stored) -->
+  <line x1="535" y1="430" x2="535" y2="545" stroke="#333" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+  <text x="565" y="488" text-anchor="start" font-size="10" fill="#333">Recording +</text>
+  <text x="565" y="501" text-anchor="start" font-size="10" fill="#333">transcript stored</text>
+
+  <!-- Azure Functions → Gemini (generate minutes) -->
+  <line x1="460" y1="420" x2="370" y2="550" stroke="#990066" stroke-width="1.5" marker-end="url(#arrowhead2)" stroke-dasharray="6,3"/>
+  <text x="390" y="490" text-anchor="middle" font-size="10" fill="#990066">Generate minutes</text>
+  <text x="390" y="503" text-anchor="middle" font-size="10" fill="#990066">+ format transcript</text>
+
+  <!-- Gemini → Azure Functions (minutes back) -->
+  <line x1="340" y1="550" x2="475" y2="430" stroke="#990066" stroke-width="1.5" marker-end="url(#arrowhead2)" stroke-dasharray="6,3"/>
+
+  <!-- Frontend ← Azure Functions (fetch recording) -->
+  <line x1="455" y1="415" x2="365" y2="415" stroke="#666" stroke-width="1.5" marker-end="url(#arrowhead3)"/>
+  <text x="410" y="432" text-anchor="middle" font-size="10" fill="#666">Minutes + recording</text>
+
+  <!-- SQL → Frontend (display) -->
+  <path d="M700,400 Q650,450 365,420" fill="none" stroke="#666" stroke-width="1" stroke-dasharray="4,3"/>
+
+  <!-- Arrowhead markers -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#333"/>
+    </marker>
+    <marker id="arrowhead2" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#990066"/>
+    </marker>
+    <marker id="arrowhead3" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#666"/>
+    </marker>
+  </defs>
+
+  <!-- Legend -->
+  <g transform="translate(30, 660)">
+    <text x="0" y="0" font-size="12" font-weight="600" fill="#333">Legend:</text>
+    <line x1="0" y1="15" x2="30" y2="15" stroke="#333" stroke-width="1.5"/>
+    <text x="35" y="19" font-size="10" fill="#333">Internal flow</text>
+    <line x1="120" y1="15" x2="150" y2="15" stroke="#990066" stroke-width="1.5" stroke-dasharray="6,3"/>
+    <text x="155" y="19" font-size="10" fill="#990066">External API / AI call</text>
+    <line x1="310" y1="15" x2="340" y2="15" stroke="#666" stroke-width="1.5"/>
+    <text x="345" y="19" font-size="10" fill="#666">Data retrieval</text>
+  </g>
+
+  <!-- Title -->
+  <text x="550" y="30" text-anchor="middle" font-size="20" font-weight="700" fill="#006699">Transparency Hub Network — Meeting Bot Architecture</text>
+  <text x="550" y="50" text-anchor="middle" font-size="12" fill="#666">Automated meeting recording, transcription, and AI-powered minute generation</text>
+</svg>
