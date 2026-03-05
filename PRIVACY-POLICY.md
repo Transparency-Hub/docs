@@ -5,7 +5,7 @@
 ---
 
 **Effective Date:** 2025-07-28
-**Last Updated:** 2025-07-28
+**Last Updated:** 2026-03-05
 
 ---
 
@@ -81,15 +81,35 @@ We may share your data with:
 
 ---
 
-## 5. Your Rights and Choices
+## 5. Your Data Subject Rights
 
-You have the right to:
+Under applicable data protection laws (including the Nigeria Data Protection Act 2023 and GDPR), you have the following rights regarding your personal data:
 
-- Access, correct your personal data
-- Withdraw consent at any time (which may affect access to some features)
-- Opt out of non-essential communications (e.g., newsletters)
+### Your Rights
 
-You can manage these through your account settings or by contacting us directly at info@transparencyhubnetwork.ai.
+- **Right of Access** — You can request a copy of all personal data we hold about you
+- **Right to Rectification** — You can request correction of inaccurate or incomplete personal data
+- **Right to Erasure (Right to be Forgotten)** — You can request deletion of your personal data, subject to legal retention requirements
+- **Right to Restriction** — You can request that we limit the processing of your personal data
+- **Right to Data Portability** — You can request your data in a structured, machine-readable format (JSON or CSV)
+- **Right to Object** — You can object to processing of your data based on legitimate interest
+- **Right to Withdraw Consent** — You can withdraw consent at any time, which may affect access to some features
+- **Right to Opt Out** — You can opt out of non-essential communications (e.g., newsletters)
+
+### How to Exercise Your Rights
+
+You can exercise your rights in the following ways:
+
+- **Self-service:** Update or correct your personal data directly through your account settings
+- **Email request:** Send a request to support@transparencyhubnetwork.ai with the subject line "Data Subject Request"
+
+### What to Expect
+
+- We will verify your identity before processing any request
+- Requests will be fulfilled within **30 days** of receipt
+- If a request cannot be fully fulfilled (e.g., legal retention obligations for financial records), we will explain the reason and inform you of your right to appeal
+
+> **Right to Lodge a Complaint:** If you believe your data protection rights have been violated, you have the right to lodge a complaint with the National Information Technology Development Agency (NITDA) in Nigeria, or the relevant data protection authority in your jurisdiction.
 
 ---
 
@@ -125,7 +145,7 @@ We may update this Privacy Policy from time to time. You will be notified of sig
 
 If you have questions, concerns, or requests regarding your privacy or this policy, contact us at:
 
-**Email:** info@transparencyhubnetwork.ai
+**Email:** support@transparencyhubnetwork.ai
 
 ---
 
