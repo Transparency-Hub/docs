@@ -6,9 +6,17 @@ description: "Connect Google Meet, Zoom, or Microsoft Teams for automated meetin
 ## Overview
 
 Transparency Hub Network integrates with video conferencing platforms to automatically:
-- Join and record meetings via a bot ("Transparencyhub Notetaker")
+- Join and record meetings via a bot ("Transparency Hub Notetaker")
 - Generate transcripts
 - Create AI-powered meeting minutes
+
+## Meeting Integrations Settings
+
+Navigate to **Settings → Meeting Integrations** to connect your meeting providers.
+
+<img src="/images/meeting-integrations-settings.jpg" alt="Meeting Integrations settings page showing Zoom, Microsoft Teams, and Google Meet provider cards" />
+
+Each provider card shows its connection status. Once connected, the provider's email and connection date are displayed.
 
 ## Supported Providers
 
@@ -25,13 +33,13 @@ Transparency Hub Network integrates with video conferencing platforms to automat
     Go to **Settings → Meeting Integrations**.
   </Step>
   <Step title="Connect Google Meet">
-    Click **Connect** on the Google Meet card. You'll be redirected to Google's consent screen.
+    Click **+ Connect Google Meet** on the Google Meet card. You'll be redirected to Google's consent screen.
   </Step>
   <Step title="Authorize">
     Sign in with your Google account and grant the requested permissions.
   </Step>
   <Step title="Confirm">
-    You'll be redirected back to settings with a success confirmation. Your Google email will appear on the card.
+    You'll be redirected back to settings with a success confirmation. Your Google email and connection date will appear on the card.
   </Step>
 </Steps>
 
@@ -42,7 +50,7 @@ Transparency Hub Network integrates with video conferencing platforms to automat
     Go to **Settings → Meeting Integrations**.
   </Step>
   <Step title="Connect Zoom">
-    Click **Connect** on the Zoom card. You'll be redirected to Zoom's authorization page.
+    Click **+ Connect Zoom** on the Zoom card. You'll be redirected to Zoom's authorization page.
   </Step>
   <Step title="Authorize">
     Sign in with your Zoom account and approve access.
@@ -55,20 +63,63 @@ Transparency Hub Network integrates with video conferencing platforms to automat
 
 ## Microsoft Teams Setup
 
-Follow the same pattern as Google Meet — click **Connect**, authorize via Microsoft's consent screen, and confirm.
+<Steps>
+  <Step title="Navigate to Settings">
+    Go to **Settings → Meeting Integrations**.
+  </Step>
+  <Step title="Connect Microsoft Teams">
+    Click **Connect** on the Microsoft Teams card. You'll be redirected to Microsoft's consent screen.
+  </Step>
+  <Step title="Authorize">
+    Sign in with your Microsoft account and approve access.
+  </Step>
+  <Step title="Confirm">
+    Once connected, your Microsoft email and connection date will appear on the card.
+  </Step>
+</Steps>
+
+## Default Recording Settings
+
+You can enable recording by default for all new events in a chapter:
+
+1. Scroll to **Default Recording Settings** on the Meeting Integrations page
+2. Toggle **Enable recording by default for new events**
+3. When enabled, the "Record and Generate Minute" option will be checked by default when creating new events
 
 ## How Recording Works
 
-1. When you create an event with a meeting link and enable **Record & Generate Minutes**, a bot is automatically scheduled
-2. The bot ("Transparencyhub Notetaker") joins the meeting at the scheduled time
-3. It records audio/video and generates a transcript
-4. AI processes the transcript into formatted meeting minutes
-5. Minutes appear in the event's **Meeting Minutes** section
+<Steps>
+  <Step title="Create an Event">
+    Create an event with a meeting link (Google Meet, Zoom, or Teams) and enable **Record and Generate Minute**.
+  </Step>
+  <Step title="Bot Is Scheduled">
+    A recording bot is automatically scheduled to join the meeting at the event's start time.
+  </Step>
+  <Step title="Bot Joins">
+    **Transparency Hub Notetaker** joins the meeting as a visible participant and begins recording.
+
+    <img src="/images/notetaker-zoom.jpg" alt="Transparency Hub Notetaker in a Zoom meeting" />
+  </Step>
+  <Step title="AI Processing">
+    After the meeting ends, the recording and transcript are processed by AI to generate formatted meeting minutes.
+  </Step>
+  <Step title="View Minutes">
+    Minutes appear on the event's detail page. See [Meeting Minutes](/platform/meeting-minutes) for details.
+  </Step>
+</Steps>
 
 <Warning>
-  All meeting participants will see "Transparencyhub Notetaker" join as an attendee. Ensure participants are aware of the recording.
+  A recording bot will join meetings as a visible participant (e.g., "Transparency Hub Notetaker"). All meeting attendees will be notified that the meeting is being recorded. Please ensure you have appropriate consent from participants before recording.
 </Warning>
+
+## Next Steps
+
+After connecting at least one provider:
+
+1. ✅ Connect at least one meeting provider to enable recording features
+2. ✅ When creating events, select a connected provider and enable "Record and Generate Minute"
+3. ✅ Recordings and transcripts will be automatically saved and linked to your events
 
 ## Disconnecting a Provider
 
-Go to **Settings → Meeting Integrations**, click the menu on the provider card, and select **Disconnect**. This revokes access and removes stored credentials.
+Go to **Settings → Meeting Integrations**, click **Disconnect** on the provider card. This revokes access and removes stored credentials.
