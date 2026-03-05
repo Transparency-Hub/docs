@@ -18,7 +18,7 @@
   "topbarLinks": [
     {
       "name": "Support",
-      "url": "mailto:info@transparencyhubnetwork.ai"
+      "url": "mailto:support@transparencyhubnetwork.ai"
     }
   ],
   "topbarCtaButton": {
@@ -40,7 +40,7 @@
     {
       "name": "Contact Us",
       "icon": "envelope",
-      "url": "mailto:info@transparencyhubnetwork.ai"
+      "url": "mailto:support@transparencyhubnetwork.ai"
     }
   ],
   "navigation": [

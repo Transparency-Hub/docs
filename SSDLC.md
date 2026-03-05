@@ -377,4 +377,4 @@ This document is reviewed and updated quarterly, or immediately following a sign
 
 ---
 
-*For questions about this policy, contact: info@transparencyhubnetwork.ai*
+*For questions about this policy, contact: support@transparencyhubnetwork.ai*
