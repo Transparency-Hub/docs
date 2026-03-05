@@ -1,0 +1,51 @@
+---
+title: "Create Member"
+api: "POST /createmembers"
+description: "Create a new member in a chapter."
+---
+
+## Request Body
+
+<ParamField body="firstname" type="string" required>
+  Member's first name.
+</ParamField>
+
+<ParamField body="lastname" type="string" required>
+  Member's last name.
+</ParamField>
+
+<ParamField body="email" type="string" required>
+  Member's email address.
+</ParamField>
+
+<ParamField body="chapter_id" type="integer" required>
+  Chapter to add the member to.
+</ParamField>
+
+<ParamField body="membertype_id" type="integer" required>
+  Membership type ID.
+</ParamField>
+
+<ParamField body="phone" type="string">
+  Phone number.
+</ParamField>
+
+## Response
+
+<ResponseExample>
+```json 201
+{
+  "status": "success",
+  "data": {
+    "id": 42,
+    "firstname": "Jane",
+    "lastname": "Smith",
+    "email": "jane@example.com",
+    "chapter_id": 1,
+    "membertype_id": 1,
+    "status": "pending",
+    "createddate": "2025-06-01T12:00:00Z"
+  }
+}
+```
+</ResponseExample>

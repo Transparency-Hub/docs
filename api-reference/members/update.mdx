@@ -1,0 +1,48 @@
+---
+title: "Update Member"
+api: "PUT /editmember"
+description: "Update an existing member's details."
+---
+
+## Request Body
+
+<ParamField body="id" type="integer" required>
+  Member ID to update.
+</ParamField>
+
+<ParamField body="firstname" type="string">
+  Updated first name.
+</ParamField>
+
+<ParamField body="lastname" type="string">
+  Updated last name.
+</ParamField>
+
+<ParamField body="email" type="string">
+  Updated email address.
+</ParamField>
+
+<ParamField body="phone" type="string">
+  Updated phone number.
+</ParamField>
+
+<ParamField body="status" type="string">
+  Member status: `active`, `inactive`, `suspended`.
+</ParamField>
+
+## Response
+
+<ResponseExample>
+```json 200
+{
+  "status": "success",
+  "data": {
+    "id": 42,
+    "firstname": "Jane",
+    "lastname": "Smith-Updated",
+    "email": "jane@example.com",
+    "status": "active"
+  }
+}
+```
+</ResponseExample>

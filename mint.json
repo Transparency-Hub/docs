@@ -1,0 +1,121 @@
+{
+  "$schema": "https://mintlify.com/schema.json",
+  "name": "Transparency Hub Network",
+  "logo": {
+    "dark": "/logo/dark.svg",
+    "light": "/logo/light.svg"
+  },
+  "favicon": "/favicon.svg",
+  "colors": {
+    "primary": "#006699",
+    "light": "#3399CC",
+    "dark": "#004D73",
+    "anchors": {
+      "from": "#006699",
+      "to": "#990066"
+    }
+  },
+  "topbarLinks": [
+    {
+      "name": "Support",
+      "url": "mailto:info@transparencyhubnetwork.ai"
+    }
+  ],
+  "topbarCtaButton": {
+    "name": "Get Started",
+    "url": "https://transparencyhubnetwork.ai"
+  },
+  "tabs": [
+    {
+      "name": "API Reference",
+      "url": "api-reference"
+    }
+  ],
+  "anchors": [
+    {
+      "name": "Website",
+      "icon": "globe",
+      "url": "https://transparencyhubnetwork.ai"
+    },
+    {
+      "name": "Contact Us",
+      "icon": "envelope",
+      "url": "mailto:info@transparencyhubnetwork.ai"
+    }
+  ],
+  "navigation": [
+    {
+      "group": "Getting Started",
+      "pages": [
+        "introduction",
+        "quickstart",
+        "concepts"
+      ]
+    },
+    {
+      "group": "Platform Guide",
+      "pages": [
+        "platform/associations",
+        "platform/chapters",
+        "platform/members",
+        "platform/membership-types",
+        "platform/dues-payments",
+        "platform/events",
+        "platform/meeting-minutes"
+      ]
+    },
+    {
+      "group": "Administration",
+      "pages": [
+        "admin/dashboard",
+        "admin/roles-permissions",
+        "admin/workflows",
+        "admin/notifications",
+        "admin/settings"
+      ]
+    },
+    {
+      "group": "Integrations",
+      "pages": [
+        "integrations/payment-gateways",
+        "integrations/meeting-providers",
+        "integrations/email"
+      ]
+    },
+    {
+      "group": "API Reference",
+      "pages": [
+        "api-reference/introduction",
+        "api-reference/authentication"
+      ]
+    },
+    {
+      "group": "Members",
+      "pages": [
+        "api-reference/members/list",
+        "api-reference/members/get",
+        "api-reference/members/create",
+        "api-reference/members/update"
+      ]
+    },
+    {
+      "group": "Membership Types",
+      "pages": [
+        "api-reference/membership-types/list",
+        "api-reference/membership-types/create",
+        "api-reference/membership-types/update"
+      ]
+    },
+    {
+      "group": "Events",
+      "pages": [
+        "api-reference/events/list",
+        "api-reference/events/create",
+        "api-reference/events/update"
+      ]
+    }
+  ],
+  "footerSocials": {
+    "website": "https://transparencyhubnetwork.ai"
+  }
+}

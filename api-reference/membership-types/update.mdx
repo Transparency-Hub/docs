@@ -1,0 +1,33 @@
+---
+title: "Update Membership Type"
+api: "PUT /editmember_type"
+description: "Update an existing membership type."
+---
+
+## Request Body
+
+Same structure as [Create Membership Type](/api-reference/membership-types/create), with the addition of:
+
+<ParamField body="membership_type.id" type="integer" required>
+  ID of the membership type to update.
+</ParamField>
+
+All other fields from the create endpoint are accepted and will update the corresponding values.
+
+## Response
+
+<ResponseExample>
+```json 200
+{
+  "status": "success",
+  "data": {
+    "id": 5,
+    "name": "Premium Member (Updated)",
+    "category": "premium",
+    "duration": "24",
+    "autorecurring_payment": true,
+    "reminder_frequency": "quarterly"
+  }
+}
+```
+</ResponseExample>

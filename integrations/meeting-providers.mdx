@@ -1,0 +1,74 @@
+---
+title: "Meeting Providers"
+description: "Connect Google Meet, Zoom, or Microsoft Teams for automated meeting recording and AI minutes."
+---
+
+## Overview
+
+Transparency Hub Network integrates with video conferencing platforms to automatically:
+- Join and record meetings via a bot ("Transparencyhub Notetaker")
+- Generate transcripts
+- Create AI-powered meeting minutes
+
+## Supported Providers
+
+| Provider | Status | OAuth Required |
+|----------|--------|---------------|
+| **Google Meet** | ✅ Supported | Yes |
+| **Zoom** | ✅ Supported | Yes (managed by Attendee.dev) |
+| **Microsoft Teams** | ✅ Supported | Yes |
+
+## Google Meet Setup
+
+<Steps>
+  <Step title="Navigate to Settings">
+    Go to **Settings → Meeting Integrations**.
+  </Step>
+  <Step title="Connect Google Meet">
+    Click **Connect** on the Google Meet card. You'll be redirected to Google's consent screen.
+  </Step>
+  <Step title="Authorize">
+    Sign in with your Google account and grant the requested permissions.
+  </Step>
+  <Step title="Confirm">
+    You'll be redirected back to settings with a success confirmation. Your Google email will appear on the card.
+  </Step>
+</Steps>
+
+## Zoom Setup
+
+<Steps>
+  <Step title="Navigate to Settings">
+    Go to **Settings → Meeting Integrations**.
+  </Step>
+  <Step title="Connect Zoom">
+    Click **Connect** on the Zoom card. You'll be redirected to Zoom's authorization page.
+  </Step>
+  <Step title="Authorize">
+    Sign in with your Zoom account and approve access.
+  </Step>
+</Steps>
+
+<Info>
+  Zoom tokens are managed securely by our integration partner. We don't store your Zoom credentials directly.
+</Info>
+
+## Microsoft Teams Setup
+
+Follow the same pattern as Google Meet — click **Connect**, authorize via Microsoft's consent screen, and confirm.
+
+## How Recording Works
+
+1. When you create an event with a meeting link and enable **Record & Generate Minutes**, a bot is automatically scheduled
+2. The bot ("Transparencyhub Notetaker") joins the meeting at the scheduled time
+3. It records audio/video and generates a transcript
+4. AI processes the transcript into formatted meeting minutes
+5. Minutes appear in the event's **Meeting Minutes** section
+
+<Warning>
+  All meeting participants will see "Transparencyhub Notetaker" join as an attendee. Ensure participants are aware of the recording.
+</Warning>
+
+## Disconnecting a Provider
+
+Go to **Settings → Meeting Integrations**, click the menu on the provider card, and select **Disconnect**. This revokes access and removes stored credentials.

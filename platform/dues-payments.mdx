@@ -1,0 +1,61 @@
+---
+title: "Dues & Payments"
+description: "Configure dues, connect payment gateways, and track member payments"
+---
+
+# Dues & Payments
+
+Transparency Hub Network supports flexible dues collection with integrated payment processing through **Stripe** and **Paystack**.
+
+## Configuring Dues
+
+Dues are configured per [membership type](/platform/membership-types). Each type specifies:
+
+- **Amount** and **currency**
+- **Billing cycle** — one-time, annual, or custom period
+- **Auto-recurring** — whether to charge automatically on renewal
+
+## Payment Gateways
+
+<CardGroup cols={2}>
+  <Card title="Stripe" icon="credit-card">
+    Ideal for international organizations. Supports cards, bank transfers, and 135+ currencies.
+    [Setup guide →](/integrations/payment-gateways)
+  </Card>
+  <Card title="Paystack" icon="money-bill">
+    Optimized for African markets. Supports cards, bank transfers, mobile money, and USSD.
+    [Setup guide →](/integrations/payment-gateways)
+  </Card>
+</CardGroup>
+
+Connect your gateway in **Association Settings → Payment Settings**.
+
+## Payment Methods
+
+Members can pay via:
+
+- **Online payment** — Through the member portal using the configured gateway
+- **Manual recording** — Admins can record offline payments (cash, cheque, bank transfer)
+
+## Tracking Payments
+
+The **Payments** dashboard shows:
+
+- **Recent transactions** with status (completed, pending, failed)
+- **Outstanding dues** — Members with overdue payments
+- **Revenue summary** — Total collected by period
+- **Export** — Download payment records as CSV
+
+<Tip>
+  Use filters to view payments by membership type, chapter, date range, or status.
+</Tip>
+
+## Payment Receipts
+
+Members automatically receive an email receipt after each successful payment. Admins can resend receipts from the payment details page.
+
+## Refunds
+
+<Info>
+  Refunds must be processed directly through your Stripe or Paystack dashboard. Record the refund manually in the platform to keep records in sync.
+</Info>

@@ -1,0 +1,33 @@
+---
+title: "Get Member"
+api: "GET /getmember/{id}"
+description: "Retrieve a single member by ID."
+---
+
+## Path Parameters
+
+<ParamField path="id" type="integer" required>
+  The member ID.
+</ParamField>
+
+## Response
+
+<ResponseExample>
+```json 200
+{
+  "status": "success",
+  "data": {
+    "id": 1,
+    "firstname": "John",
+    "lastname": "Doe",
+    "email": "john@example.com",
+    "phone": "+2348012345678",
+    "chapter_id": 1,
+    "membertype_id": 1,
+    "status": "active",
+    "date_of_birth": "1990-05-15",
+    "createddate": "2025-01-15T10:00:00Z"
+  }
+}
+```
+</ResponseExample>

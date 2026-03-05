@@ -1,0 +1,58 @@
+---
+title: "Authentication"
+description: "How to authenticate with the Transparency Hub Network API."
+---
+
+## JWT Authentication
+
+All API requests require a valid JWT token in the `Authorization` header:
+
+```bash
+Authorization: Bearer <your-jwt-token>
+```
+
+## Obtaining a Token
+
+```bash
+POST /auth/login
+Content-Type: application/json
+
+{
+  "email": "user@example.com",
+  "password": "your-password",
+  "otp": "123456"
+}
+```
+
+**Response:**
+
+```json
+{
+  "status": "success",
+  "data": {
+    "access_token": "eyJhbGciOiJIUzI1NiIs...",
+    "refresh_token": "eyJhbGciOiJIUzI1NiIs...",
+    "expires_in": 3600
+  }
+}
+```
+
+## Token Refresh
+
+```bash
+POST /auth/refresh
+Content-Type: application/json
+
+{
+  "refresh_token": "eyJhbGciOiJIUzI1NiIs..."
+}
+```
+
+## Token Expiry
+
+- **Access tokens** expire after 1 hour
+- **Refresh tokens** expire after 7 days
+
+<Warning>
+  Never expose your tokens in client-side code or public repositories. Store them securely.
+</Warning>

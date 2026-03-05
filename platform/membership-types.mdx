@@ -1,0 +1,62 @@
+---
+title: "Membership Types"
+description: "Create and configure membership types with dues, workflows, and renewal settings"
+---
+
+# Membership Types
+
+Membership types define the tiers and categories available to members of your association — such as "Regular", "Student", "Honorary", or "Corporate".
+
+## Creating a Membership Type
+
+<Steps>
+  <Step title="Navigate to Membership Types">
+    Go to **Association Settings → Membership Types → Create Type**.
+  </Step>
+  <Step title="Basic Details">
+    - **Name** — e.g., "Regular Member", "Student"
+    - **Description** — What this membership level includes
+    - **Duration** — Annual, biannual, lifetime, or custom period
+  </Step>
+  <Step title="Configure Dues">
+    - **Amount** — The dues amount for this type
+    - **Currency** — Select from supported currencies
+    - **Auto-Recurring Payment** — Toggle to enable automatic charge on renewal date via the configured payment gateway
+  </Step>
+  <Step title="Set Renewal Reminders">
+    Configure how often members are reminded before and after expiration:
+    - **Daily**
+    - **Weekly**
+    - **Biweekly**
+    - **Monthly**
+    - **Quarterly**
+
+    <Tip>
+      For annual memberships, starting with monthly reminders 3 months before expiry works well. Switch to weekly as the date approaches.
+    </Tip>
+  </Step>
+  <Step title="Assign Workflow">
+    Select an [application/renewal workflow](/admin/workflows) for this type. Workflows can require approval steps, document uploads, or payment before activation.
+  </Step>
+</Steps>
+
+## Auto-Recurring Payments
+
+When enabled, the platform automatically charges the member's saved payment method on the renewal date.
+
+<Info>
+  Auto-recurring payments require a connected payment gateway ([Stripe](/integrations/payment-gateways) or [Paystack](/integrations/payment-gateways)). Members must have a saved payment method.
+</Info>
+
+- Members receive a notification **7 days before** the charge
+- Failed charges are retried up to **3 times** over 7 days
+- If all retries fail, the membership status changes to **Expired**
+
+## Editing & Archiving
+
+- **Edit** a membership type to change its settings. Changes apply to new members and upcoming renewals.
+- **Archive** a type to stop new sign-ups while keeping existing members active.
+
+<Warning>
+  Changing the dues amount does not affect members with active auto-recurring subscriptions until their next renewal cycle.
+</Warning>

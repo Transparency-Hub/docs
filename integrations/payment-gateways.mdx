@@ -1,0 +1,47 @@
+---
+title: "Payment Gateways"
+description: "Connect Stripe or Paystack to accept membership dues and donations."
+---
+
+## Supported Providers
+
+| Provider | Regions | Currencies |
+|----------|---------|------------|
+| **Stripe** | Global | 135+ currencies |
+| **Paystack** | Nigeria, Ghana, South Africa, Kenya | NGN, GHS, ZAR, KES |
+
+## Stripe Setup
+
+<Steps>
+  <Step title="Create a Stripe Account">
+    Sign up at [stripe.com](https://stripe.com) if you don't have one.
+  </Step>
+  <Step title="Get API Keys">
+    Go to **Developers → API Keys** in your Stripe dashboard. Copy the **Publishable Key** and **Secret Key**.
+  </Step>
+  <Step title="Connect in THN">
+    Navigate to **Settings → Payment Gateways → Stripe**. Paste your API keys and save.
+  </Step>
+</Steps>
+
+## Paystack Setup
+
+<Steps>
+  <Step title="Create a Paystack Account">
+    Sign up at [paystack.com](https://paystack.com).
+  </Step>
+  <Step title="Get API Keys">
+    Go to **Settings → API Keys & Webhooks**. Copy the **Public Key** and **Secret Key**.
+  </Step>
+  <Step title="Connect in THN">
+    Navigate to **Settings → Payment Gateways → Paystack**. Paste your API keys and save.
+  </Step>
+</Steps>
+
+<Info>
+  Payment processing fees are charged by the provider (Stripe/Paystack), not by Transparency Hub Network.
+</Info>
+
+## Auto-Recurring Payments
+
+When a membership type has **auto-recurring payment** enabled, the system automatically charges members at renewal time using their saved payment method. Failed charges trigger retry notifications.

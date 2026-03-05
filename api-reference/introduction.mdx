@@ -1,0 +1,73 @@
+---
+title: "API Introduction"
+description: "Overview of the Transparency Hub Network REST API."
+---
+
+## Base URL
+
+```
+https://api.transparencyhubnetwork.ai
+```
+
+For staging/testing:
+```
+https://testapp.transparencyhubnetwork.ai
+```
+
+## Response Format
+
+All API responses follow a consistent format:
+
+```json
+{
+  "status": "success",
+  "data": { ... }
+}
+```
+
+Error responses:
+
+```json
+{
+  "status": "error",
+  "message": "Description of what went wrong"
+}
+```
+
+## HTTP Status Codes
+
+| Code | Description |
+|------|-------------|
+| `200` | Success |
+| `201` | Created |
+| `400` | Bad Request — invalid parameters |
+| `401` | Unauthorized — missing or invalid token |
+| `403` | Forbidden — insufficient permissions |
+| `404` | Not Found |
+| `500` | Internal Server Error |
+
+## Pagination
+
+List endpoints support pagination via query parameters:
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `offset` | integer | 0 | Number of records to skip |
+| `limit` | integer | 50 | Maximum records to return |
+
+Response includes pagination metadata:
+
+```json
+{
+  "data": [...],
+  "pagination": {
+    "total": 150,
+    "offset": 0,
+    "limit": 50
+  }
+}
+```
+
+## Rate Limiting
+
+API requests are rate-limited to **100 requests per minute** per API key. Exceeding this limit returns a `429 Too Many Requests` response.

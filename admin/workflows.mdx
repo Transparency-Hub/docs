@@ -1,0 +1,81 @@
+---
+title: "Workflows"
+description: "Configure application and renewal workflows with approval and payment steps"
+---
+
+# Workflows
+
+Workflows define the steps a member goes through when applying for membership or renewing. You can require approvals, document uploads, and payment at each stage.
+
+## Workflow Types
+
+<CardGroup cols={2}>
+  <Card title="Application Workflow" icon="file-circle-plus">
+    Controls the process for new member applications — from submission to activation.
+  </Card>
+  <Card title="Renewal Workflow" icon="rotate">
+    Controls the renewal process for expiring memberships.
+  </Card>
+</CardGroup>
+
+## Creating a Workflow
+
+<Steps>
+  <Step title="Navigate to Workflows">
+    Go to **Administration → Workflows → Create Workflow**.
+  </Step>
+  <Step title="Name and Type">
+    Give the workflow a name and select whether it's for **Application** or **Renewal**.
+  </Step>
+  <Step title="Add Steps">
+    Build the workflow by adding steps in order:
+
+    - **Application Form** — Member fills in required information
+    - **Document Upload** — Request supporting documents (ID, certificates, etc.)
+    - **Admin Approval** — An admin or moderator reviews and approves
+    - **Payment** — Member pays their dues via the configured gateway
+    - **Activation** — Membership is activated automatically after all steps complete
+  </Step>
+  <Step title="Assign to Membership Types">
+    Link the workflow to one or more [membership types](/platform/membership-types).
+  </Step>
+</Steps>
+
+## Example Workflows
+
+<Tabs>
+  <Tab title="Simple">
+    1. Application Form
+    2. Payment
+    3. Activation
+
+    Best for open associations with minimal vetting.
+  </Tab>
+  <Tab title="Approval Required">
+    1. Application Form
+    2. Document Upload
+    3. Admin Approval
+    4. Payment
+    5. Activation
+
+    Best for professional bodies requiring credential verification.
+  </Tab>
+  <Tab title="Auto-Renewal">
+    1. Payment (auto-charged)
+    2. Activation
+
+    For members with auto-recurring payments enabled.
+  </Tab>
+</Tabs>
+
+## Managing Applications in Progress
+
+View pending applications at each workflow stage from **Administration → Applications**. Admins can:
+
+- **Approve** or **reject** at approval steps
+- **Send reminders** for incomplete steps
+- **Override** steps when necessary (with audit logging)
+
+<Warning>
+  Overriding a workflow step is logged and visible in the audit trail. Use sparingly.
+</Warning>

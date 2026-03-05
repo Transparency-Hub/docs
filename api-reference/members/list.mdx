@@ -1,0 +1,52 @@
+---
+title: "List Members"
+api: "GET /getmembers"
+description: "Retrieve a paginated list of members for a chapter."
+---
+
+## Query Parameters
+
+<ParamField query="chapter_id" type="integer" required>
+  The chapter ID to list members for.
+</ParamField>
+
+<ParamField query="offset" type="integer" default="0">
+  Number of records to skip.
+</ParamField>
+
+<ParamField query="limit" type="integer" default="50">
+  Maximum number of records to return.
+</ParamField>
+
+<ParamField query="search" type="string">
+  Search by member name or email.
+</ParamField>
+
+## Response
+
+<ResponseExample>
+```json 200
+{
+  "status": "success",
+  "data": {
+    "members": [
+      {
+        "id": 1,
+        "firstname": "John",
+        "lastname": "Doe",
+        "email": "john@example.com",
+        "chapter_id": 1,
+        "membertype_id": 1,
+        "status": "active",
+        "createddate": "2025-01-15T10:00:00Z"
+      }
+    ],
+    "pagination": {
+      "total": 120,
+      "offset": 0,
+      "limit": 50
+    }
+  }
+}
+```
+</ResponseExample>

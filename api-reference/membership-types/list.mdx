@@ -1,0 +1,45 @@
+---
+title: "List Membership Types"
+api: "GET /getmember_types"
+description: "Retrieve membership types for a chapter."
+---
+
+## Query Parameters
+
+<ParamField query="chapter_id" type="integer" required>
+  Chapter ID.
+</ParamField>
+
+## Response
+
+<ResponseExample>
+```json 200
+{
+  "status": "success",
+  "data": {
+    "membership_type_with_logs": [
+      {
+        "id": 1,
+        "name": "Annual Member",
+        "category": "standard",
+        "duration": "12",
+        "description": "Standard annual membership",
+        "autorecurring_payment": true,
+        "reminder_frequency": "monthly",
+        "membership_privacy": false,
+        "startdate": "2025-01-01T00:00:00Z",
+        "enddate": "2025-12-31T00:00:00Z",
+        "membership_dues": [],
+        "workflows": {},
+        "notificationsettings": {}
+      }
+    ],
+    "pagination": {
+      "total": 3,
+      "offset": 0,
+      "limit": 50
+    }
+  }
+}
+```
+</ResponseExample>

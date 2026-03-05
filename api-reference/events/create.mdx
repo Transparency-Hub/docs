@@ -1,0 +1,63 @@
+---
+title: "Create Event"
+api: "POST /createevent"
+description: "Create a new event in a chapter."
+---
+
+## Request Body
+
+<ParamField body="title" type="string" required>
+  Event title.
+</ParamField>
+
+<ParamField body="description" type="string">
+  Event description.
+</ParamField>
+
+<ParamField body="chapter_id" type="integer" required>
+  Chapter ID.
+</ParamField>
+
+<ParamField body="start_time" type="string" required>
+  Start time (ISO 8601, UTC).
+</ParamField>
+
+<ParamField body="end_time" type="string" required>
+  End time (ISO 8601, UTC).
+</ParamField>
+
+<ParamField body="timezone" type="string">
+  IANA timezone (e.g., `Africa/Lagos`). Used for display in emails and notifications.
+</ParamField>
+
+<ParamField body="meeting_link" type="string">
+  Video meeting URL (Google Meet, Zoom, or Teams link).
+</ParamField>
+
+<ParamField body="meeting_provider_type" type="string">
+  Provider type: `google_meet`, `zoom`, `teams`.
+</ParamField>
+
+<ParamField body="record_meeting" type="boolean" default="false">
+  Enable automatic recording and AI minute generation.
+</ParamField>
+
+## Response
+
+<ResponseExample>
+```json 201
+{
+  "status": "success",
+  "data": {
+    "id": 10,
+    "title": "Board Meeting",
+    "start_time": "2025-07-01T09:00:00Z",
+    "end_time": "2025-07-01T11:00:00Z",
+    "timezone": "Africa/Lagos",
+    "meeting_link": "https://meet.google.com/xyz",
+    "record_meeting": true,
+    "chapter_id": 1
+  }
+}
+```
+</ResponseExample>

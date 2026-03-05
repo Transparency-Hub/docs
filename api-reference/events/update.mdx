@@ -1,0 +1,35 @@
+---
+title: "Update Event"
+api: "PUT /editevent"
+description: "Update an existing event."
+---
+
+## Request Body
+
+<ParamField body="id" type="integer" required>
+  Event ID to update.
+</ParamField>
+
+All other fields from [Create Event](/api-reference/events/create) are accepted. Only provided fields will be updated.
+
+<Info>
+  If you change the `meeting_link` or `start_time` on an event with recording enabled, the meeting bot is automatically rescheduled.
+</Info>
+
+## Response
+
+<ResponseExample>
+```json 200
+{
+  "status": "success",
+  "data": {
+    "id": 10,
+    "title": "Board Meeting (Updated)",
+    "start_time": "2025-07-01T10:00:00Z",
+    "end_time": "2025-07-01T12:00:00Z",
+    "timezone": "Africa/Lagos",
+    "record_meeting": true
+  }
+}
+```
+</ResponseExample>

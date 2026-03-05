@@ -1,0 +1,65 @@
+---
+title: "Notifications"
+description: "Configure email notification templates for membership lifecycle events"
+---
+
+# Notifications
+
+Transparency Hub Network sends automated email notifications at key points in the membership lifecycle. You can customize templates for each stage.
+
+## Notification Types
+
+### Application Stage
+- **Application Received** — Sent to the applicant upon submission
+- **Application Approved** — Sent when an admin approves the application
+- **Application Rejected** — Sent with an optional reason for rejection
+- **Action Required** — Reminder for incomplete application steps
+
+### Expiration & Renewal
+- **Renewal Reminder** — Sent based on the [reminder frequency](/platform/membership-types) configured on the membership type (daily, weekly, biweekly, monthly, or quarterly)
+- **Membership Expired** — Sent when the membership lapses
+- **Renewal Successful** — Confirmation after successful renewal payment
+
+### Payment
+- **Payment Receipt** — Sent after each successful payment
+- **Payment Failed** — Sent when an auto-recurring charge fails
+- **Payment Retry Notice** — Notification of upcoming retry attempt
+
+## Customizing Templates
+
+<Steps>
+  <Step title="Go to Notifications">
+    Navigate to **Administration → Notifications**.
+  </Step>
+  <Step title="Select Template">
+    Click on the notification type you want to customize.
+  </Step>
+  <Step title="Edit Content">
+    Modify the subject line and email body. Use **template variables** to personalize:
+
+    | Variable | Description |
+    |----------|-------------|
+    | `{{member.name}}` | Member's full name |
+    | `{{member.email}}` | Member's email |
+    | `{{association.name}}` | Association name |
+    | `{{membership.type}}` | Membership type name |
+    | `{{membership.expiresAt}}` | Expiration date |
+    | `{{payment.amount}}` | Payment amount |
+    | `{{payment.currency}}` | Payment currency |
+  </Step>
+  <Step title="Preview & Save">
+    Use **Send Test Email** to preview, then save.
+  </Step>
+</Steps>
+
+<Tip>
+  Keep notification emails concise with a clear call-to-action. Members are more likely to act on short, focused messages.
+</Tip>
+
+## Disabling Notifications
+
+Toggle individual notification types on/off from the notifications settings page. Disabled notifications are never sent.
+
+<Warning>
+  Disabling **Renewal Reminder** notifications may lead to higher churn rates. Consider adjusting frequency instead.
+</Warning>

@@ -1,0 +1,72 @@
+---
+title: "Members"
+description: "Add, manage, and import members into your association"
+---
+
+# Members
+
+Members are the core of your association. Transparency Hub Network provides flexible tools for adding, managing, and importing members.
+
+## Adding Members
+
+<Tabs>
+  <Tab title="Manual Entry">
+    Navigate to **Members → Add Member** and fill in:
+    - Full name and email address
+    - Membership type
+    - Chapter assignment (optional)
+    - Custom profile fields
+
+    The member will receive an invitation email to complete their profile.
+  </Tab>
+  <Tab title="Bulk Import">
+    Import members from a CSV file:
+
+    1. Go to **Members → Import**
+    2. Download the CSV template
+    3. Fill in your member data
+    4. Upload the completed CSV
+    5. Map columns to fields and confirm
+
+    <Info>
+      The importer handles duplicates by matching on email address. Existing members are updated rather than duplicated.
+    </Info>
+  </Tab>
+  <Tab title="Application Form">
+    Members can self-register through your association's public application form. Applications follow your configured [workflow](/admin/workflows) before being approved.
+  </Tab>
+</Tabs>
+
+## Member Profiles
+
+Each member profile includes:
+
+- **Personal information** — Name, email, phone, address
+- **Membership details** — Type, status, join date, expiration
+- **Chapter assignments** — Which chapters they belong to
+- **Payment history** — Dues payments and outstanding balances
+- **Event attendance** — Events they've registered for or attended
+
+## Managing Members
+
+From the member list, you can:
+
+- **Search and filter** by name, email, membership type, status, or chapter
+- **Edit** individual member profiles
+- **Change membership type** or status
+- **Suspend or deactivate** members
+- **Export** the member list to CSV
+
+<Warning>
+  Deactivating a member revokes their access to the member portal and stops renewal reminders. It does not delete their data.
+</Warning>
+
+## Member Statuses
+
+| Status | Description |
+|--------|-------------|
+| **Pending** | Application submitted, awaiting approval |
+| **Active** | Approved and in good standing |
+| **Expired** | Membership has lapsed |
+| **Suspended** | Temporarily disabled by an admin |
+| **Deactivated** | Permanently disabled |

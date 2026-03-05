@@ -1,0 +1,52 @@
+---
+title: "Create Membership Type"
+api: "POST /createmember_type"
+description: "Create a new membership type with dues, workflow, and notification settings."
+---
+
+## Request Body
+
+<ParamField body="membership_type" type="object" required>
+  <Expandable>
+    <ParamField body="name" type="string" required>Name of the membership type.</ParamField>
+    <ParamField body="chapter_id" type="integer" required>Chapter ID.</ParamField>
+    <ParamField body="category" type="string" required>Category (e.g., "standard", "premium").</ParamField>
+    <ParamField body="duration" type="integer" required>Duration in months.</ParamField>
+    <ParamField body="description" type="string">Description.</ParamField>
+    <ParamField body="autorecurring_payment" type="boolean" required>Enable auto-renewal.</ParamField>
+    <ParamField body="reminder_frequency" type="string">Reminder frequency: `daily`, `weekly`, `biweekly`, `monthly`, `quarterly`, or empty for none.</ParamField>
+    <ParamField body="membership_privacy" type="boolean" required>Whether membership is private.</ParamField>
+    <ParamField body="startdate" type="string" required>Start date (ISO 8601).</ParamField>
+    <ParamField body="enddate" type="string" required>End date (ISO 8601).</ParamField>
+  </Expandable>
+</ParamField>
+
+<ParamField body="membership_dues" type="array">
+  Array of dues configurations.
+</ParamField>
+
+<ParamField body="workflow" type="object">
+  Workflow settings (approval, payment requirements).
+</ParamField>
+
+<ParamField body="notificationsettings" type="object">
+  Notification template configuration.
+</ParamField>
+
+## Response
+
+<ResponseExample>
+```json 201
+{
+  "status": "success",
+  "data": {
+    "id": 5,
+    "name": "Premium Member",
+    "category": "premium",
+    "duration": "12",
+    "autorecurring_payment": true,
+    "reminder_frequency": "monthly"
+  }
+}
+```
+</ResponseExample>

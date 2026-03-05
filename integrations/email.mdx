@@ -1,0 +1,32 @@
+---
+title: "Email Service"
+description: "How Transparency Hub Network sends transactional emails."
+---
+
+## Email Delivery
+
+Transparency Hub Network uses a managed email service to deliver transactional emails including:
+
+- Membership application notifications
+- Renewal reminders
+- Payment receipts
+- Event invitations and reminders
+- Meeting minutes delivery
+
+## Email Types
+
+| Type | Trigger | Configurable |
+|------|---------|-------------|
+| Application notifications | Membership workflow state changes | ✅ Template customizable |
+| Renewal reminders | Based on reminder frequency setting | ✅ Frequency configurable |
+| Payment receipts | Successful payment | Template only |
+| Event reminders | Configurable minutes before event | ✅ Time configurable |
+| Meeting minutes | After AI processing completes | Automatic |
+
+## Customization
+
+Email templates can be customized per notification type in **Administration → Notifications**. See [Notifications](/admin/notifications) for details on template variables and customization options.
+
+<Tip>
+  Ensure your association's email domain is properly configured to avoid emails landing in spam folders. Contact support if you need help with email deliverability.
+</Tip>
