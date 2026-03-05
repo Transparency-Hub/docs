@@ -10,20 +10,41 @@ When an event is recorded, Transparency Hub Network automatically generates meet
 ## How It Works
 
 <Steps>
-  <Step title="Record the Meeting">
-    Enable **Record Meeting** on an [event](/platform/events). The platform's bot joins the meeting and captures audio.
+  <Step title="Schedule a Recorded Event">
+    When creating an event with a meeting link (Google Meet, Zoom, or Teams), enable **Record & Generate Minutes**. A bot is automatically scheduled to join.
+  </Step>
+  <Step title="Bot Joins the Meeting">
+    At the scheduled time, **Transparency Hub Notetaker** joins the meeting as a participant and begins recording.
+
+    <img src="/images/notetaker-zoom.jpg" alt="Transparency Hub Notetaker in a Zoom meeting" />
+
+    All participants will see the bot as an attendee. Ensure participants are aware of the recording.
   </Step>
   <Step title="AI Processing">
-    After the meeting ends, the recording is transcribed and processed by AI to produce structured minutes including:
-    - **Summary** — Key topics discussed
-    - **Action items** — Tasks assigned with owners
-    - **Decisions** — Resolutions and votes
-    - **Attendees** — Who participated
+    After the meeting ends, the recording and transcript are processed automatically:
+    - Recording uploaded to **Azure Blob Storage**
+    - Transcript sent to **Google Gemini AI** for analysis
+    - AI generates structured meeting minutes
   </Step>
   <Step title="Review & Edit">
     Minutes appear on the event's detail page once processing is complete (typically within 15–30 minutes).
   </Step>
 </Steps>
+
+## Architecture
+
+The meeting bot system uses a multi-provider architecture to support Google Meet, Zoom, and Microsoft Teams:
+
+<img src="/images/meeting-bot-architecture.svg" alt="Meeting Bot Architecture Diagram" />
+
+**Flow:**
+1. Admin creates an event with recording enabled
+2. Backend schedules a bot via **Attendee.dev** (our bot service provider)
+3. Bot joins the meeting at the scheduled time and records
+4. After the meeting, Attendee.dev sends a **webhook** with transcript and recording URLs
+5. Backend downloads and stores the recording in **Azure Blob Storage**
+6. Transcript is sent to **Google Gemini AI** to generate formatted minutes
+7. Minutes are saved and displayed on the event page
 
 ## Viewing Minutes
 
@@ -51,6 +72,14 @@ Export meeting minutes or the full transcript as a PDF:
 3. Choose between **Minutes** (structured summary) or **Full Transcript** (verbatim)
 
 The PDF includes the event title, date, attendees, and your association's branding.
+
+## Supported Providers
+
+| Provider | Bot Name | Status |
+|----------|----------|--------|
+| **Google Meet** | Transparency Hub Notetaker | ✅ Supported |
+| **Zoom** | Transparency Hub Notetaker | ✅ Supported |
+| **Microsoft Teams** | Transparency Hub Notetaker | ✅ Supported |
 
 ## Access Control
 
