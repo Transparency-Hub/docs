@@ -9,7 +9,8 @@
     "start": "npx serve build"
   },
   "dependencies": {
-    "mintlify": "^4.2.405"
+    "mintlify": "^4.2.405",
+    "sharp": "^0.34.5"
   },
   "devDependencies": {
     "serve": "^14.2.0"
@@ -19,7 +20,6 @@
     "body-parser": "^1.20.4",
     "cookie": "^0.7.2",
     "express": "^4.21.3",
-
     "lodash": "^4.17.23",
     "minimatch": "^5.1.9",
     "path-to-regexp": "^0.2.5",
