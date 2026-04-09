@@ -118,3 +118,36 @@ The PDF includes the event title, date, attendees, and your association's brandi
 <Info>
   All members of the association can view meeting minutes for any event. There are no restrictions — minutes are visible to every member to promote transparency.
 </Info>
+
+## Disconnecting a Provider
+
+Go to **Settings → Meeting Integrations**, click **Disconnect** on the provider card. This removes the provider connection from your chapter.
+
+### Zoom — Full Deauthorization
+
+When you disconnect Zoom from Transparency Hub, we automatically revoke the OAuth access token so our app no longer has access to your Zoom account. No further action is needed on your part.
+
+If you prefer, you can also remove the app directly from your Zoom account:
+
+<Steps>
+  <Step title="Go to Zoom Marketplace">
+    Visit the [Zoom App Marketplace — Installed Apps](https://marketplace.zoom.us/user/installed) page.
+  </Step>
+  <Step title="Find Transparency Hub Network">
+    Locate **Transparency Hub Network** in your list of installed apps.
+  </Step>
+  <Step title="Remove the App">
+    Click **Remove** to fully deauthorize the app from your Zoom account.
+  </Step>
+</Steps>
+
+<Info>
+  Either method — disconnecting from Transparency Hub or removing from Zoom — fully revokes our access. When you disconnect from our app, we call Zoom's token revocation endpoint automatically. When you remove from Zoom's side, Zoom notifies us and we clean up the connection on our end.
+</Info>
+
+### Google Meet & Microsoft Teams
+
+When you disconnect Google Meet or Microsoft Teams from Transparency Hub, the stored OAuth credentials are removed from our system. You can also revoke access from your Google or Microsoft account settings:
+
+- **Google:** Go to [Google Account → Security → Third-party apps](https://myaccount.google.com/permissions) and remove Transparency Hub Network.
+- **Microsoft:** Go to [Microsoft Account → Privacy → Apps and services](https://account.live.com/consent/Manage) and remove Transparency Hub Network.
