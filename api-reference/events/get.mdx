@@ -1,28 +1,15 @@
 ---
-title: "Create Event"
-api: "POST /v1/events"
-description: "Create an event."
+title: "Get Event"
+api: "GET /v1/events/{event_id}"
+description: "Retrieve one event."
 ---
 
-Create an event. By default every chapter member is invited (`all_participant: true`) and invitations are sent (`should_notify: true`) exactly as if the key's owner had created the event in the app.
+Retrieve one event.
 
-**Required scope:** `events:write`
-
-<RequestExample>
-```json Request
-{
-  "title": "Annual General Meeting",
-  "start_date_time": "2026-10-01T10:00:00Z",
-  "end_date_time": "2026-10-01T12:00:00Z",
-  "venue": "Main Hall",
-  "timezone": "Africa/Lagos",
-  "should_notify": true
-}
-```
-</RequestExample>
+**Required scope:** `events:read`
 
 <ResponseExample>
-```json 201
+```json 200
 {
   "status": "success",
   "data": {

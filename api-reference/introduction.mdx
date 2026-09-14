@@ -1,73 +1,94 @@
 ---
 title: "API Introduction"
-description: "Overview of the Transparency Hub Network REST API."
+description: "Overview of the Transparency Hub public REST API (v1)."
 ---
+
+The public API lets association and chapter admins integrate their own tools
+(CRM, website, Zapier, spreadsheets) with Transparency Hub. It is
+authenticated with API keys that admins create in **Settings → API Keys**
+(see [Managing API keys](/admin/api-keys)).
 
 ## Base URL
 
 ```
-https://api.transparencyhubnetwork.ai
+https://api.transparencyhubnetwork.ai/api/v1
 ```
 
-For staging/testing:
+Test environment:
+
 ```
-https://testapp.transparencyhubnetwork.ai
+https://testapp.transparencyhubnetwork.ai/api/v1
 ```
 
-## Response Format
+Keys are environment-specific: a `thn_test_…` key only works against the test
+base URL and a `thn_live_…` key only against production.
 
-All API responses follow a consistent format:
+## Response format
+
+Every response is JSON. Successful responses use one envelope:
+
+```json
+{ "status": "success", "data": { ... } }
+```
+
+List endpoints add pagination metadata:
 
 ```json
 {
   "status": "success",
-  "data": { ... }
+  "data": [ ... ],
+  "pagination": { "total": 150, "offset": 0, "limit": 50 }
 }
 ```
 
-Error responses:
+Errors always carry a machine-readable `code`:
 
 ```json
 {
   "status": "error",
-  "message": "Description of what went wrong"
+  "code": "insufficient_scope",
+  "message": "Key lacks required scope",
+  "details": { "required": ["members:write"] }
 }
 ```
 
-## HTTP Status Codes
+## Error codes
 
-| Code | Description |
-|------|-------------|
-| `200` | Success |
-| `201` | Created |
-| `400` | Bad Request — invalid parameters |
-| `401` | Unauthorized — missing or invalid token |
-| `403` | Forbidden — insufficient permissions |
-| `404` | Not Found |
-| `500` | Internal Server Error |
+| HTTP | `code` | Meaning |
+|------|--------|---------|
+| `400` | `validation_error` | Missing or malformed parameters or body (`details.missing` lists absent required fields). |
+| `401` | `unauthorized` | Missing, unknown, revoked or expired API key. The response never says which. |
+| `403` | `insufficient_scope` | The key does not hold every scope the operation needs (`details.required`). |
+| `403` | `chapter_forbidden` | The key is not scoped to the requested `chapter_id`. |
+| `404` | `not_found` | The resource does not exist in the key's chapter. |
+| `429` | `rate_limited` | Too many requests; retry after `Retry-After` seconds. |
+| `4xx` | `request_failed` | The operation was rejected by business rules (message explains why). |
+| `500` | `internal_error` | Unexpected failure. Nothing about the failure is echoed back. |
+
+## Chapters
+
+A key is either **chapter-bound** or **association-wide**:
+
+- Chapter-bound keys act on their chapter. `chapter_id` may be omitted; if
+  sent it must match the key's chapter.
+- Association-wide keys must send `chapter_id` (query parameter on reads,
+  body field on creates) naming a chapter inside the association.
 
 ## Pagination
 
-List endpoints support pagination via query parameters:
-
 | Parameter | Type | Default | Description |
 |-----------|------|---------|-------------|
-| `offset` | integer | 0 | Number of records to skip |
-| `limit` | integer | 50 | Maximum records to return |
+| `offset` | integer | 0 | Records to skip (≥ 0). |
+| `limit` | integer | 50 | Records to return (1–200). |
 
-Response includes pagination metadata:
+## Rate limiting
 
-```json
-{
-  "data": [...],
-  "pagination": {
-    "total": 150,
-    "offset": 0,
-    "limit": 50
-  }
-}
-```
+Each key may make **100 requests per minute**. Every response after
+authentication carries `X-RateLimit-Limit` and `X-RateLimit-Remaining`; a
+`429 rate_limited` response also carries `Retry-After` (seconds until the
+window resets).
 
-## Rate Limiting
+## Timestamps
 
-API requests are rate-limited to **100 requests per minute** per API key. Exceeding this limit returns a `429 Too Many Requests` response.
+All timestamps are ISO-8601 in UTC with a trailing `Z`, e.g.
+`2026-09-14T10:00:00Z`. Timestamps you send may carry any offset.
