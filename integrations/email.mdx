@@ -1,32 +1,12 @@
 ---
-title: "Email Service"
-description: "How Transparency Hub Network sends transactional emails."
+title: Email and notification controls
+description: Notification configuration visible to chapter admins.
 ---
 
-## Email Delivery
+# Email and notification controls
 
-Transparency Hub Network uses a managed email service to deliver transactional emails including:
+Open **Settings → General** for member notification settings. When you create or edit a membership type, the **Notification Settings** step provides application, expiration, and renewal email stages and supported template controls. Recurring payment reminders are configured in the membership type's general information.
 
-- Membership application notifications
-- Renewal reminders
-- Payment receipts
-- Event invitations and reminders
-- Meeting minutes delivery
+Use **Profile → Notifications** to read your own chapter notifications. This page is a paginated inbox; opening an unread entry marks it as read.
 
-## Email Types
-
-| Type | Trigger | Configurable |
-|------|---------|-------------|
-| Application notifications | Membership workflow state changes | ✅ Template customizable |
-| Renewal reminders | Based on reminder frequency setting | ✅ Frequency configurable |
-| Payment receipts | Successful payment | Template only |
-| Event reminders | Configurable minutes before event | ✅ Time configurable |
-| Meeting minutes | After AI processing completes | Automatic |
-
-## Customization
-
-Email templates can be customized per notification type in **Administration → Notifications**. See [Notifications](/admin/notifications) for details on template variables and customization options.
-
-<Tip>
-  Ensure your association's email domain is properly configured to avoid emails landing in spam folders. Contact support if you need help with email deliverability.
-</Tip>
+The admin web app does not expose a single global transactional email editor or a **Send Test Email** control on the Notifications page. Delivery timing and triggers depend on the configured workflow and backend service.
