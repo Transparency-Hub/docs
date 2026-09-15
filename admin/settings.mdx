@@ -1,44 +1,16 @@
 ---
-title: "Settings"
-description: "Configure your association's general settings, payment gateways, and integrations."
+title: Settings
+description: Chapter settings tabs in the admin web app.
 ---
 
-## General Settings
+# Settings
 
-Navigate to **Administration → Settings** to manage:
+Open **Settings** in the admin sidebar. The tabs are **General**, **Membership Type**, **Meeting Integrations**, and **Application Forms**. A tab is available only when your chapter role has the relevant viewing permission.
 
-- **Association Profile** — Name, description, logo
-- **Chapter Settings** — Privacy, default membership type
-- **Payment Accounts** — Bank accounts linked to chapters
+**General** includes chapter accounts, Stripe Connect setup, GoCardless connection and mandates, directory fields, birthday broadcasts, a join slug, member notification settings, and finance visibility. Payment setup uses the flows shown here rather than a form for pasting Stripe or Paystack API keys.
 
-## Payment Gateway Configuration
+**Membership Type** lists types and opens a four step configuration flow for general information, price and dues, workflow rules, and notifications. See [Membership Types](/platform/membership-types).
 
-Connect payment providers to accept dues and donations:
+**Meeting Integrations** shows Google Meet, Zoom, and Microsoft Teams provider cards, plus the chapter's default recording preference. See [Meeting Providers](/integrations/meeting-providers).
 
-<CardGroup cols={2}>
-  <Card title="Stripe" icon="stripe" href="/integrations/payment-gateways">
-    Accept credit cards, bank transfers, and more globally.
-  </Card>
-  <Card title="Paystack" icon="credit-card" href="/integrations/payment-gateways">
-    Popular payment gateway for African markets.
-  </Card>
-</CardGroup>
-
-## Meeting Integrations
-
-Connect video conferencing providers for automated meeting recording and AI-powered minutes:
-
-- **Google Meet** — OAuth connection for calendar-linked meetings
-- **Zoom** — OAuth with managed token handling
-- **Microsoft Teams** — OAuth connection for Teams meetings
-
-See [Meeting Providers](/integrations/meeting-providers) for setup details.
-
-## Membership Type Settings
-
-Configure default behaviors for membership types including:
-- Auto-recurring payment toggle
-- Reminder frequency for renewals
-- Workflow requirements (approval, payment)
-
-See [Membership Types](/platform/membership-types) for details.
+**Application Forms** manages the chapter's application form templates, including a form builder. The sidebar also exposes **Roles** and **Executives** under Settings as separate pages.

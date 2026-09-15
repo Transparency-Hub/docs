@@ -1,42 +1,9 @@
-# Transparency Hub Network — Documentation
+# Transparency Hub Network admin web documentation
 
-Built with [Mintlify](https://mintlify.com).
+This Mintlify guide describes the admin web app at `Staticwebsite-App` `origin/main` commit `b1ee213` (checked September 15, 2026). It covers UI available to an administrator in a selected chapter, subject to role permissions. It does not document unpublished feature branches, the mobile apps, or the backend/public API.
 
-## Local Development
+When updating the guide, fetch `origin/main` in `Staticwebsite-App` and compare page labels, controls, routes, feature flags, and permissions against that commit before making claims. Update the source commit in the introduction and this README. Do not use plans or QA guides as evidence that a feature is released.
 
-```bash
-npm install
-npx mintlify dev
-```
+Validate the site with `npx mintlify validate` and `npx mintlify broken-links`. Preview it with `npx mintlify dev`.
 
-Opens at `http://localhost:3000`.
-
-## Docker Build (Azure Container Service)
-
-```bash
-docker build -t thub-docs .
-docker run -p 3000:3000 thub-docs
-```
-
-## Deployment
-
-This project is deployed on **Azure Container Apps**. The CI/CD pipeline builds the Docker image and pushes it to Azure Container Registry.
-
-### Environment Variables
-
-| Variable | Description |
-|----------|-------------|
-| `PORT` | Server port (default: 3000) |
-
-### Azure CLI Deployment
-
-```bash
-# Build and push to ACR
-az acr build --registry <acr-name> --image thub-docs:latest .
-
-# Deploy to Container Apps
-az containerapp update \
-  --name thub-docs \
-  --resource-group <resource-group> \
-  --image <acr-name>.azurecr.io/thub-docs:latest
-```
+The repository's older Dockerfile and GitHub Pages workflow still call `mintlify build`, which the installed CLI no longer provides. Those deployment paths need separate repair before they can build a static artifact.

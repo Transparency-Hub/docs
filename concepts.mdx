@@ -1,62 +1,14 @@
 ---
-title: Core Concepts
-description: "Understand the key building blocks of Transparency Hub Network."
+title: Core concepts
+description: How the admin web app organizes associations, chapters, members, and meetings.
 ---
 
-## Association
+# Core concepts
 
-An **Association** is the top-level entity — your organization. It represents the alumni group, club, professional body, or any membership-based organization using the platform.
+An **association** groups its chapters. The admin app operates in a **selected chapter**: the chapter name appears in the sidebar, and chapter roles determine which screens and actions are available. **Association** displays the hierarchy and lets permitted admins manage chapters and subchapters.
 
-## Chapters
+A **membership type** belongs to chapter settings. Its configuration includes general information, dues, application and renewal approval rules, and notification settings. **Members** shows chapter members; **Workflow → Application** and **Workflow → Renewal** show their records by stage.
 
-**Chapters** are subdivisions of an association. They can represent regional branches, departments, cohorts, or any logical grouping. Each chapter has its own:
+**Meetings** are scheduled in a calendar or list. A meeting can use an external link or a generated TransparencyHub in-app meeting link. External recording uses a connected Google Meet, Zoom, or Microsoft Teams account. **Gatherings** is a separate admin screen for events and tickets.
 
-- Members and membership types
-- Financial accounts and dues
-- Settings and workflows
-- Events and meeting minutes
-
-## Membership Types
-
-A **Membership Type** defines the terms of membership — duration, dues, renewal rules, and application workflow. Examples: "Annual Member", "Lifetime Member", "Student Member".
-
-Key settings include:
-- **Duration** — How long the membership lasts
-- **Auto-Recurring Payment** — Whether renewals happen automatically
-- **Reminder Frequency** — How often renewal reminders are sent (daily, weekly, biweekly, monthly, quarterly)
-- **Workflow** — Approval process for applications and renewals
-
-## Workflows
-
-**Workflows** control the lifecycle of a membership application or renewal:
-
-1. **Application Submitted** → Awaiting approval or payment
-2. **Approved / Payment Received** → Membership activated
-3. **Expiring** → Renewal triggered (manual or automatic)
-4. **Declined / Cancelled** → Membership ended
-
-Administrators can configure whether approval, payment, or both are required at each stage.
-
-## Dues
-
-**Dues** are financial obligations tied to a membership type. They have:
-- **Amount** and **Currency**
-- **Frequency** — One-time, monthly, yearly, etc.
-- **Payment Schedule** — When the payment is due
-- **Taxes** — Optional tax configuration
-
-## Events
-
-**Events** are meetings, gatherings, or activities organized by a chapter. They support:
-- Online meeting links (Google Meet, Zoom, Teams)
-- Automated recording via meeting bot integration
-- AI-generated meeting minutes and transcripts
-- Timezone-aware scheduling and email notifications
-
-## Meeting Minutes
-
-**Meeting Minutes** are automatically generated from recorded meetings using AI. They include:
-- Summary of discussion points
-- Decisions made
-- Action items
-- Full formatted transcript
+**Transactions** lists chapter financial records and offers transaction uploads and statements. **Minutes** is a separate screen for viewing and uploading minutes, with actions governed by the chapter's minutes permissions.

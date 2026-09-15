@@ -23,14 +23,8 @@
   ],
   "topbarCtaButton": {
     "name": "Get Started",
-    "url": "https://transparencyhubnetwork.ai"
+    "url": "https://transparencyhubnetwork.ai/#signup"
   },
-  "tabs": [
-    {
-      "name": "API Reference",
-      "url": "api-reference"
-    }
-  ],
   "anchors": [
     {
       "name": "Website",
@@ -53,7 +47,7 @@
       ]
     },
     {
-      "group": "Platform Guide",
+      "group": "Chapter tools",
       "pages": [
         "platform/associations",
         "platform/chapters",
@@ -65,60 +59,25 @@
       ]
     },
     {
-      "group": "Administration",
+      "group": "Admin settings and workflow",
       "pages": [
         "admin/dashboard",
         "admin/roles-permissions",
         "admin/workflows",
         "admin/notifications",
-        "admin/settings",
-        "admin/api-keys"
+        "admin/settings"
       ]
     },
     {
-      "group": "Integrations",
+      "group": "Connections",
       "pages": [
         "integrations/payment-gateways",
         "integrations/meeting-providers",
         "integrations/email"
       ]
-    },
-    {
-      "group": "API Reference",
-      "pages": [
-        "api-reference/introduction",
-        "api-reference/authentication"
-      ]
-    },
-    {
-      "group": "Members",
-      "pages": [
-        "api-reference/members/list",
-        "api-reference/members/get",
-        "api-reference/members/create",
-        "api-reference/members/update"
-      ]
-    },
-    {
-      "group": "Membership Types",
-      "pages": [
-        "api-reference/membership-types/list",
-        "api-reference/membership-types/get",
-        "api-reference/membership-types/update"
-      ]
-    },
-    {
-      "group": "Events",
-      "pages": [
-        "api-reference/events/list",
-        "api-reference/events/get",
-        "api-reference/events/create",
-        "api-reference/events/update"
-      ]
     }
   ],
   "footerSocials": {
     "website": "https://transparencyhubnetwork.ai"
-  },
-  "openapi": "api-reference/openapi.json"
+  }
 }

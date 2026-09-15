@@ -1,47 +1,12 @@
 ---
-title: "Payment Gateways"
-description: "Connect Stripe or Paystack to accept membership dues and donations."
+title: Payment setup in the admin app
+description: Payment account controls visible in chapter settings.
 ---
 
-## Supported Providers
+# Payment setup in the admin app
 
-| Provider | Regions | Currencies |
-|----------|---------|------------|
-| **Stripe** | Global | 135+ currencies |
-| **Paystack** | Nigeria, Ghana, South Africa, Kenya | NGN, GHS, ZAR, KES |
+Open **Settings → General** for the selected chapter. The screen includes a chapter accounts table, a **Setup Stripe Account** flow, **Connect GoCardless** for Direct Debit, and a GoCardless mandates table. Complete the connection flows presented by the app; Stripe uses account onboarding and GoCardless redirects to its authorization page.
 
-## Stripe Setup
+Membership dues and payment rules are configured separately under **Settings → Membership Type**. The checkout provider and available methods depend on the chapter's payment setup and payment context.
 
-<Steps>
-  <Step title="Create a Stripe Account">
-    Sign up at [stripe.com](https://stripe.com) if you don't have one.
-  </Step>
-  <Step title="Get API Keys">
-    Go to **Developers → API Keys** in your Stripe dashboard. Copy the **Publishable Key** and **Secret Key**.
-  </Step>
-  <Step title="Connect in THN">
-    Navigate to **Settings → Payment Gateways → Stripe**. Paste your API keys and save.
-  </Step>
-</Steps>
-
-## Paystack Setup
-
-<Steps>
-  <Step title="Create a Paystack Account">
-    Sign up at [paystack.com](https://paystack.com).
-  </Step>
-  <Step title="Get API Keys">
-    Go to **Settings → API Keys & Webhooks**. Copy the **Public Key** and **Secret Key**.
-  </Step>
-  <Step title="Connect in THN">
-    Navigate to **Settings → Payment Gateways → Paystack**. Paste your API keys and save.
-  </Step>
-</Steps>
-
-<Info>
-  Payment processing fees are charged by the provider (Stripe/Paystack), not by Transparency Hub Network.
-</Info>
-
-## Auto-Recurring Payments
-
-When a membership type has **auto-recurring payment** enabled, the system automatically charges members at renewal time using their saved payment method. Failed charges trigger retry notifications.
+The admin General tab does not provide fields to paste Stripe or Paystack secret keys. This guide describes only the connections and controls visible in the admin web app at the release commit.
