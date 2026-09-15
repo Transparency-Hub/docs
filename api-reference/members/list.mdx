@@ -1,51 +1,39 @@
 ---
 title: "List Members"
-api: "GET /getmembers"
-description: "Retrieve a paginated list of members for a chapter."
+api: "GET /v1/members"
+description: "Retrieve a paginated list of the chapter's members."
 ---
 
-## Query Parameters
+Retrieve a paginated list of the chapter's members. Supports `search` (first name, last name or email) and `status` (`active` / `inactive`).
 
-<ParamField query="chapter_id" type="integer" required>
-  The chapter ID to list members for.
-</ParamField>
-
-<ParamField query="offset" type="integer" default="0">
-  Number of records to skip.
-</ParamField>
-
-<ParamField query="limit" type="integer" default="50">
-  Maximum number of records to return.
-</ParamField>
-
-<ParamField query="search" type="string">
-  Search by member name or email.
-</ParamField>
-
-## Response
+**Required scope:** `members:read`
 
 <ResponseExample>
 ```json 200
 {
   "status": "success",
-  "data": {
-    "members": [
-      {
-        "id": 1,
-        "firstname": "John",
-        "lastname": "Doe",
-        "email": "john@example.com",
-        "chapter_id": 1,
-        "membertype_id": 1,
-        "status": "active",
-        "createddate": "2025-01-15T10:00:00Z"
-      }
-    ],
-    "pagination": {
-      "total": 120,
-      "offset": 0,
-      "limit": 50
+  "data": [
+    {
+      "id": 42,
+      "title": "Mr",
+      "firstname": "Ada",
+      "lastname": "Lovelace",
+      "email": "ada@example.org",
+      "country": "NG",
+      "profilepic": null,
+      "chapter_id": 9,
+      "role_id": null,
+      "membership_type_id": 3,
+      "status": "active",
+      "is_new_user": false,
+      "createddate": "2026-01-15T10:00:00Z",
+      "lastmodifieddate": null
     }
+  ],
+  "pagination": {
+    "total": 1,
+    "offset": 0,
+    "limit": 50
   }
 }
 ```

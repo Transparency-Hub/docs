@@ -71,7 +71,8 @@
         "admin/roles-permissions",
         "admin/workflows",
         "admin/notifications",
-        "admin/settings"
+        "admin/settings",
+        "admin/api-keys"
       ]
     },
     {
@@ -102,7 +103,7 @@
       "group": "Membership Types",
       "pages": [
         "api-reference/membership-types/list",
-        "api-reference/membership-types/create",
+        "api-reference/membership-types/get",
         "api-reference/membership-types/update"
       ]
     },
@@ -110,6 +111,7 @@
       "group": "Events",
       "pages": [
         "api-reference/events/list",
+        "api-reference/events/get",
         "api-reference/events/create",
         "api-reference/events/update"
       ]
@@ -117,5 +119,6 @@
   ],
   "footerSocials": {
     "website": "https://transparencyhubnetwork.ai"
-  }
+  },
+  "openapi": "api-reference/openapi.json"
 }

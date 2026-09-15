@@ -1,44 +1,42 @@
 ---
 title: "List Membership Types"
-api: "GET /getmember_types"
-description: "Retrieve membership types for a chapter."
+api: "GET /v1/membership-types"
+description: "Retrieve the chapter's membership types."
 ---
 
-## Query Parameters
+Retrieve the chapter's membership types.
 
-<ParamField query="chapter_id" type="integer" required>
-  Chapter ID.
-</ParamField>
-
-## Response
+**Required scope:** `membership_types:read`
 
 <ResponseExample>
 ```json 200
 {
   "status": "success",
-  "data": {
-    "membership_type_with_logs": [
-      {
-        "id": 1,
-        "name": "Annual Member",
-        "category": "standard",
-        "duration": "12",
-        "description": "Standard annual membership",
-        "autorecurring_payment": true,
-        "reminder_frequency": "monthly",
-        "membership_privacy": false,
-        "startdate": "2025-01-01T00:00:00Z",
-        "enddate": "2025-12-31T00:00:00Z",
-        "membership_dues": [],
-        "workflows": {},
-        "notificationsettings": {}
-      }
-    ],
-    "pagination": {
-      "total": 3,
-      "offset": 0,
-      "limit": 50
+  "data": [
+    {
+      "id": 3,
+      "chapter_id": 9,
+      "name": "Gold",
+      "category": "Individual",
+      "description": "Full membership",
+      "duration": 12,
+      "renewal_timeline": 30,
+      "deactivation_timeline": 60,
+      "deactivation_policy": null,
+      "deactivation_threshold_amount": null,
+      "startdate": "2026-01-01T00:00:00Z",
+      "enddate": "2026-12-31T00:00:00Z",
+      "is_end_date_fixed": false,
+      "autorecurring_payment": false,
+      "membership_privacy": false,
+      "createddate": "2025-12-01T09:00:00Z",
+      "lastmodifieddate": null
     }
+  ],
+  "pagination": {
+    "total": 1,
+    "offset": 0,
+    "limit": 50
   }
 }
 ```

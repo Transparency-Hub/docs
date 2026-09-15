@@ -1,21 +1,12 @@
 ---
-title: "Update Membership Type"
-api: "PATCH /v1/membership-types/{type_id}"
-description: "Update the flat fields of a membership type (name, category, description, durations, timelines, privacy and payment flags)."
+title: "Get Membership Type"
+api: "GET /v1/membership-types/{type_id}"
+description: "Retrieve one membership type."
 ---
 
-Update the flat fields of a membership type (name, category, description, durations, timelines, privacy and payment flags). Dues, workflows and application forms are managed in the app.
+Retrieve one membership type.
 
-**Required scope:** `membership_types:write`
-
-<RequestExample>
-```json Request
-{
-  "name": "Gold (renewing)",
-  "renewal_timeline": 45
-}
-```
-</RequestExample>
+**Required scope:** `membership_types:read`
 
 <ResponseExample>
 ```json 200

@@ -1,32 +1,32 @@
 ---
 title: "Get Member"
-api: "GET /getmember/{id}"
-description: "Retrieve a single member by ID."
+api: "GET /v1/members/{member_id}"
+description: "Retrieve one member."
 ---
 
-## Path Parameters
+Retrieve one member. Returns `404 not_found` if the member is not in the key's chapter.
 
-<ParamField path="id" type="integer" required>
-  The member ID.
-</ParamField>
-
-## Response
+**Required scope:** `members:read`
 
 <ResponseExample>
 ```json 200
 {
   "status": "success",
   "data": {
-    "id": 1,
-    "firstname": "John",
-    "lastname": "Doe",
-    "email": "john@example.com",
-    "phone": "+2348012345678",
-    "chapter_id": 1,
-    "membertype_id": 1,
+    "id": 42,
+    "title": "Mr",
+    "firstname": "Ada",
+    "lastname": "Lovelace",
+    "email": "ada@example.org",
+    "country": "NG",
+    "profilepic": null,
+    "chapter_id": 9,
+    "role_id": null,
+    "membership_type_id": 3,
     "status": "active",
-    "date_of_birth": "1990-05-15",
-    "createddate": "2025-01-15T10:00:00Z"
+    "is_new_user": false,
+    "createddate": "2026-01-15T10:00:00Z",
+    "lastmodifieddate": null
   }
 }
 ```

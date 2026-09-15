@@ -1,36 +1,20 @@
 ---
 title: "Update Member"
-api: "PUT /editmember"
-description: "Update an existing member's details."
+api: "PATCH /v1/members/{member_id}"
+description: "Update a member's `title`, `firstname`, `lastname`, `country` or `profilepic`."
 ---
 
-## Request Body
+Update a member's `title`, `firstname`, `lastname`, `country` or `profilepic`. Email and password cannot be changed through the public API.
 
-<ParamField body="id" type="integer" required>
-  Member ID to update.
-</ParamField>
+**Required scope:** `members:write`
 
-<ParamField body="firstname" type="string">
-  Updated first name.
-</ParamField>
-
-<ParamField body="lastname" type="string">
-  Updated last name.
-</ParamField>
-
-<ParamField body="email" type="string">
-  Updated email address.
-</ParamField>
-
-<ParamField body="phone" type="string">
-  Updated phone number.
-</ParamField>
-
-<ParamField body="status" type="string">
-  Member status: `active`, `inactive`, `suspended`.
-</ParamField>
-
-## Response
+<RequestExample>
+```json Request
+{
+  "firstname": "Augusta"
+}
+```
+</RequestExample>
 
 <ResponseExample>
 ```json 200
@@ -38,10 +22,19 @@ description: "Update an existing member's details."
   "status": "success",
   "data": {
     "id": 42,
-    "firstname": "Jane",
-    "lastname": "Smith-Updated",
-    "email": "jane@example.com",
-    "status": "active"
+    "title": "Mr",
+    "firstname": "Ada",
+    "lastname": "Lovelace",
+    "email": "ada@example.org",
+    "country": "NG",
+    "profilepic": null,
+    "chapter_id": 9,
+    "role_id": null,
+    "membership_type_id": 3,
+    "status": "active",
+    "is_new_user": false,
+    "createddate": "2026-01-15T10:00:00Z",
+    "lastmodifieddate": null
   }
 }
 ```
