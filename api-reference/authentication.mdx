@@ -1,0 +1,85 @@
+---
+title: "Authentication"
+description: "Authenticate with an API key and understand scopes."
+---
+
+## API keys
+
+Every request must carry an API key. Two header forms are accepted:
+
+```bash
+Authorization: Bearer thn_live_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+```
+
+```bash
+X-API-Key: thn_live_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+```
+
+Keys look like `thn_{env}_{32 characters}` where `env` is `live` or `test`.
+Only the first 12 characters are ever shown again in the admin UI — copy the
+full key when it is created.
+
+<Warning>
+  Treat keys as passwords. Never put them in client-side code, public
+  repositories or logs. Revoke and re-create a key if it may have leaked.
+</Warning>
+
+## Scopes
+
+A key only holds the scopes chosen when it was created. Write scopes do not
+imply read scopes — pick both if you need both.
+
+| Scope | Grants |
+|-------|--------|
+| `members:read` | Read members |
+| `members:write` | Create and update members |
+| `membership_types:read` | Read membership types |
+| `membership_types:write` | Update membership types |
+| `events:read` | Read events |
+| `events:write` | Create and update events |
+
+A request with a key that lacks a required scope returns
+`403 insufficient_scope` with `details.required` listing what is needed.
+
+## Chapter scope
+
+Keys are created for one chapter, or association-wide by a root-chapter
+admin. See [Chapters](/api-reference/introduction#chapters) for how
+`chapter_id` is interpreted for each kind of key.
+
+## Expiry and revocation
+
+Keys may be given an expiry date at creation. An admin can revoke a key at
+any time; revoked or expired keys receive `401 unauthorized` immediately.
+
+## Example
+
+```bash
+curl "https://api.transparencyhubnetwork.ai/api/v1/members?limit=5" \
+  -H "Authorization: Bearer thn_live_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+```
+
+```json
+{
+  "status": "success",
+  "data": [
+    {
+      "id": 42,
+      "title": "Mr",
+      "firstname": "Ada",
+      "lastname": "Lovelace",
+      "email": "ada@example.org",
+      "country": "NG",
+      "profilepic": null,
+      "chapter_id": 9,
+      "role_id": null,
+      "membership_type_id": 3,
+      "status": "active",
+      "is_new_user": false,
+      "createddate": "2026-01-15T10:00:00Z",
+      "lastmodifieddate": null
+    }
+  ],
+  "pagination": { "total": 120, "offset": 0, "limit": 5 }
+}
+```
