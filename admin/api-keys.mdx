@@ -1,0 +1,38 @@
+---
+title: "API Keys"
+description: "Create and revoke keys for the Transparency Hub public API."
+---
+
+API keys let external tools use the [public API](/api-reference/introduction)
+on behalf of your chapter. Keys are managed by chapter admins under
+**Settings → API Keys**.
+
+## Creating a key
+
+1. Open **Settings → API Keys** and click **Create key**.
+2. Give the key a name that identifies the integration (for example
+   "Zapier sync").
+3. Tick the scopes the integration needs. Grant the minimum: a reporting
+   tool needs only `*:read` scopes.
+4. Optionally set an expiry date.
+5. Click **Create**. The full key is shown **once**. Copy it into the
+   integration now — it cannot be displayed again.
+
+The list shows each key's name, the first characters of the key, its scopes,
+when it was created and last used, and whether it is active, expired or
+revoked.
+
+## Association-wide keys
+
+Admins of a root chapter can create keys that work across every chapter in
+the association. Such keys must send a `chapter_id` on every request.
+
+## Revoking a key
+
+Click **Revoke** next to a key and confirm. Integrations using that key stop
+working immediately. Revocation cannot be undone — create a new key instead.
+
+## Rotating a key
+
+Create a new key with the same scopes, switch the integration over, then
+revoke the old key.

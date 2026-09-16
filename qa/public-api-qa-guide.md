@@ -1,0 +1,369 @@
+# Public API (Phase 1) — QA Guide
+
+A step-by-step test plan for the **new Public API and the API Keys settings page**. Part A is done in a normal web browser. Part B uses **Postman**, a free app for sending messages to the API by clicking — every step is spelled out, and **you do not need to know anything about how the feature was built.** (If you prefer the command line, there is a short appendix at the end.)
+
+> **How to read this**: each test has **Steps** (what you do) and **Expected** (what you should see). If what you see matches → tick the box. If it doesn't → write it up using the **Bug Reporting Template** at the bottom.
+
+### What this feature is (in plain English)
+
+- Chapter admins can now create **API keys** under **Settings → API Keys**. A key is a long secret string that starts with `thn_test_` (test environment) or `thn_live_` (production).
+- External tools (a CRM, Zapier, a spreadsheet script) present that key to a new set of web addresses — the **public API** — to read and update **members**, **membership types** and **events** for the chapter, without logging in to the app.
+- Each key only has the **permissions** (the app calls them *scopes*) the admin ticked when creating it, e.g. "Read members" but not "Create and update members".
+- A key can be **revoked** at any time; tools using it stop working immediately.
+
+Run the **P0** sections first (1–4). **P1** (5–7) is the deeper pass. **P2** (8) is polish.
+
+---
+
+## 0. Before You Start
+
+Ask the person who set up your test environment to give you / confirm the following. If any are missing, pause and ask.
+
+- [ ] The **website address** to test on (e.g. `https://testapp.transparencyhubnetwork.ai`).
+- [ ] The **API address** for the same environment — the web address the API answers on. On test this is normally `https://testapp.transparencyhubnetwork.ai/api/v1`; confirm it.
+- [ ] Confirmation that **the public API is switched on** in this environment (the developers call the switch `PUBLIC_API_ENABLED`). If it is off, every Part B test just says "not found" — ask for it to be enabled before starting.
+- [ ] An **admin login** for a chapter you can experiment in freely (must be able to see **Settings**).
+- [ ] A **second admin login for a different chapter** in the same association (for the "wrong chapter" tests in section 6). If none exists, note it and skip 6.3–6.4.
+- [ ] A **login that is NOT an admin** (a plain member of the same chapter) — for test 1.7.
+- [ ] The chapter's **numeric id** (ask; it appears in some admin URLs). Write it here: `CHAPTER_ID = ______`
+- [ ] **Postman** installed (free, postman.com/downloads). Part B explains how to use it — you don't need to have used it before.
+- [ ] The chapter should already have **at least 3 members, 1 membership type and 1 event**. If not, create them in the app first.
+
+> **Tip:** keep a text file open while testing. You will be pasting keys and ids into it; the key is shown **only once**.
+
+---
+
+## Part A — API Keys page (browser)
+
+## 1. Creating and managing keys (P0)
+
+Where: **Admin → Settings → API Keys** (new entry under Settings in the left menu).
+
+### 1.1 The page exists and is empty
+**Steps:** Log in as the chapter admin. Open Settings → API Keys.
+**Expected:**
+- [ ] The page opens with the normal admin header and the title **"API Keys"**.
+- [ ] A table with columns *Name, Key, Scopes, Created, Last used, Status* and a **Create key** button.
+- [ ] If no keys exist yet, the table says **"No API keys yet."**
+
+### 1.2 Create a read-only key
+**Steps:** Click **Create key**. Name: `QA read only`. Tick **Read members**, **Read membership types**, **Read events**. Leave expiry empty. Click **Create**.
+**Expected:**
+- [ ] The dialog closes and a yellow panel appears at the top: **New key "QA read only"** with the full key in a box, a **Copy** button and the text *"Copy this key now — it will not be shown again."*
+- [ ] The key starts with `thn_test_` (on production it would start with `thn_live_`) and is long (about 40 characters).
+- [ ] **Copy** puts the key on your clipboard (paste it into your text file — this is `<KEY>` for Part B) and shows a "Copied" toast.
+- [ ] The table now lists **QA read only**, with only the first 12 characters of the key followed by `…`, the three scopes as small badges, today's date under *Created*, `—` under *Last used*, and status **active**.
+- [ ] Click **Dismiss** on the yellow panel. Reload the page. The full key is **not shown anywhere** — only the 12-character prefix.
+
+### 1.3 Create a read-write key
+**Steps:** Create key. Name: `QA read write`. Tick **all six** scopes. Click **Create**. Copy the key into your text file as `<RW_KEY>`.
+**Expected:**
+- [ ] Same as 1.2; the table shows six scope badges.
+
+### 1.4 Validation in the dialog
+**Steps:** Click **Create key**. Click **Create** with nothing filled.
+**Expected:** [ ] Red text **"Name is required"**; nothing created.
+**Steps:** Type a name, tick no scopes, click **Create**.
+**Expected:** [ ] Red text **"Select at least one scope"**; nothing created.
+**Steps:** Click **Cancel**.
+**Expected:** [ ] Dialog closes, table unchanged.
+
+### 1.5 Key with an expiry
+**Steps:** Create key. Name: `QA expiring`. Tick **Read events**. Set *Expires* to **tomorrow**. Create.
+**Expected:** [ ] Created and listed as **active**. (You will use it in test 8.1 if you can test again after it expires.)
+**Steps:** Create another key, name `QA past`, tick a scope, set *Expires* to **yesterday**. Create.
+**Expected:** [ ] An error is shown in the dialog (mentions expiry must be in the future); nothing is created.
+
+### 1.6 Revoke a key
+**Steps:** On `QA expiring`, click **Revoke**. Read the confirmation.
+**Expected:**
+- [ ] A confirmation dialog: *Revoke "QA expiring"?* with text saying integrations using it will stop working immediately, and buttons **Revoke** / **Cancel**.
+- [ ] **Cancel** leaves it active.
+- [ ] Clicking **Revoke** again and confirming: toast **"API key revoked"**, status becomes **revoked**, and the **Revoke** button disappears for that row.
+
+### 1.7 Non-admins cannot see the page
+**Steps:** Log out. Log in as the plain (non-admin) member. Try to open the API Keys page directly by typing its address: `<website>/admin/settings/api-keys`.
+**Expected:** [ ] You land on a "not allowed" (403) page, or are redirected away; the keys table is never shown.
+
+---
+
+## Part B — Talking to the API with Postman
+
+The public API has no screens. To test it you send it **requests** — the same thing a CRM or Zapier would do — and read the **replies**. You'll use **Postman**, a free app that lets you do this by clicking. No coding needed.
+
+### Words you'll see in this part
+
+- **Request**: one message to the API. It has a *method* (what you want: **GET** = read, **POST** = create, **PATCH** = change), an *address* (which thing), and sometimes a *body* (the details you're sending).
+- **Reply**: what the API sends back. It always includes a **status number** — `200` = OK, `201` = created, `400` = you sent something wrong, `401` = key not accepted, `403` = key not allowed to do that, `404` = not found, `429` = too many requests — and a block of text in curly braces (called JSON). Inside it look for `"status"` (`success` or `error`), `"code"` (a short reason when it's an error) and `"data"` (the actual members/events).
+- **Header**: an extra label attached to a request. The only one you'll use carries your key.
+
+### One-time Postman setup
+
+1. Install Postman (postman.com/downloads) and open it. You can skip creating an account ("Lightweight API client").
+2. Click **New → Collection**, name it `Public API QA`.
+3. Click the collection → **Variables** tab. Add two rows and fill the *Current value* column:
+   - `api` = the API address from section 0 (e.g. `https://testapp.transparencyhubnetwork.ai/api/v1`)
+   - `key` = the key you copied in test 1.2
+4. Click **Save**.
+5. Click the collection → **Authorization** tab → Type **Bearer Token** → Token: `{{key}}` → **Save**. Every request in the collection now sends your key automatically.
+6. To make a request: right-click the collection → **Add request**, pick the **method** from the dropdown on the left, type the **address** in the long box, and click **Send**. The reply appears at the bottom; the status number is at the top right of the reply (e.g. `200 OK`).
+7. For POST/PATCH requests: open the **Body** tab under the address, choose **raw**, choose **JSON** in the little dropdown, and paste the body text given in the test.
+
+> **Switching keys:** several tests use a second key (`QA read write`). Change the `key` variable's *Current value* in the collection's Variables tab and Save — every request picks it up.
+>
+> **Filters** like `?limit=5` are just typed at the end of the address.
+
+---
+
+## 2. Reading data (P0)
+
+Use the **read-only** key (`QA read only`) for this section.
+
+### 2.1 List members
+**Steps:** New request: **GET** `{{api}}/members?limit=5`. Send.
+**Expected:**
+- [ ] Status `200 OK` and the reply starts with `"status": "success"`.
+- [ ] `"data"` contains up to 5 members, each showing things like `id`, `firstname`, `lastname`, `email`, `chapter_id`, `status` (`"active"` or `"inactive"`) and `createddate`.
+- [ ] Near the end there is `"pagination"` with `"total"` = the number of members in your chapter, `"offset": 0`, `"limit": 5`.
+- [ ] **Nothing secret is present**: press Ctrl+F in the reply area and search for `password`, then `otp`, then `token` — none should be found.
+- [ ] Dates look like `2026-01-15T10:00:00Z` (they end with `Z`).
+
+### 2.2 Paging (getting the next page)
+**Steps:** Send `{{api}}/members?limit=2&offset=0`, then `{{api}}/members?limit=2&offset=2`.
+**Expected:** [ ] Two different pairs of members; nobody appears in both; `"total"` is the same both times.
+
+### 2.3 Searching and filtering
+**Steps:** Send `{{api}}/members?search=<part of a real member's last name>`. Then `{{api}}/members?status=active`. Then `{{api}}/members?status=inactive`. Then `{{api}}/members?status=nonsense`.
+**Expected:**
+- [ ] Search returns only members whose first name, last name or email contains that text (capital letters don't matter).
+- [ ] The `active` total plus the `inactive` total equals the total from 2.1.
+- [ ] `nonsense` gives status `400` with `"code": "validation_error"`.
+
+### 2.4 One member
+**Steps:** Copy an `id` number from 2.1. Send **GET** `{{api}}/members/<that id>`.
+**Expected:** [ ] `200`, and `"data"` is just that member.
+**Steps:** Send `{{api}}/members/999999999`.
+**Expected:** [ ] `404` with `"code": "not_found"`.
+
+### 2.5 Membership types
+**Steps:** **GET** `{{api}}/membership-types`, then `{{api}}/membership-types/<an id from the list>`.
+**Expected:**
+- [ ] Both `200`. Each type shows `name`, `category`, `description`, `duration`, `renewal_timeline`, `deactivation_timeline` and a few yes/no settings.
+- [ ] The names match **Admin → Membership Types** in the app.
+
+### 2.6 Events
+**Steps:** **GET** `{{api}}/events?limit=5`, then `{{api}}/events/<an id from the list>`.
+**Expected:**
+- [ ] `200`; the events are listed **newest start date first**; each shows `title`, `venue`, `start_date_time`, `end_date_time`, `timezone`, `all_participant`.
+- [ ] `{{api}}/events?from=2030-01-01T00:00:00Z` shows only events starting after 2030 (probably an empty list and `"total": 0`).
+- [ ] `{{api}}/events?from=yesterday` gives `400` `validation_error`.
+
+### 2.7 The "how many requests are left" labels
+**Steps:** After any successful request, click the **Headers** tab in the reply area (next to Body).
+**Expected:** [ ] A row `X-RateLimit-Limit` with value `100` is there.
+
+---
+
+## 3. Writing data (P0)
+
+Switch the `key` variable to the **read-write** key (`QA read write`).
+
+### 3.1 Create a member
+**Steps:** New request: **POST** `{{api}}/members`. Body (raw, JSON) — change the email so it's new each time, e.g. add today's date:
+```
+{ "firstname": "Api", "lastname": "Tester", "email": "api.tester.16sep@example.com" }
+```
+Send.
+**Expected:**
+- [ ] Status `201 Created`; `"data"` shows the new member with an `id`, and `"status": "inactive"` (new members start inactive, just like when an admin adds one in the app). Write the id down.
+- [ ] In the app, **Admin → Members** now lists **Api Tester**.
+- [ ] Send the exact same request again: `400` with `"code": "request_failed"` and a message saying the email already exists for the chapter.
+
+### 3.2 Create — missing details
+**Steps:** POST the same address with body `{ "firstname": "Only" }`.
+**Expected:** [ ] `400` `validation_error`; inside `"details"` → `"missing"` lists `lastname` and `email`.
+**Steps:** Change the body to the plain word `hello` (not JSON). Send.
+**Expected:** [ ] `400` `validation_error` saying the body must be valid JSON.
+
+### 3.3 Change a member
+**Steps:** **PATCH** `{{api}}/members/<id from 3.1>`. Body:
+```
+{ "firstname": "Changed", "email": "hacked@example.com", "password": "x" }
+```
+**Expected:**
+- [ ] `200`; `"firstname"` is now `Changed`; `"email"` is **unchanged** — email and password cannot be changed through the API.
+- [ ] The app shows the member's first name as **Changed**.
+- [ ] PATCH again with body `{ "email": "x@y.z" }` only → `400` `validation_error` "No editable fields supplied", and `"details"` → `"editable"` lists what *can* be changed.
+
+### 3.4 Change a membership type
+**Steps:** Note the current `description` of a membership type (from 2.5). **PATCH** `{{api}}/membership-types/<its id>` with body:
+```
+{ "description": "Updated by QA via API" }
+```
+**Expected:**
+- [ ] `200`; `"description"` is the new text; **everything else is the same** (name, category, duration, timelines).
+- [ ] **Admin → Membership Types** shows the new description; the type's dues, workflow and application form are untouched.
+- [ ] Send another PATCH putting the original description back.
+
+### 3.5 Create an event
+**Steps:** **POST** `{{api}}/events` with body:
+```
+{ "title": "QA API Event", "start_date_time": "2030-06-01T10:00:00Z", "end_date_time": "2030-06-01T11:00:00Z", "venue": "QA Hall", "should_notify": false }
+```
+**Expected:**
+- [ ] `201`; `"title"` is `QA API Event`, `"start_date_time"` is `2030-06-01T10:00:00Z`, `"all_participant"` is `true`.
+- [ ] In the app (**Admin → Events**, go to June 2030) the event exists and **everyone in the chapter is invited**.
+- [ ] Because `should_notify` was `false`, **no invitation emails** went out (check the inbox of a member you control).
+- [ ] Send again with the two dates swapped (end before start) → `400` `validation_error`.
+- [ ] Send with body `{ "title": "x" }` → `400`; `"missing"` lists `start_date_time` and `end_date_time`.
+
+### 3.6 Change an event (invitations must survive)
+**Steps:** In the **app**, create an event called "QA targeted event" (any future date) and invite **only 2 specific members**, not everyone. Find its id: send **GET** `{{api}}/events?limit=3` — it will be near the top. Then **PATCH** `{{api}}/events/<that id>` with body:
+```
+{ "venue": "Moved by API" }
+```
+**Expected:**
+- [ ] `200`; `"venue"` is `Moved by API`; title and dates unchanged.
+- [ ] In the app, the event still shows the **same 2 invited members** — nobody removed, nobody added.
+- [ ] Do the same PATCH on the `QA API Event` from 3.5 (an "everyone" event): afterwards it still invites everyone.
+
+---
+
+## 4. Keys, permissions and revoking (P0)
+
+### 4.1 No key / made-up key
+**Steps:** Open any GET request → **Authorization** tab → set Type to **No Auth** → Send. Then set Type to **Bearer Token** with Token `thn_test_madeup` → Send. (Afterwards set it back to **Inherit auth from parent**.)
+**Expected:** [ ] Both give `401` with `"code": "unauthorized"`. The message does **not** say whether the key exists.
+
+### 4.2 The other way of sending a key also works
+**Steps:** On a GET request, set Authorization to **No Auth**, open the **Headers** tab and add a row: Key `X-API-Key`, Value `{{key}}`. Send. (Remove the row and restore auth afterwards.)
+**Expected:** [ ] Works exactly like before (`200`).
+
+### 4.3 Permissions (scopes) are enforced
+**Steps:** Switch the `key` variable to the **read-only** key. Try 3.1 (create a member) again.
+**Expected:** [ ] `403` with `"code": "insufficient_scope"`; `"details"` → `"required"` says `members:write`; **no member was created** (check the app).
+**Steps:** In the app, create a key ticking **only** "Create and update members" (nothing else). Put it in the `key` variable and send **GET** `{{api}}/members`.
+**Expected:** [ ] `403` `insufficient_scope` — being allowed to *write* does not include *reading*.
+
+### 4.4 A revoked key stops at once
+**Steps:** In the app, revoke `QA read only`. Straight away, with that key in the variable, send **GET** `{{api}}/members`.
+**Expected:** [ ] `401` `unauthorized`. No waiting, no logging out needed.
+
+### 4.5 "Last used" updates
+**Steps:** Send any request with `QA read write`, then reload the API Keys page in the app.
+**Expected:** [ ] *Last used* for `QA read write` shows today's date.
+
+---
+
+## 5. Too many requests (P1)
+
+Each key may make **100 requests per minute**. Going over is refused until the minute is up.
+
+### 5.1 Hit the limit
+**Steps:** Right-click the `Public API QA` collection → **Run collection**. Untick everything except the *list members* GET request. Set **Iterations** to `101` and **Delay** to `0`. Click **Run**.
+**Expected:**
+- [ ] The first 100 runs show `200`; the last one (or last few) show **`429`**.
+- [ ] Click a `429` result: the reply has `"code": "rate_limited"`; in its Headers there is `Retry-After` (a number of seconds, 60 or less) and `X-RateLimit-Remaining` is `0`.
+- [ ] Wait until the next minute starts, send one request by hand: `200` again.
+- [ ] The limit is **per key**: while one key is blocked, switch the variable to a different active key — it still works.
+
+---
+
+## 6. Keys only see their own chapter (P1)
+
+A key belongs to **one chapter**. It must never see or change another chapter's data.
+
+### 6.1 Asking for another chapter by number
+**Steps:** **GET** `{{api}}/members?chapter_id=<a different chapter's id>`.
+**Expected:** [ ] `403` with `"code": "chapter_forbidden"`.
+**Steps:** **GET** `{{api}}/members?chapter_id=<CHAPTER_ID>` (your own).
+**Expected:** [ ] Works normally.
+
+### 6.2 Other chapters' records look like they don't exist
+**Steps:** Get a member id, a membership-type id and an event id **from another chapter** (log in to the app as the second admin and look, or ask). Send **GET** `{{api}}/members/<that id>`, `{{api}}/membership-types/<that id>`, `{{api}}/events/<that id>`. Then send a **PATCH** to each with body `{ "firstname": "x" }` / `{ "description": "x" }` / `{ "venue": "x" }`.
+**Expected:** [ ] Every one returns `404` `not_found` — never the other chapter's data — and nothing changes in the other chapter.
+
+### 6.3 Keys are listed per chapter
+**Steps:** Log in to the app as the **second chapter's** admin. Open Settings → API Keys.
+**Expected:** [ ] The keys you created for the first chapter (`QA read only`, `QA read write` …) are **not** listed.
+
+### 6.4 Cannot revoke another chapter's key
+This one needs a developer's help (it means pretending to be the app). Ask them to try revoking one of your first-chapter keys while logged in as the second chapter's admin.
+**Expected:** [ ] It is refused, and the key stays active on the first chapter's page.
+
+---
+
+## 7. Association-wide keys (P1) — only if you're an admin of the **top-level** chapter
+
+The top-level ("root") chapter is the one that has other chapters under it. Ask if unsure; if this doesn't apply to your login, skip this section.
+
+### 7.1 Create one
+**Steps:** The Phase 1 API Keys page always creates keys for one chapter, so ask a developer to create an **association-wide** key for you (they'll know what that means). Put it in the `key` variable.
+**Expected:** [ ] It appears on the top-level chapter's API Keys page with an **association-wide** badge, and **also** on every sub-chapter's page.
+
+### 7.2 It must say which chapter
+**Steps:** **GET** `{{api}}/members` (no `chapter_id`).
+**Expected:** [ ] `400` `validation_error` saying chapter_id is required for association-wide keys.
+**Steps:** **GET** `{{api}}/members?chapter_id=<a sub-chapter id>`.
+**Expected:** [ ] Works; shows that sub-chapter's members.
+**Steps:** **GET** `{{api}}/members?chapter_id=<a chapter id from a DIFFERENT association>`.
+**Expected:** [ ] `403` `chapter_forbidden`.
+
+---
+
+## 8. Polish (P2)
+
+### 8.1 Expired key
+**Steps:** The day after creating `QA expiring` (test 1.5), put it in the `key` variable and send any GET.
+**Expected:** [ ] `401` `unauthorized`; the API Keys page shows it as **expired** with no Revoke button.
+
+### 8.2 The API describes itself
+**Steps:** In a normal browser tab open `<API address>/openapi.json` (no key needed).
+**Expected:** [ ] A page of text mentioning `/v1/members`, `/v1/membership-types` and `/v1/events`.
+
+### 8.3 API Keys page on a small screen
+**Steps:** Make the browser window narrow (or use the phone view) on the API Keys page.
+**Expected:** [ ] The table scrolls sideways, nothing overlaps, the Create dialog fits and can be submitted.
+
+### 8.4 Errors never reveal internals
+**Steps:** Send **GET** `{{api}}/members/abc`, then `{{api}}/members?limit=99999`, then `{{api}}/members?offset=-1`.
+**Expected:** [ ] `abc` → `404` `not_found`; the other two → `400` `validation_error`. No reply ever contains file names, code, or database text.
+
+---
+
+## 9. Clean-up
+
+- [ ] Revoke every `QA …` key you created.
+- [ ] Delete or deactivate **Api Tester / Changed Tester** (created in 3.1) and the events **QA API Event** and **QA targeted event** in the app.
+- [ ] Restore the membership-type description if you didn't in 3.4.
+
+---
+
+## Appendix — the same requests on the command line (optional, for technical testers)
+
+Replace `<API>` with the API address and `<KEY>` with your key.
+
+```
+List members:      curl -s "<API>/members?limit=5" -H "Authorization: Bearer <KEY>"
+One member:        curl -s "<API>/members/<id>" -H "Authorization: Bearer <KEY>"
+Create member:     curl -s -X POST "<API>/members" -H "Authorization: Bearer <KEY>" -H "Content-Type: application/json" -d '{"firstname":"Api","lastname":"Tester","email":"api.tester@example.com"}'
+Change member:     curl -s -X PATCH "<API>/members/<id>" -H "Authorization: Bearer <KEY>" -H "Content-Type: application/json" -d '{"firstname":"Changed"}'
+Membership types:  curl -s "<API>/membership-types" -H "Authorization: Bearer <KEY>"
+Events:            curl -s "<API>/events?limit=5" -H "Authorization: Bearer <KEY>"
+Create event:      curl -s -X POST "<API>/events" -H "Authorization: Bearer <KEY>" -H "Content-Type: application/json" -d '{"title":"QA API Event","start_date_time":"2030-06-01T10:00:00Z","end_date_time":"2030-06-01T11:00:00Z","should_notify":false}'
+See headers too:   add -i right after curl
+```
+
+## Bug Reporting Template
+
+```
+Title: [Public API] <short summary>
+Section/test: e.g. 3.6 Update an event
+Environment: <website / API address>, date & time
+Key used: name of the key (never paste the key itself), its scopes
+Request: method + full URL + body (redact the Authorization header)
+Expected: <from this guide>
+Actual: HTTP status, full JSON response, and what the app shows
+Screenshots / response headers: attach
+Repeatable: always / sometimes / once
+```

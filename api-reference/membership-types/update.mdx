@@ -1,0 +1,45 @@
+---
+title: "Update Membership Type"
+api: "PATCH /v1/membership-types/{type_id}"
+description: "Update the flat fields of a membership type (name, category, description, durations, timelines, privacy and payment flags)."
+---
+
+Update the flat fields of a membership type (name, category, description, durations, timelines, privacy and payment flags). Dues, workflows and application forms are managed in the app.
+
+**Required scope:** `membership_types:write`
+
+<RequestExample>
+```json Request
+{
+  "name": "Gold (renewing)",
+  "renewal_timeline": 45
+}
+```
+</RequestExample>
+
+<ResponseExample>
+```json 200
+{
+  "status": "success",
+  "data": {
+    "id": 3,
+    "chapter_id": 9,
+    "name": "Gold",
+    "category": "Individual",
+    "description": "Full membership",
+    "duration": 12,
+    "renewal_timeline": 30,
+    "deactivation_timeline": 60,
+    "deactivation_policy": null,
+    "deactivation_threshold_amount": null,
+    "startdate": "2026-01-01T00:00:00Z",
+    "enddate": "2026-12-31T00:00:00Z",
+    "is_end_date_fixed": false,
+    "autorecurring_payment": false,
+    "membership_privacy": false,
+    "createddate": "2025-12-01T09:00:00Z",
+    "lastmodifieddate": null
+  }
+}
+```
+</ResponseExample>
