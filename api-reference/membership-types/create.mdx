@@ -1,0 +1,49 @@
+---
+title: "Create Membership Type"
+api: "POST /v1/membership-types"
+description: "Create a membership type with the chapter default workflow, notification settings and application form, and no fees."
+---
+
+Create a membership type with the chapter default workflow, notification settings and application form, and no fees. Add fees in the app afterwards.
+
+**Required scope:** `membership_types:write`
+
+<RequestExample>
+```json Request
+{
+  "name": "Gold",
+  "category": "Individual",
+  "description": "Full membership",
+  "duration": 12,
+  "renewal_timeline": 30,
+  "deactivation_timeline": 60
+}
+```
+</RequestExample>
+
+<ResponseExample>
+```json 201
+{
+  "status": "success",
+  "data": {
+    "id": 3,
+    "chapter_id": 9,
+    "name": "Gold",
+    "category": "Individual",
+    "description": "Full membership",
+    "duration": 12,
+    "renewal_timeline": 30,
+    "deactivation_timeline": 60,
+    "deactivation_policy": null,
+    "deactivation_threshold_amount": null,
+    "startdate": null,
+    "enddate": null,
+    "is_end_date_fixed": false,
+    "autorecurring_payment": false,
+    "membership_privacy": false,
+    "createddate": "2026-09-16T09:00:00Z",
+    "lastmodifieddate": null
+  }
+}
+```
+</ResponseExample>

@@ -106,7 +106,9 @@
       "pages": [
         "api-reference/membership-types/list",
         "api-reference/membership-types/get",
-        "api-reference/membership-types/update"
+        "api-reference/membership-types/create",
+        "api-reference/membership-types/update",
+        "api-reference/payments/membership-type-dues"
       ]
     },
     {
@@ -116,6 +118,35 @@
         "api-reference/events/get",
         "api-reference/events/create",
         "api-reference/events/update"
+      ]
+    },
+    {
+      "group": "Payments",
+      "pages": [
+        "api-reference/payments/transactions-list",
+        "api-reference/payments/transactions-get",
+        "api-reference/payments/member-dues"
+      ]
+    },
+    {
+      "group": "Community",
+      "pages": [
+        "api-reference/community/posts-list",
+        "api-reference/community/posts-get",
+        "api-reference/community/post-comments",
+        "api-reference/community/groups-list",
+        "api-reference/community/groups-get",
+        "api-reference/community/group-members"
+      ]
+    },
+    {
+      "group": "Meetings",
+      "pages": [
+        "api-reference/meetings/list",
+        "api-reference/meetings/get",
+        "api-reference/meetings/recordings",
+        "api-reference/meetings/minutes-list",
+        "api-reference/meetings/minutes-get"
       ]
     }
   ],

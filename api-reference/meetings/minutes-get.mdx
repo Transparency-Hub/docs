@@ -1,0 +1,28 @@
+---
+title: "Get Minute"
+api: "GET /v1/minutes/{minute_id}"
+description: "Retrieve one set of minutes including the full text."
+---
+
+Retrieve one set of minutes including the full text.
+
+**Required scope:** `meetings:read`
+
+<ResponseExample>
+```json 200
+{
+  "status": "success",
+  "data": {
+    "id": 4,
+    "event_id": 11,
+    "title": "AGM minutes",
+    "motion": "Adopt the 2025 accounts",
+    "minute_text": "The meeting opened at 10:05...",
+    "adopted_by": 42,
+    "seconded_by": 43,
+    "createddate": "2026-10-02T09:00:00Z",
+    "lastmodifieddate": null
+  }
+}
+```
+</ResponseExample>

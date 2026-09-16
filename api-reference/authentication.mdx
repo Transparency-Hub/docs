@@ -37,6 +37,9 @@ imply read scopes — pick both if you need both.
 | `membership_types:write` | Update membership types |
 | `events:read` | Read events |
 | `events:write` | Create and update events |
+| `payments:read` | Read payments and dues |
+| `community:read` | Read posts, comments and groups |
+| `meetings:read` | Read meetings, recordings and minutes |
 
 A request with a key that lacks a required scope returns
 `403 insufficient_scope` with `details.required` listing what is needed.
