@@ -1,12 +1,45 @@
 ---
-title: Payment setup in the admin app
-description: Payment account controls visible in chapter settings.
+title: Connect payment accounts
+description: Set up Stripe or GoCardless from the chapter's General settings.
 ---
 
-# Payment setup in the admin app
+# Connect payment accounts
 
-Open **Settings → General** for the selected chapter. The screen includes a chapter accounts table, a **Setup Stripe Account** flow, **Connect GoCardless** for Direct Debit, and a GoCardless mandates table. Complete the connection flows presented by the app; Stripe uses account onboarding and GoCardless redirects to its authorization page.
+## Set up Stripe
 
-Membership dues and payment rules are configured separately under **Settings → Membership Type**. The checkout provider and available methods depend on the chapter's payment setup and payment context.
+<Steps>
+  <Step title="Select the chapter">
+    Confirm that you are working in the correct chapter.
+  </Step>
+  <Step title="Open General settings">
+    Go to **Settings → General**.
+  </Step>
+  <Step title="Start Stripe setup">
+    Select **Setup Stripe Account**.
+  </Step>
+  <Step title="Complete onboarding">
+    Follow the Stripe account onboarding shown in the app.
+  </Step>
+  <Step title="Finish the setup">
+    Complete the flow and return to General settings. The app confirms when the Stripe account configuration succeeds.
+  </Step>
+</Steps>
 
-The admin General tab does not provide fields to paste Stripe or Paystack secret keys. This guide describes only the connections and controls visible in the admin web app at the release commit.
+## Connect GoCardless
+
+<Steps>
+  <Step title="Open General settings">
+    Go to **Settings → General**.
+  </Step>
+  <Step title="Start the connection">
+    Select **Connect GoCardless**, then select **Connect with GoCardless**.
+  </Step>
+  <Step title="Authorize the chapter">
+    Complete the authorization on GoCardless. You are returned to the admin app afterward.
+  </Step>
+  <Step title="Review mandates">
+    Use the GoCardless mandates table in General settings to review available mandate records.
+  </Step>
+</Steps>
+
+Configure dues separately under **Settings → Membership Type → Price Configuration**. The General tab does not ask you to paste Stripe or Paystack secret keys.

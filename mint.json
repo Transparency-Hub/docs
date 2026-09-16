@@ -55,7 +55,8 @@
         "platform/membership-types",
         "platform/dues-payments",
         "platform/events",
-        "platform/meeting-minutes"
+        "platform/meeting-minutes",
+        "platform/drive-projects"
       ]
     },
     {
@@ -65,7 +66,8 @@
         "admin/roles-permissions",
         "admin/workflows",
         "admin/notifications",
-        "admin/settings"
+        "admin/settings",
+        "admin/other-tools"
       ]
     },
     {

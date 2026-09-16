@@ -1,12 +1,60 @@
 ---
-title: Dues and transactions
-description: Configure dues and view chapter transactions.
+title: Manage dues and transactions
+description: Configure dues, upload transactions, and generate statements.
 ---
 
-# Dues and transactions
+# Manage dues and transactions
 
-Configure dues when creating or editing a membership type under **Settings → Membership Type → Price Configuration**. The step provides due amount and frequency, account mapping, and tax options.
+## Add dues to a membership type
 
-The **General** settings tab displays chapter accounts and payment connection flows including **Setup Stripe Account** and **Connect GoCardless**. GoCardless mandates are also displayed there. The app's payment choices can vary by chapter and checkout context; see [Payment setup](/integrations/payment-gateways) for the admin controls actually shown.
+<Steps>
+  <Step title="Open the membership type">
+    Go to **Settings → Membership Type**, then create or edit a type.
+  </Step>
+  <Step title="Open Price Configuration">
+    Continue to the **Price Configuration** step.
+  </Step>
+  <Step title="Add a due">
+    Enter the due amount and frequency.
+  </Step>
+  <Step title="Map the account and tax">
+    Choose the applicable chapter account and configure tax options when required.
+  </Step>
+  <Step title="Finish the membership type">
+    Continue through **Workflow Settings** and **Notification Settings**, then save.
+  </Step>
+</Steps>
 
-Open **Transactions** to see the chapter's transaction table with **All** and **Recent** views. **Upload Transactions** opens the upload flow; **Generate Statement** opens the statement flow. The **Finance** dashboard is a separate page and requires finance viewing permission.
+## View and upload transactions
+
+<Steps>
+  <Step title="Open Transactions">
+    Select **Transactions** in the sidebar.
+  </Step>
+  <Step title="Choose a table view">
+    Use **All** or **Recent** to change the records displayed.
+  </Step>
+  <Step title="Start an upload">
+    Select **Upload Transactions** and follow the upload form.
+  </Step>
+  <Step title="Review the processed upload">
+    Return to the transaction table and upload archive to confirm the imported records.
+  </Step>
+</Steps>
+
+## Generate a statement
+
+<Steps>
+  <Step title="Open Transactions">
+    Select **Transactions** in the sidebar.
+  </Step>
+  <Step title="Open the statement form">
+    Select **Generate Statement**.
+  </Step>
+  <Step title="Set the statement options">
+    Choose the chapter account, start date, end date, and report type.
+  </Step>
+  <Step title="Generate">
+    Submit the form and use the generated report provided by the app.
+  </Step>
+</Steps>

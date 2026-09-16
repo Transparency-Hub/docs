@@ -1,14 +1,50 @@
 ---
-title: Meetings
-description: Schedule and manage meetings from the admin web app.
+title: Schedule and manage meetings
+description: Create external or in-app meetings from the admin calendar.
 ---
 
-# Meetings
+# Schedule and manage meetings
 
-Open **Meetings** in the admin sidebar. The page shows a monthly calendar; create a meeting from a calendar date if your chapter role permits it.
+## Create a meeting
 
-The create or edit form includes a title, start and end times, timezone, description, invitees, and a meeting location. For an online meeting you can provide an **external meeting link** (Zoom, Microsoft Teams, or Google Meet) or select a **TransparencyHub meeting** to generate an in-app link. A generated link is available after creation; the event details offer a copy action. The in-app option can include a waiting room.
+<Steps>
+  <Step title="Connect a provider if needed">
+    For an external meeting that should be recorded, first go to **Settings → Meeting Integrations** and connect its provider.
+  </Step>
+  <Step title="Open Meetings">
+    Select **Meetings** in the sidebar. The page displays a monthly calendar.
+  </Step>
+  <Step title="Choose a date">
+    Select a date on the calendar to open the create meeting form.
+  </Step>
+  <Step title="Enter the meeting details">
+    Add the title, start and end times, timezone, description, and invitees.
+  </Step>
+  <Step title="Choose the meeting location">
+    Select **External meeting link** and paste a Zoom, Microsoft Teams, or Google Meet URL, or select **TransparencyHub meeting** to have the app generate an in-app meeting link.
+  </Step>
+  <Step title="Configure access and recording">
+    For an in-app meeting, set the waiting room option shown by the form. For an external meeting, enable **Record and Generate Minute** and select the connected provider when recording is required.
+  </Step>
+  <Step title="Save the meeting">
+    Submit the form. For a TransparencyHub meeting, wait for the generated link and use the copy action in the meeting details.
+  </Step>
+</Steps>
 
-For an external meeting with a link, **Record and Generate Minute** is available after a matching provider is connected under **Settings → Meeting Integrations**. Select the connected provider when recording. A bot joins the external meeting to record and transcribe it. See [Meeting Providers](/integrations/meeting-providers).
+## Edit or cancel a meeting
 
-Open an existing meeting to view its details and available edit, attendance, and cancellation actions. **Gatherings** is a separate admin section for ticketed events.
+<Steps>
+  <Step title="Open the meeting">
+    Find the meeting on the calendar and select it.
+  </Step>
+  <Step title="Choose the action">
+    Use the available edit, attendance, or cancellation action.
+  </Step>
+  <Step title="Confirm the change">
+    Save edits or confirm cancellation, then check the calendar entry.
+  </Step>
+</Steps>
+
+<Note>
+  **Gatherings** is a separate admin section for ticketed events.
+</Note>
