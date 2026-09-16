@@ -1,17 +1,34 @@
 ---
-title: Membership types
-description: Configure chapter membership types in Settings.
+title: Configure membership types
+description: Set membership duration, dues, workflows, and email stages.
 ---
 
-# Membership types
+# Configure membership types
 
-Open **Settings → Membership Type** to list the selected chapter's membership types. An admin with the necessary permission can create or edit a type.
+<Steps>
+  <Step title="Open Membership Type settings">
+    Select **Settings**, then open the **Membership Type** tab.
+  </Step>
+  <Step title="Create or edit a type">
+    Start a new membership type, or use an existing row's edit action.
+  </Step>
+  <Step title="Complete General Information">
+    Enter the name and description. Configure the duration or fixed end date, renewal and deactivation behavior, privacy, and application form template. If you enable **Automatic Recurring Payments**, choose the reminder frequency shown by the form.
+  </Step>
+  <Step title="Complete Price Configuration">
+    Add each due with its amount and frequency. Configure its chapter account mapping and tax options where required.
+  </Step>
+  <Step title="Complete Workflow Settings">
+    Choose whether applications require approval, whether application fees are paid separately, whether approval happens after payment, and whether renewals require approval.
+  </Step>
+  <Step title="Complete Notification Settings">
+    Enable the supported application, expiration, and renewal email stages. Open a stage's template control when you need to edit its message.
+  </Step>
+  <Step title="Save the membership type">
+    Submit the final step, then confirm that the type appears in the Membership Type table.
+  </Step>
+</Steps>
 
-The configuration flow has four steps:
-
-1. **General Information** — Name, description, duration or end date, renewal and deactivation choices, private membership option, recurring payment option, and an application form template.
-2. **Price Configuration** — Add dues and their amounts, frequencies, account mapping, and applicable tax configuration.
-3. **Workflow Settings** — Set the offered approval and application fee payment rules, plus renewal approval.
-4. **Notification Settings** — Choose email stages and edit supported templates for application, expiration, and renewal.
-
-The **Automatic Recurring Payments** switch and reminder frequency controls appear in general information when relevant. Do not assume a payment retry schedule from these controls.
+<Note>
+  The recurring payment controls do not display or guarantee a specific retry schedule.
+</Note>

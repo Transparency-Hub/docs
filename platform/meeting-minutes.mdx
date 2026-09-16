@@ -1,14 +1,48 @@
 ---
-title: Minutes
-description: Review and upload meeting minutes in the admin web app.
+title: Manage meeting minutes
+description: Upload minutes and prepare external meetings for generated minutes.
 ---
 
-# Minutes
+# Manage meeting minutes
 
-Open **Minutes** in the admin sidebar. The page shows an **Uploads** table and an **Upload Minutes** action for roles with create permission. Entries can be opened and managed according to the selected chapter's minutes permissions.
+## Upload minutes manually
 
-For an external meeting, connect Google Meet, Zoom, or Microsoft Teams in **Settings → Meeting Integrations**, supply its meeting link when scheduling, and enable **Record and Generate Minute**. The recording bot joins to record and transcribe; generated minutes can be reviewed in the app after processing. Processing time and content can vary, so check generated text before sharing.
+<Steps>
+  <Step title="Open Minutes">
+    Select **Minutes** in the admin sidebar.
+  </Step>
+  <Step title="Start the upload">
+    Select **Upload Minutes**. This button requires minutes create permission.
+  </Step>
+  <Step title="Complete the form">
+    Add the minute details and file requested by the upload form.
+  </Step>
+  <Step title="Submit the upload">
+    Save the record, then return to the **Uploads** table.
+  </Step>
+  <Step title="Review or edit the entry">
+    Open the uploaded record and use the actions permitted by your chapter role.
+  </Step>
+</Steps>
 
-For the in-app TransparencyHub meeting option, meeting controls and recording are handled in the meeting experience. Consult the specific meeting details for available recording and minutes actions.
+## Generate minutes from an external meeting
 
-The admin **Minutes** page also supports manual uploads. It does not promise an **Export → PDF** transcript selector or unrestricted access to all association members.
+<Steps>
+  <Step title="Connect the meeting provider">
+    Go to **Settings → Meeting Integrations** and connect Google Meet, Zoom, or Microsoft Teams.
+  </Step>
+  <Step title="Create the meeting">
+    Open **Meetings**, choose a date, and enter an external meeting link.
+  </Step>
+  <Step title="Enable recording">
+    Turn on **Record and Generate Minute** and select the connected provider that matches the link.
+  </Step>
+  <Step title="Run the meeting">
+    At the scheduled time, the visible recording bot joins to record and transcribe the meeting.
+  </Step>
+  <Step title="Review the result">
+    After processing, open the related minutes in the app and check the generated text before sharing it.
+  </Step>
+</Steps>
+
+For a generated TransparencyHub meeting, use the recording controls available inside its meeting experience.
