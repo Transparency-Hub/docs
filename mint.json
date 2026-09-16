@@ -56,7 +56,13 @@
         "platform/dues-payments",
         "platform/events",
         "platform/meeting-minutes",
-        "platform/drive-projects"
+        "platform/drive",
+        "platform/projects",
+        "admin/fundraising",
+        "admin/tasks",
+        "admin/gatherings",
+        "admin/contacts",
+        "admin/elections"
       ]
     },
     {
@@ -67,7 +73,7 @@
         "admin/workflows",
         "admin/notifications",
         "admin/settings",
-        "admin/other-tools"
+        "admin/activity-log"
       ]
     },
     {
