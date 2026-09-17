@@ -544,7 +544,7 @@ The third release opens up the rest of the app for **reading**: the chapter and 
 **Steps:** **GET** `{{api}}/gatherings`, then for one id: `/ticket-classes`, `/attendees`, `/orders`.
 **Expected:**
 - [ ] `200`; the gathering shows `title`, dates, `venue_name`, `capacity`; ticket classes show `price` and `quantity_sold`; attendees show `name`, `email`, `checked_in`.
-- [ ] Search every reply for `eventbrite` — the word never appears.
+- [ ] Search every reply for `eventbrite_` (with the underscore) — it never appears. (The plain word may show up as the gathering's `source` or inside an image address; that is fine — what must never appear are Eventbrite id fields.)
 
 ### 18.3 Elections
 **Steps:** **GET** `{{api}}/elections`, then `{{api}}/elections/<id>/questions`, then `{{api}}/elections/<id>/results`.
