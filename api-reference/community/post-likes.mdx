@@ -1,0 +1,24 @@
+---
+title: "Likes on a post"
+openapi: "GET /v1/posts/{post_id}/likes"
+description: "How many members liked a post and who."
+---
+
+How many members liked a post and who.
+
+**Required scope:** `community:read`
+
+<ResponseExample>
+```json 200
+{
+  "status": "success",
+  "data": {
+    "count": 2,
+    "member_ids": [
+      42,
+      43
+    ]
+  }
+}
+```
+</ResponseExample>

@@ -1,0 +1,31 @@
+---
+title: "List group join requests"
+openapi: "GET /v1/groups/{group_id}/requests"
+description: "Requests to join a private group."
+---
+
+Requests to join a private group. Filter by `status` (`pending`, `approved`, `rejected`).
+
+**Required scope:** `community:read`
+
+<ResponseExample>
+```json 200
+{
+  "status": "success",
+  "data": [
+    {
+      "id": 15,
+      "group_id": 12,
+      "member_id": 44,
+      "status": "pending",
+      "requested_at": "2026-09-10T12:00:00Z"
+    }
+  ],
+  "pagination": {
+    "total": 1,
+    "offset": 0,
+    "limit": 50
+  }
+}
+```
+</ResponseExample>

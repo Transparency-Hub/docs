@@ -1,0 +1,44 @@
+---
+title: "Get campaign"
+openapi: "GET /v1/campaigns/{campaign_id}"
+description: "One campaign."
+---
+
+One campaign.
+
+**Required scope:** `campaigns:read`
+
+<ResponseExample>
+```json 200
+{
+  "status": "success",
+  "data": {
+    "id": 40,
+    "name": "AGM reminder",
+    "description": null,
+    "channels": [
+      "email",
+      "sms"
+    ],
+    "status": "sent",
+    "scheduled_at": "2026-09-20T09:00:00Z",
+    "scheduled_timezone": "Africa/Lagos",
+    "recurrence_rule": null,
+    "parent_campaign_id": null,
+    "sent_at": "2026-09-20T09:00:12Z",
+    "stats": {
+      "email": {
+        "sent": 118,
+        "delivered": 115
+      },
+      "sms": {
+        "sent": 118,
+        "delivered": 110
+      }
+    },
+    "createddate": "2026-09-15T00:00:00Z",
+    "lastmodifieddate": null
+  }
+}
+```
+</ResponseExample>

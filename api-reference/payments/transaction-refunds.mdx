@@ -1,0 +1,33 @@
+---
+title: "List refunds for a transaction"
+openapi: "GET /v1/transactions/{transaction_id}/refunds"
+description: "Refunds raised against a payment and their status."
+---
+
+Refunds raised against a payment and their status.
+
+**Required scope:** `payments:read`
+
+<ResponseExample>
+```json 200
+{
+  "status": "success",
+  "data": [
+    {
+      "id": 3,
+      "transaction_id": 501,
+      "amount": 50.0,
+      "currency": "GBP",
+      "status": "paid",
+      "createddate": "2026-08-01T00:00:00Z",
+      "lastmodifieddate": "2026-08-03T00:00:00Z"
+    }
+  ],
+  "pagination": {
+    "total": 1,
+    "offset": 0,
+    "limit": 50
+  }
+}
+```
+</ResponseExample>

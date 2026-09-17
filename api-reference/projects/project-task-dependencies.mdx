@@ -1,0 +1,26 @@
+---
+title: "Task dependencies"
+openapi: "GET /v1/project-tasks/{task_id}/dependencies"
+description: "Card ids this card is `blocked_by`, and card ids it `blocks`."
+---
+
+Card ids this card is `blocked_by`, and card ids it `blocks`.
+
+**Required scope:** `projects:read`
+
+<ResponseExample>
+```json 200
+{
+  "status": "success",
+  "data": {
+    "blocked_by": [
+      76
+    ],
+    "blocks": [
+      78,
+      79
+    ]
+  }
+}
+```
+</ResponseExample>

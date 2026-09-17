@@ -1,0 +1,33 @@
+---
+title: "List application form templates"
+openapi: "GET /v1/application-forms"
+description: "The chapter's application form templates."
+---
+
+The chapter's application form templates.
+
+**Required scope:** `applications:read`
+
+<ResponseExample>
+```json 200
+{
+  "status": "success",
+  "data": [
+    {
+      "id": 2,
+      "name": "Default",
+      "is_default": true,
+      "is_active": true,
+      "version": 1,
+      "createddate": "2026-01-01T00:00:00Z",
+      "lastmodifieddate": null
+    }
+  ],
+  "pagination": {
+    "total": 1,
+    "offset": 0,
+    "limit": 50
+  }
+}
+```
+</ResponseExample>

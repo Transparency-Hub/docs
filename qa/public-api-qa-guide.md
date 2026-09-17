@@ -11,7 +11,7 @@ A step-by-step test plan for the **new Public API and the API Keys settings page
 - Each key only has the **permissions** (the app calls them *scopes*) the admin ticked when creating it, e.g. "Read members" but not "Create and update members".
 - A key can be **revoked** at any time; tools using it stop working immediately.
 
-Run the **P0** sections first (1–4). **P1** (5–7) is the deeper pass. **P2** (8) is polish. **Part C** (10–14) covers the second release — payments, community, meetings and creating membership types. **Part D** (15–21) covers the third release — chapter, roles, tasks, contacts, projects, fundraising, gatherings, elections, Drive and the activity log. Both are all P0.
+Run the **P0** sections first (1–4). **P1** (5–7) is the deeper pass. **P2** (8) is polish. **Part C** (10–14) covers the second release — payments, community, meetings and creating membership types. **Part D** (15–21) covers the third release — chapter, roles, tasks, contacts, projects, fundraising, gatherings, elections, Drive and the activity log. **Part E** (22–25) covers the fourth — event invitees, applications and forms, likes, project card extras, refunds, meeting feedback, notifications, support tickets and campaigns. All are P0.
 
 ---
 
@@ -577,6 +577,86 @@ The third release opens up the rest of the app for **reading**: the chapter and 
 
 - [ ] Delete **QA API task** (Admin → Task), **QA API Contact** (Admin → Contacts) and the **QA API card** on the board if one was created.
 - [ ] Revoke `QA phase 3` and `QA read members only`.
+
+---
+
+## Part E — The last set of reads (fourth release)
+
+The fourth release adds more **read-only** information: who is invited to events, membership applications and their forms, likes and group requests, extra project card details, fundraising recipients, refunds, meeting feedback, members' notifications, support tickets and communication campaigns. Nothing can be created or changed.
+
+### Set-up for Part E
+
+- [ ] Create a key named `QA phase 4` and tick **every** box (there are four new ones: **Read membership applications and form templates**, **Read member notifications**, **Read support requests**, **Read communication campaigns and delivery stats**). Put it in the Postman `key` variable.
+- [ ] Use a chapter that has an event with invitees, at least one membership application, a post with likes, a project card with an attachment, a refunded payment (if any exist), a meeting that collected feedback, a support ticket and a sent campaign. Ask if unsure.
+
+---
+
+## 22. Events, applications and forms (P0)
+
+### 22.1 Event attendees
+**Steps:** **GET** `{{api}}/events/<an event id from 2.6>/attendees`.
+**Expected:**
+- [ ] `200`; each invitee shows `member_id` (or `email` for guests), `rsvp_status`, `did_rsvp`, `did_attend`, and `owner` is `true` for the organiser.
+- [ ] Matches the invitee list on the event in the app.
+- [ ] `{{api}}/events/999999999/attendees` → `404`.
+
+### 22.2 Applications
+**Steps:** **GET** `{{api}}/applications?limit=5`, then `{{api}}/applications?status=<a status you saw>`, then `{{api}}/applications/<an id>`.
+**Expected:**
+- [ ] `200`; each application shows `member_id`, `membership_type_id`, `status` (the workflow stage) and dates — **but no answers** in the list.
+- [ ] The single application **does** include `answers` (what the applicant typed) and matches **Admin → Workflow** for that member.
+- [ ] Search both replies for `snapshot` — it does not appear.
+
+### 22.3 Forms and workflows
+**Steps:** **GET** `{{api}}/application-forms`, then `{{api}}/application-forms/<an id>`, then `{{api}}/workflows`.
+**Expected:** [ ] `200`; the form list has names and `is_default`; the single form includes `definition` (its questions, matching **Settings → Application Forms**); workflows show the approval/payment tick-boxes.
+
+---
+
+## 23. Community and project extras (P0)
+
+### 23.1 Likes and group requests
+**Steps:** **GET** `{{api}}/posts/<a post id from 11.1>/likes`, then `{{api}}/groups/<a group id>/requests`.
+**Expected:** [ ] `200`; likes show a `count` and `member_ids` that match the post in the app; group requests show `status` and `requested_at`.
+
+### 23.2 Card attachments, dependencies, volunteers
+**Steps:** For a card id from 17.2: **GET** `{{api}}/project-tasks/<id>/attachments`, `/dependencies`, `/volunteer-requests`.
+**Expected:**
+- [ ] `200` for all; attachments show `filename`, `content_type`, `size_bytes`; dependencies show `blocked_by` and `blocks` card ids; volunteer requests show `status`.
+- [ ] Search the attachments reply for `http` and `blob` — neither appears (no download links).
+
+---
+
+## 24. Money, meetings, people (P0)
+
+### 24.1 Fundraising recipients and refunds
+**Steps:** **GET** `{{api}}/fundraising/campaigns/<id>/recipients`, then `{{api}}/transactions/<a payment id from 10.1>/refunds`.
+**Expected:** [ ] `200`; recipients show `name` and `tribute`; refunds show `amount`, `currency`, `status` (an empty list if the payment was never refunded). Search the refunds reply for `gocardless` — absent.
+
+### 24.2 Meeting feedback
+**Steps:** **GET** `{{api}}/meetings/<a meeting id from 12.1>/feedback`.
+**Expected:** [ ] `200`; each entry shows a display name, `overall_rating` / `audio_rating` / `video_rating` and `comment` — and **no** `member_id`.
+
+### 24.3 Notifications
+**Steps:** **GET** `{{api}}/notifications?limit=5`, then `{{api}}/notifications?member_id=<a member id>&unread=true`.
+**Expected:** [ ] `200`; newest first; each shows `title`, `description`, `type`, `is_read`; with `unread=true` every `is_read` is `false`.
+
+### 24.4 Support tickets
+**Steps:** **GET** `{{api}}/support-requests`, then `{{api}}/support-requests/<an id>`.
+**Expected:** [ ] `200`; tickets show `subject`, `category`, `customer_priority`, `progress`; search for `issue_number` and `attachments` — neither appears.
+
+### 24.5 Campaigns
+**Steps:** **GET** `{{api}}/campaigns`, then `{{api}}/campaigns/<an id>`.
+**Expected:** [ ] `200`; each campaign shows `name`, `channels`, `status`, `scheduled_at`, `sent_at` and `stats` (sent/delivered counts). Search for `template` and `credits` — neither appears.
+
+---
+
+## 25. Permissions and clean-up (P0)
+
+**Steps:** Put the `QA read members only` key (from section 20) in the `key` variable and send **GET** `{{api}}/applications`, `{{api}}/notifications`, `{{api}}/support-requests`, `{{api}}/campaigns`.
+**Expected:** [ ] Every one returns `403` `insufficient_scope`.
+
+- [ ] Revoke `QA phase 4`.
 
 ---
 

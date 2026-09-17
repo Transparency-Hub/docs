@@ -117,7 +117,8 @@
         "api-reference/events/list",
         "api-reference/events/get",
         "api-reference/events/create",
-        "api-reference/events/update"
+        "api-reference/events/update",
+        "api-reference/events/attendees"
       ]
     },
     {
@@ -125,7 +126,8 @@
       "pages": [
         "api-reference/payments/transactions-list",
         "api-reference/payments/transactions-get",
-        "api-reference/payments/member-dues"
+        "api-reference/payments/member-dues",
+        "api-reference/payments/transaction-refunds"
       ]
     },
     {
@@ -136,7 +138,9 @@
         "api-reference/community/post-comments",
         "api-reference/community/groups-list",
         "api-reference/community/groups-get",
-        "api-reference/community/group-members"
+        "api-reference/community/group-members",
+        "api-reference/community/post-likes",
+        "api-reference/community/group-requests"
       ]
     },
     {
@@ -146,7 +150,8 @@
         "api-reference/meetings/get",
         "api-reference/meetings/recordings",
         "api-reference/meetings/minutes-list",
-        "api-reference/meetings/minutes-get"
+        "api-reference/meetings/minutes-get",
+        "api-reference/meetings/feedback"
       ]
     },
     {
@@ -182,7 +187,10 @@
         "api-reference/projects/project-tasks-create",
         "api-reference/projects/project-tasks-get",
         "api-reference/projects/project-task-updates",
-        "api-reference/projects/project-task-time-logs"
+        "api-reference/projects/project-task-time-logs",
+        "api-reference/projects/project-task-attachments",
+        "api-reference/projects/project-task-dependencies",
+        "api-reference/projects/project-task-volunteers"
       ]
     },
     {
@@ -190,7 +198,8 @@
       "pages": [
         "api-reference/fundraising/campaigns",
         "api-reference/fundraising/campaigns-get",
-        "api-reference/fundraising/campaign-payments"
+        "api-reference/fundraising/campaign-payments",
+        "api-reference/fundraising/campaign-recipients"
       ]
     },
     {
@@ -217,6 +226,31 @@
       "pages": [
         "api-reference/drive/items",
         "api-reference/drive/items-get"
+      ]
+    },
+    {
+      "group": "Applications",
+      "pages": [
+        "api-reference/applications/applications",
+        "api-reference/applications/applications-get",
+        "api-reference/applications/forms",
+        "api-reference/applications/forms-get",
+        "api-reference/applications/workflows"
+      ]
+    },
+    {
+      "group": "Notifications & Support",
+      "pages": [
+        "api-reference/notifications/notifications",
+        "api-reference/notifications/support-requests",
+        "api-reference/notifications/support-requests-get"
+      ]
+    },
+    {
+      "group": "Communication Campaigns",
+      "pages": [
+        "api-reference/campaigns/campaigns",
+        "api-reference/campaigns/campaigns-get"
       ]
     }
   ],

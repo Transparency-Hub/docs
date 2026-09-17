@@ -1,0 +1,33 @@
+---
+title: "List notifications"
+openapi: "GET /v1/notifications"
+description: "In-app notifications for the chapter's members, newest first."
+---
+
+In-app notifications for the chapter's members, newest first. Filter by `member_id`; `unread=true` returns only unread ones.
+
+**Required scope:** `notifications:read`
+
+<ResponseExample>
+```json 200
+{
+  "status": "success",
+  "data": [
+    {
+      "id": 9001,
+      "member_id": 42,
+      "title": "New task assigned",
+      "description": "You were assigned 'Book venue'",
+      "type": "project_task_assigned",
+      "is_read": false,
+      "createddate": "2026-09-02T00:05:00Z"
+    }
+  ],
+  "pagination": {
+    "total": 1,
+    "offset": 0,
+    "limit": 50
+  }
+}
+```
+</ResponseExample>
