@@ -1,0 +1,27 @@
+---
+title: "Get Post"
+api: "GET /v1/posts/{post_id}"
+description: "Retrieve one post."
+---
+
+Retrieve one post.
+
+**Required scope:** `community:read`
+
+<ResponseExample>
+```json 200
+{
+  "status": "success",
+  "data": {
+    "id": 900,
+    "member_id": 42,
+    "content": "Welcome to the new members!",
+    "image_url": null,
+    "video_url": null,
+    "is_edited": false,
+    "createddate": "2026-04-02T12:00:00Z",
+    "lastmodifieddate": null
+  }
+}
+```
+</ResponseExample>

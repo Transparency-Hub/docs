@@ -1,0 +1,34 @@
+---
+title: "List Posts"
+api: "GET /v1/posts"
+description: "Retrieve the chapter feed, newest first."
+---
+
+Retrieve the chapter feed, newest first. Filter by `from` / `to` on the posting date.
+
+**Required scope:** `community:read`
+
+<ResponseExample>
+```json 200
+{
+  "status": "success",
+  "data": [
+    {
+      "id": 900,
+      "member_id": 42,
+      "content": "Welcome to the new members!",
+      "image_url": null,
+      "video_url": null,
+      "is_edited": false,
+      "createddate": "2026-04-02T12:00:00Z",
+      "lastmodifieddate": null
+    }
+  ],
+  "pagination": {
+    "total": 1,
+    "offset": 0,
+    "limit": 50
+  }
+}
+```
+</ResponseExample>
