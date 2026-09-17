@@ -1,6 +1,6 @@
-# Public API (Phase 1) — QA Guide
+# Public API — QA Guide
 
-A step-by-step test plan for the **new Public API and the API Keys settings page**. Part A is done in a normal web browser. Part B uses **Postman**, a free app for sending messages to the API by clicking — every step is spelled out, and **you do not need to know anything about how the feature was built.** (If you prefer the command line, there is a short appendix at the end.)
+A step-by-step test plan for the **Public API and the API Keys settings page** — the first release (keys, members, membership types, events) and the second (payments, community, meetings, creating membership types). Part A is done in a normal web browser. Parts B and C use **Postman**, a free app for sending messages to the API by clicking — every step is spelled out, and **you do not need to know anything about how the feature was built.** (If you prefer the command line, there is a short appendix at the end.)
 
 > **How to read this**: each test has **Steps** (what you do) and **Expected** (what you should see). If what you see matches → tick the box. If it doesn't → write it up using the **Bug Reporting Template** at the bottom.
 
