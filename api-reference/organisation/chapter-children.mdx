@@ -1,0 +1,38 @@
+---
+title: "List sub-chapters"
+openapi: "GET /v1/chapter/children"
+description: "Sub-chapters directly under the chapter."
+---
+
+Sub-chapters directly under the chapter.
+
+**Required scope:** `chapters:read`
+
+<ResponseExample>
+```json 200
+{
+  "status": "success",
+  "data": [
+    {
+      "id": 9,
+      "association_id": 5,
+      "parent_id": null,
+      "title": "Lagos Chapter",
+      "slogan": null,
+      "description": "Alumni in Lagos",
+      "coverimg": null,
+      "timezone": "Africa/Lagos",
+      "slug": "lagos",
+      "private": false,
+      "createddate": "2025-01-01T00:00:00Z",
+      "lastmodifieddate": null
+    }
+  ],
+  "pagination": {
+    "total": 1,
+    "offset": 0,
+    "limit": 50
+  }
+}
+```
+</ResponseExample>

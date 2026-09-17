@@ -1,0 +1,43 @@
+---
+title: "List gatherings"
+openapi: "GET /v1/gatherings"
+description: "Ticketed gatherings (Eventbrite-synced or manual)."
+---
+
+Ticketed gatherings (Eventbrite-synced or manual). Filter by `from` / `to` on the start time.
+
+**Required scope:** `gatherings:read`
+
+<ResponseExample>
+```json 200
+{
+  "status": "success",
+  "data": [
+    {
+      "id": 11,
+      "title": "Reunion Dinner",
+      "description": null,
+      "source": "eventbrite",
+      "status": "live",
+      "timezone": "Africa/Lagos",
+      "venue_name": "Eko Hotel",
+      "venue_address": "Victoria Island, Lagos",
+      "registration_url": "https://www.eventbrite.com/e/123",
+      "capacity": 200,
+      "is_free": false,
+      "currency": "NGN",
+      "image_url": null,
+      "start_date_time": "2026-11-20T18:00:00Z",
+      "end_date_time": "2026-11-20T22:00:00Z",
+      "createddate": "2026-08-01T00:00:00Z",
+      "lastmodifieddate": null
+    }
+  ],
+  "pagination": {
+    "total": 1,
+    "offset": 0,
+    "limit": 50
+  }
+}
+```
+</ResponseExample>

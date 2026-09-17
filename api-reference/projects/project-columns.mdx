@@ -1,0 +1,32 @@
+---
+title: "List board columns"
+openapi: "GET /v1/projects/{project_id}/columns"
+description: "Board columns in display order, with WIP limits and which column counts as done."
+---
+
+Board columns in display order, with WIP limits and which column counts as done.
+
+**Required scope:** `projects:read`
+
+<ResponseExample>
+```json 200
+{
+  "status": "success",
+  "data": [
+    {
+      "id": 21,
+      "project_id": 4,
+      "name": "In Progress",
+      "position": 2,
+      "wip_limit": 3,
+      "is_done_column": false
+    }
+  ],
+  "pagination": {
+    "total": 1,
+    "offset": 0,
+    "limit": 50
+  }
+}
+```
+</ResponseExample>

@@ -1,0 +1,41 @@
+---
+title: "List elections"
+openapi: "GET /v1/elections"
+description: "Elections in the chapter."
+---
+
+Elections in the chapter. Filter by `state` (`draft`, `scheduled`, `running`, `completed`, `archived`).
+
+**Required scope:** `elections:read`
+
+<ResponseExample>
+```json 200
+{
+  "status": "success",
+  "data": [
+    {
+      "id": 3,
+      "slug": "exco-2026",
+      "title": "Executive Committee 2026",
+      "description": null,
+      "state": "completed",
+      "timezone": "Africa/Lagos",
+      "results_visibility": "after_close",
+      "results_published": true,
+      "is_secret_ballot": true,
+      "theme_color": null,
+      "start_at": "2026-08-01T08:00:00Z",
+      "end_at": "2026-08-03T20:00:00Z",
+      "launched_at": "2026-08-01T08:00:00Z",
+      "closed_at": "2026-08-03T20:00:00Z",
+      "createddate": "2026-07-01T00:00:00Z"
+    }
+  ],
+  "pagination": {
+    "total": 1,
+    "offset": 0,
+    "limit": 50
+  }
+}
+```
+</ResponseExample>

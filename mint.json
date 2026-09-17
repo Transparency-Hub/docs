@@ -148,6 +148,76 @@
         "api-reference/meetings/minutes-list",
         "api-reference/meetings/minutes-get"
       ]
+    },
+    {
+      "group": "Organisation",
+      "pages": [
+        "api-reference/organisation/chapter",
+        "api-reference/organisation/chapter-children",
+        "api-reference/organisation/association",
+        "api-reference/organisation/roles",
+        "api-reference/organisation/activity"
+      ]
+    },
+    {
+      "group": "Tasks & Contacts",
+      "pages": [
+        "api-reference/tasks-contacts/tasks",
+        "api-reference/tasks-contacts/tasks-create",
+        "api-reference/tasks-contacts/tasks-get",
+        "api-reference/tasks-contacts/contacts",
+        "api-reference/tasks-contacts/contacts-create",
+        "api-reference/tasks-contacts/contact-groups",
+        "api-reference/tasks-contacts/contacts-get"
+      ]
+    },
+    {
+      "group": "Projects",
+      "pages": [
+        "api-reference/projects/projects",
+        "api-reference/projects/projects-get",
+        "api-reference/projects/project-columns",
+        "api-reference/projects/project-labels",
+        "api-reference/projects/project-tasks",
+        "api-reference/projects/project-tasks-create",
+        "api-reference/projects/project-tasks-get",
+        "api-reference/projects/project-task-updates",
+        "api-reference/projects/project-task-time-logs"
+      ]
+    },
+    {
+      "group": "Fundraising",
+      "pages": [
+        "api-reference/fundraising/campaigns",
+        "api-reference/fundraising/campaigns-get",
+        "api-reference/fundraising/campaign-payments"
+      ]
+    },
+    {
+      "group": "Gatherings",
+      "pages": [
+        "api-reference/gatherings/gatherings",
+        "api-reference/gatherings/gatherings-get",
+        "api-reference/gatherings/ticket-classes",
+        "api-reference/gatherings/attendees",
+        "api-reference/gatherings/orders"
+      ]
+    },
+    {
+      "group": "Elections",
+      "pages": [
+        "api-reference/elections/elections",
+        "api-reference/elections/elections-get",
+        "api-reference/elections/questions",
+        "api-reference/elections/results"
+      ]
+    },
+    {
+      "group": "Drive",
+      "pages": [
+        "api-reference/drive/items",
+        "api-reference/drive/items-get"
+      ]
     }
   ],
   "footerSocials": {

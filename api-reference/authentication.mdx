@@ -40,6 +40,19 @@ imply read scopes — pick both if you need both.
 | `payments:read` | Read payments and dues |
 | `community:read` | Read posts, comments and groups |
 | `meetings:read` | Read meetings, recordings and minutes |
+| `chapters:read` | Read chapter and association details |
+| `roles:read` | Read roles |
+| `tasks:read` | Read tasks |
+| `tasks:write` | Create tasks |
+| `projects:read` | Read projects and project tasks |
+| `projects:write` | Create project tasks |
+| `fundraising:read` | Read fundraising campaigns and payments |
+| `gatherings:read` | Read gatherings, tickets, attendees and orders |
+| `elections:read` | Read elections, questions and published results |
+| `drive:read` | Read Drive file and folder metadata |
+| `contacts:read` | Read contacts |
+| `contacts:write` | Create contacts |
+| `activity:read` | Read the activity log |
 
 A request with a key that lacks a required scope returns
 `403 insufficient_scope` with `details.required` listing what is needed.

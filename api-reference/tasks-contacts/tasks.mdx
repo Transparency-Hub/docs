@@ -1,0 +1,35 @@
+---
+title: "List tasks"
+openapi: "GET /v1/tasks"
+description: "Legacy task list (Admin → Task)."
+---
+
+Legacy task list (Admin → Task). `member_id` is the assignee. Create requires a name; an assignee must be an active member of the chapter.
+
+**Required scope:** `tasks:read`
+
+<ResponseExample>
+```json 200
+{
+  "status": "success",
+  "data": [
+    {
+      "id": 15,
+      "name": "Book the hall",
+      "description": "Confirm AGM venue",
+      "progress": 40,
+      "member_id": 42,
+      "createdby": 7,
+      "due_date": "2026-10-01T00:00:00Z",
+      "createddate": "2026-09-01T00:00:00Z",
+      "lastmodifieddate": null
+    }
+  ],
+  "pagination": {
+    "total": 1,
+    "offset": 0,
+    "limit": 50
+  }
+}
+```
+</ResponseExample>

@@ -1,0 +1,34 @@
+---
+title: "List activity log entries"
+openapi: "GET /v1/activity"
+description: "The chapter's activity log, newest first."
+---
+
+The chapter's activity log, newest first. Filter by `entity_type` (e.g. `member`, `event`, `drive_item`) and `from` / `to` on the time performed. The log's free-form payload is not exposed.
+
+**Required scope:** `activity:read`
+
+<ResponseExample>
+```json 200
+{
+  "status": "success",
+  "data": [
+    {
+      "id": 8812,
+      "entity_type": "member",
+      "entity_id": 42,
+      "action": "create",
+      "description": "member 'Ada Lovelace' created.",
+      "performed_at": "2026-09-10T09:12:00Z",
+      "performed_by": 7,
+      "member_id": 7
+    }
+  ],
+  "pagination": {
+    "total": 1,
+    "offset": 0,
+    "limit": 50
+  }
+}
+```
+</ResponseExample>

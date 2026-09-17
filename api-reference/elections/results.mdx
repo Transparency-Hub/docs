@@ -1,0 +1,30 @@
+---
+title: "Get results (when visible)"
+openapi: "GET /v1/elections/{election_id}/results"
+description: "Tallies and turnout."
+---
+
+Tallies and turnout. The election's **results visibility** setting decides when this is available to a key (live, after close, or after publish); before that the reply is `403 request_failed` with the message *Results are not available yet*. Individual ballots are never exposed.
+
+**Required scope:** `elections:read`
+
+<ResponseExample>
+```json 200
+{
+  "status": "success",
+  "data": {
+    "results": [
+      {
+        "question_id": 10,
+        "candidate_id": 100,
+        "vote_count": 57
+      }
+    ],
+    "turnout": {
+      "eligible": 120,
+      "voted": 78
+    }
+  }
+}
+```
+</ResponseExample>

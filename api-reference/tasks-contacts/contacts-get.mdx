@@ -1,0 +1,27 @@
+---
+title: "Get contact"
+openapi: "GET /v1/contacts/{contact_id}"
+description: "One contact."
+---
+
+One contact.
+
+**Required scope:** `contacts:read`
+
+<ResponseExample>
+```json 200
+{
+  "status": "success",
+  "data": {
+    "id": 301,
+    "name": "Grace Hopper",
+    "email": "grace@example.org",
+    "phone": "+2348000000000",
+    "class_of": "1996",
+    "group_name": "Prospects",
+    "createddate": "2026-09-01T00:00:00Z",
+    "lastmodifieddate": null
+  }
+}
+```
+</ResponseExample>

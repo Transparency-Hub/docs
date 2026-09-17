@@ -1,0 +1,23 @@
+---
+title: "List contact groups"
+openapi: "GET /v1/contacts/groups"
+description: "Distinct contact group names with counts."
+---
+
+Distinct contact group names with counts.
+
+**Required scope:** `contacts:read`
+
+<ResponseExample>
+```json 200
+{
+  "status": "success",
+  "data": [
+    {
+      "group_name": "Prospects",
+      "count": 12
+    }
+  ]
+}
+```
+</ResponseExample>

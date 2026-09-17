@@ -1,0 +1,37 @@
+---
+title: "List attendees"
+openapi: "GET /v1/gatherings/{gathering_id}/attendees"
+description: "Attendees and check-in status."
+---
+
+Attendees and check-in status.
+
+**Required scope:** `gatherings:read`
+
+<ResponseExample>
+```json 200
+{
+  "status": "success",
+  "data": [
+    {
+      "id": 401,
+      "gathering_id": 11,
+      "gathering_order_id": 210,
+      "ticket_class_id": 30,
+      "name": "Ada Lovelace",
+      "email": "ada@example.org",
+      "class_of": "1996",
+      "member_id": 42,
+      "status": "attending",
+      "checked_in": false,
+      "checked_in_at": null
+    }
+  ],
+  "pagination": {
+    "total": 1,
+    "offset": 0,
+    "limit": 50
+  }
+}
+```
+</ResponseExample>

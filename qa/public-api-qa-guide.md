@@ -11,7 +11,7 @@ A step-by-step test plan for the **new Public API and the API Keys settings page
 - Each key only has the **permissions** (the app calls them *scopes*) the admin ticked when creating it, e.g. "Read members" but not "Create and update members".
 - A key can be **revoked** at any time; tools using it stop working immediately.
 
-Run the **P0** sections first (1–4). **P1** (5–7) is the deeper pass. **P2** (8) is polish. **Part C** (10–14) covers the second release of the API — payments, community, meetings and creating membership types — and is all P0.
+Run the **P0** sections first (1–4). **P1** (5–7) is the deeper pass. **P2** (8) is polish. **Part C** (10–14) covers the second release — payments, community, meetings and creating membership types. **Part D** (15–21) covers the third release — chapter, roles, tasks, contacts, projects, fundraising, gatherings, elections, Drive and the activity log. Both are all P0.
 
 ---
 
@@ -441,6 +441,142 @@ Phase 2 adds **read-only** information: payments and dues, the community feed an
 
 - [ ] Delete **QA API Type** in **Admin → Membership Types**.
 - [ ] Revoke `QA phase 2` and `QA no phase 2`.
+
+---
+
+## Part D — Everything else (third release)
+
+The third release opens up the rest of the app for **reading**: the chapter and association, roles, tasks, contacts, projects, fundraising, gatherings, elections, Drive (names and sizes only, never the files) and the activity log. It also lets a key **create** three simple things: a task, a contact and a project card. Nothing can be deleted, paid, voted or downloaded.
+
+### Set-up for Part D
+
+- [ ] In the app, create a key named `QA phase 3` and tick **every** box. Put it in the Postman `key` variable.
+- [ ] Use a chapter that has at least: one task, one contact, one project with a few cards, one fundraising campaign, one gathering with tickets, one election that has **finished**, and a few Drive folders/files. Ask if you're unsure which chapter to use.
+
+---
+
+## 15. Chapter, roles and activity (P0)
+
+### 15.1 Chapter and association
+**Steps:** **GET** `{{api}}/chapter`, then `{{api}}/association`, then `{{api}}/chapter/children`.
+**Expected:**
+- [ ] `200`; the chapter reply shows your chapter's `title`, `slug` and `timezone` as in **Admin → Chapter**; the association reply shows its `name`.
+- [ ] `chapter/children` lists sub-chapters (an empty list if there are none).
+
+### 15.2 Roles
+**Steps:** **GET** `{{api}}/roles`.
+**Expected:** [ ] `200`; every role from **Admin → Roles** is listed with `rolename`, `is_super_admin` and a `permissions` block that mirrors the tick-boxes in the app.
+
+### 15.3 Activity log
+**Steps:** **GET** `{{api}}/activity?limit=5`, then `{{api}}/activity?entity_type=member`.
+**Expected:**
+- [ ] `200`; newest entries first; each has `action`, `description`, `performed_at`, `performed_by`.
+- [ ] The entries match the top of **Admin → Activity log**.
+- [ ] With `entity_type=member`, every entry's `entity_type` is `member`.
+- [ ] Search the reply for `"json"` — it does not appear.
+
+---
+
+## 16. Tasks and contacts (P0)
+
+### 16.1 Read tasks
+**Steps:** **GET** `{{api}}/tasks`, then `{{api}}/tasks/<an id>`, then `{{api}}/tasks/999999999`.
+**Expected:** [ ] `200` / `200` / `404`; tasks show `name`, `progress`, `due_date`, `member_id` (the assignee).
+
+### 16.2 Create a task
+**Steps:** **POST** `{{api}}/tasks` with body (use a real member id from Part B 2.1):
+```
+{ "name": "QA API task", "description": "Created via API", "member_id": <member id>, "due_date": "2030-01-15T00:00:00Z" }
+```
+**Expected:**
+- [ ] `201`; the reply shows the task with `progress` `0`.
+- [ ] **Admin → Task** lists **QA API task** assigned to that member.
+- [ ] POST again with `"member_id": 999999999` → `400` saying the member is not an active member of this chapter.
+- [ ] POST with `"progress": 150` → `400`.
+
+### 16.3 Read contacts
+**Steps:** **GET** `{{api}}/contacts?limit=5`, `{{api}}/contacts/groups`, then `{{api}}/contacts?search=<part of a contact's name>`.
+**Expected:** [ ] `200`; contacts show `name`, `email`, `phone`, `class_of`, `group_name`; the groups reply lists each group name with a `count`; search narrows the list.
+
+### 16.4 Create a contact
+**Steps:** **POST** `{{api}}/contacts` with body (make the email unique, e.g. add today's date):
+```
+{ "name": "QA API Contact", "email": "qa.api.17sep@example.com", "group_name": "QA" }
+```
+**Expected:**
+- [ ] `201`; **Admin → Contacts** shows **QA API Contact** in group **QA**.
+- [ ] Send the same body again → `409` with a message that the email already exists.
+- [ ] POST with body `{ "name": "No details" }` → `400` (email or phone is required).
+
+---
+
+## 17. Projects (P0)
+
+### 17.1 Boards
+**Steps:** **GET** `{{api}}/projects`, then for one project id: `{{api}}/projects/<id>/columns`, `{{api}}/projects/<id>/labels`, `{{api}}/projects/<id>/tasks`.
+**Expected:**
+- [ ] `200` for all; columns come in board order with `wip_limit` and `is_done_column`; each card shows `title`, `column_id`, `priority`, `assignee_ids` and `label_ids` that match the board in **Admin → Projects**.
+- [ ] `{{api}}/projects/<id>/tasks?column_id=<a column id>` returns only that column's cards.
+- [ ] `{{api}}/projects/999999999/columns` → `404`.
+
+### 17.2 One card, its comments and time
+**Steps:** **GET** `{{api}}/project-tasks/<a card id>`, then `/updates` and `/time-logs` on the same address.
+**Expected:** [ ] `200`; updates show the card's comments (`body`, `author_member_id`); time logs show `minutes` and `note` as in the card's side panel.
+
+### 17.3 Create a card
+**Steps:** **POST** `{{api}}/projects/<project id>/tasks` with body:
+```
+{ "title": "QA API card", "column_id": <a column id from 17.1>, "priority": "high" }
+```
+**Expected:**
+- [ ] `201` **if the key's creator is a project admin** in the chapter (the admin who created the key needs Projects → Create). The card appears in that column on the board.
+- [ ] If the key was created by someone without that permission: `403` with `"code": "request_failed"` — and no card is created. (Either outcome is correct; note which one you got and why.)
+
+---
+
+## 18. Fundraising, gatherings and elections (P0)
+
+### 18.1 Fundraising
+**Steps:** **GET** `{{api}}/fundraising/campaigns`, then `{{api}}/fundraising/campaigns/<id>/payments`.
+**Expected:** [ ] `200`; campaigns show `name`, `status`, `expected_amount`, dates; payments list who gave (`name`, `email`, `transaction_id`). Search the campaign reply for `settings_id` — absent.
+
+### 18.2 Gatherings
+**Steps:** **GET** `{{api}}/gatherings`, then for one id: `/ticket-classes`, `/attendees`, `/orders`.
+**Expected:**
+- [ ] `200`; the gathering shows `title`, dates, `venue_name`, `capacity`; ticket classes show `price` and `quantity_sold`; attendees show `name`, `email`, `checked_in`.
+- [ ] Search every reply for `eventbrite` — the word never appears.
+
+### 18.3 Elections
+**Steps:** **GET** `{{api}}/elections`, then `{{api}}/elections/<id>/questions`, then `{{api}}/elections/<id>/results`.
+**Expected:**
+- [ ] `200`; the election shows `title`, `state`, dates, `results_visibility`.
+- [ ] Questions come with their `candidates` (`display_name`).
+- [ ] **Results:** for a finished election whose results are visible to members → `200` with `results` (counts per candidate) and `turnout`. For an election whose results are **not yet** visible (e.g. still running with "after close" visibility) → `403` with the message *Results are not available yet*.
+- [ ] Search the election replies for `eligibility`, `override` and `ballot` — none appear.
+
+---
+
+## 19. Drive (P0)
+
+**Steps:** **GET** `{{api}}/drive/items`, then `{{api}}/drive/items?parent_id=<a folder id from the first reply>`, then `{{api}}/drive/items/<a file id>`.
+**Expected:**
+- [ ] `200`; the top level lists the folders you see in **Admin → Drive**; a folder id lists what's inside; a file shows `name`, `file_size`, `content_type`.
+- [ ] Items in the Drive bin do **not** appear.
+- [ ] Search the replies for `blob` and `http` — neither appears (no storage paths or download links).
+
+---
+
+## 20. Permissions for the new areas (P0)
+
+**Steps:** In the app create a key `QA read members only` ticking only **Read members**. Put it in the `key` variable and send **GET** `{{api}}/chapter`, `{{api}}/tasks`, `{{api}}/projects`, `{{api}}/drive/items`, and **POST** `{{api}}/contacts` with a valid body.
+**Expected:** [ ] Every one returns `403` `insufficient_scope`, and no contact was created. Switch back to `QA phase 3`.
+
+---
+
+## 21. Clean-up for Part D
+
+- [ ] Delete **QA API task** (Admin → Task), **QA API Contact** (Admin → Contacts) and the **QA API card** on the board if one was created.
+- [ ] Revoke `QA phase 3` and `QA read members only`.
 
 ---
 

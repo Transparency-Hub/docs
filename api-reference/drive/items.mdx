@@ -1,0 +1,37 @@
+---
+title: "List Drive items (metadata)"
+openapi: "GET /v1/drive/items"
+description: "Folder and file metadata (not the files themselves)."
+---
+
+Folder and file metadata (not the files themselves). Omit `parent_id` for the top level; pass a folder id to list its contents. Deleted and system items are excluded.
+
+**Required scope:** `drive:read`
+
+<ResponseExample>
+```json 200
+{
+  "status": "success",
+  "data": [
+    {
+      "id": 500,
+      "parent_id": 1,
+      "is_root": false,
+      "item_type": "file",
+      "name": "AGM agenda.pdf",
+      "file_size": 184320,
+      "content_type": "application/pdf",
+      "content_version": 0,
+      "createdby": 7,
+      "createddate": "2026-09-01T00:00:00Z",
+      "lastmodifieddate": null
+    }
+  ],
+  "pagination": {
+    "total": 1,
+    "offset": 0,
+    "limit": 50
+  }
+}
+```
+</ResponseExample>

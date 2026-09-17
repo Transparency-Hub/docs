@@ -1,0 +1,38 @@
+---
+title: "List ticket classes"
+openapi: "GET /v1/gatherings/{gathering_id}/ticket-classes"
+description: "Ticket types with prices and quantities sold."
+---
+
+Ticket types with prices and quantities sold.
+
+**Required scope:** `gatherings:read`
+
+<ResponseExample>
+```json 200
+{
+  "status": "success",
+  "data": [
+    {
+      "id": 30,
+      "gathering_id": 11,
+      "name": "Standard",
+      "description": null,
+      "currency": "NGN",
+      "quantity_total": 150,
+      "quantity_sold": 88,
+      "is_free": false,
+      "status": "on_sale",
+      "price": 25000.0,
+      "sales_start": "2026-08-01T00:00:00Z",
+      "sales_end": "2026-11-19T00:00:00Z"
+    }
+  ],
+  "pagination": {
+    "total": 1,
+    "offset": 0,
+    "limit": 50
+  }
+}
+```
+</ResponseExample>
