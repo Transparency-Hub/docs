@@ -166,5 +166,11 @@
     "playground": {
       "mode": "interactive"
     }
-  }
+  },
+  "tabs": [
+    {
+      "name": "API Reference",
+      "url": "api-reference"
+    }
+  ]
 }
