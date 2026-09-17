@@ -53,6 +53,10 @@ imply read scopes — pick both if you need both.
 | `contacts:read` | Read contacts |
 | `contacts:write` | Create contacts |
 | `activity:read` | Read the activity log |
+| `applications:read` | Read membership applications and form templates |
+| `notifications:read` | Read member notifications |
+| `support:read` | Read support requests |
+| `campaigns:read` | Read communication campaigns and delivery stats |
 
 A request with a key that lacks a required scope returns
 `403 insufficient_scope` with `details.required` listing what is needed.

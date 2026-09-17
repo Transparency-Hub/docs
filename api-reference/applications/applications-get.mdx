@@ -1,0 +1,32 @@
+---
+title: "Get application with answers"
+openapi: "GET /v1/applications/{application_id}"
+description: "One application including the applicant's `answers` to the form."
+---
+
+One application including the applicant's `answers` to the form.
+
+**Required scope:** `applications:read`
+
+<ResponseExample>
+```json 200
+{
+  "status": "success",
+  "data": {
+    "id": 5100,
+    "member_id": 42,
+    "membership_type_id": 3,
+    "status": "application_approved",
+    "form_template_id": 2,
+    "form_template_version": 1,
+    "expires_at": "2027-09-01T00:00:00Z",
+    "createddate": "2026-09-01T10:00:00Z",
+    "lastmodifieddate": "2026-09-02T09:00:00Z",
+    "answers": {
+      "phone_number": "+2348000000000",
+      "profession": "Engineer"
+    }
+  }
+}
+```
+</ResponseExample>

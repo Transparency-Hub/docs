@@ -1,0 +1,35 @@
+---
+title: "Get form template with definition"
+openapi: "GET /v1/application-forms/{template_id}"
+description: "One form template including its `definition` (the questions)."
+---
+
+One form template including its `definition` (the questions).
+
+**Required scope:** `applications:read`
+
+<ResponseExample>
+```json 200
+{
+  "status": "success",
+  "data": {
+    "id": 2,
+    "name": "Default",
+    "is_default": true,
+    "is_active": true,
+    "version": 1,
+    "createddate": "2026-01-01T00:00:00Z",
+    "lastmodifieddate": null,
+    "definition": {
+      "fields": [
+        {
+          "key": "profession",
+          "label": "Profession",
+          "type": "text"
+        }
+      ]
+    }
+  }
+}
+```
+</ResponseExample>

@@ -1,0 +1,36 @@
+---
+title: "List support requests"
+openapi: "GET /v1/support-requests"
+description: "Support tickets raised by members."
+---
+
+Support tickets raised by members. Filter by `status` (the ticket's `progress`).
+
+**Required scope:** `support:read`
+
+<ResponseExample>
+```json 200
+{
+  "status": "success",
+  "data": [
+    {
+      "id": 120,
+      "member_id": 42,
+      "category": "Payments",
+      "subject": "Receipt not received",
+      "description": "I paid on Monday but have no receipt",
+      "customer_priority": "medium",
+      "progress": "open",
+      "assigned_to": null,
+      "createddate": "2026-09-05T08:00:00Z",
+      "lastmodifieddate": null
+    }
+  ],
+  "pagination": {
+    "total": 1,
+    "offset": 0,
+    "limit": 50
+  }
+}
+```
+</ResponseExample>

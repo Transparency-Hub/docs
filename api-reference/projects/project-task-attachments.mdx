@@ -1,0 +1,33 @@
+---
+title: "List task attachments (metadata)"
+openapi: "GET /v1/project-tasks/{task_id}/attachments"
+description: "Files attached to a card — names and sizes only, no download links."
+---
+
+Files attached to a card — names and sizes only, no download links.
+
+**Required scope:** `projects:read`
+
+<ResponseExample>
+```json 200
+{
+  "status": "success",
+  "data": [
+    {
+      "id": 9,
+      "task_id": 77,
+      "filename": "quote.pdf",
+      "content_type": "application/pdf",
+      "size_bytes": 88211,
+      "uploaded_by_member_id": 42,
+      "uploaded_at": "2026-09-03T11:00:00Z"
+    }
+  ],
+  "pagination": {
+    "total": 1,
+    "offset": 0,
+    "limit": 50
+  }
+}
+```
+</ResponseExample>

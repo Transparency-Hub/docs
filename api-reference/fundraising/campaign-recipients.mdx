@@ -1,0 +1,33 @@
+---
+title: "List campaign recipients"
+openapi: "GET /v1/fundraising/campaigns/{campaign_id}/recipients"
+description: "Members a campaign was addressed to, with any tribute text."
+---
+
+Members a campaign was addressed to, with any tribute text.
+
+**Required scope:** `fundraising:read`
+
+<ResponseExample>
+```json 200
+{
+  "status": "success",
+  "data": [
+    {
+      "id": 31,
+      "campaign_id": 2,
+      "member_id": 42,
+      "name": "Ada Lovelace",
+      "image": null,
+      "tribute": "In memory of Prof. Okafor",
+      "createddate": "2026-06-01T00:00:00Z"
+    }
+  ],
+  "pagination": {
+    "total": 1,
+    "offset": 0,
+    "limit": 50
+  }
+}
+```
+</ResponseExample>

@@ -1,0 +1,33 @@
+---
+title: "List volunteer requests"
+openapi: "GET /v1/project-tasks/{task_id}/volunteer-requests"
+description: "Members who volunteered for a card and whether an admin accepted."
+---
+
+Members who volunteered for a card and whether an admin accepted.
+
+**Required scope:** `projects:read`
+
+<ResponseExample>
+```json 200
+{
+  "status": "success",
+  "data": [
+    {
+      "id": 4,
+      "task_id": 77,
+      "member_id": 44,
+      "status": "accepted",
+      "requested_at": "2026-09-04T09:00:00Z",
+      "decided_by_member_id": 7,
+      "decided_at": "2026-09-04T10:00:00Z"
+    }
+  ],
+  "pagination": {
+    "total": 1,
+    "offset": 0,
+    "limit": 50
+  }
+}
+```
+</ResponseExample>

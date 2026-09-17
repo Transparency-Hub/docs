@@ -1,0 +1,33 @@
+---
+title: "List onboarding workflows"
+openapi: "GET /v1/workflows"
+description: "Onboarding workflow rules (approval and payment ordering) attached to membership types."
+---
+
+Onboarding workflow rules (approval and payment ordering) attached to membership types.
+
+**Required scope:** `applications:read`
+
+<ResponseExample>
+```json 200
+{
+  "status": "success",
+  "data": [
+    {
+      "id": 3,
+      "workflow_type": "",
+      "require_approval_all_apps": true,
+      "require_payment_fee_separately": true,
+      "require_approval_after_payment": false,
+      "require_confirmation_renewals": true,
+      "require_approval_renewals": true
+    }
+  ],
+  "pagination": {
+    "total": 1,
+    "offset": 0,
+    "limit": 50
+  }
+}
+```
+</ResponseExample>

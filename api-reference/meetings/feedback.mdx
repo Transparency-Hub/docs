@@ -1,0 +1,35 @@
+---
+title: "List meeting feedback"
+openapi: "GET /v1/meetings/{meeting_id}/feedback"
+description: "Post-meeting ratings and comments."
+---
+
+Post-meeting ratings and comments. Feedback is semi-anonymous: the display name is included, member ids are not.
+
+**Required scope:** `meetings:read`
+
+<ResponseExample>
+```json 200
+{
+  "status": "success",
+  "data": [
+    {
+      "id": 12,
+      "event_id": 11,
+      "participant_kind": "member",
+      "participant_display_name": "Ada L.",
+      "overall_rating": 5,
+      "audio_rating": 4,
+      "video_rating": 5,
+      "comment": "Clear audio, thanks",
+      "submitted_at": "2026-10-01T12:40:00Z"
+    }
+  ],
+  "pagination": {
+    "total": 1,
+    "offset": 0,
+    "limit": 50
+  }
+}
+```
+</ResponseExample>

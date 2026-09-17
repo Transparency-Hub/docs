@@ -1,0 +1,35 @@
+---
+title: "List membership applications"
+openapi: "GET /v1/applications"
+description: "Membership applications and renewals in the chapter, newest first."
+---
+
+Membership applications and renewals in the chapter, newest first. `status` is the workflow stage (for example `application_submitted`, `application_approved`, `renewal_declined`). Filter by `member_id` or `status`. Form answers are only returned on the single-application route.
+
+**Required scope:** `applications:read`
+
+<ResponseExample>
+```json 200
+{
+  "status": "success",
+  "data": [
+    {
+      "id": 5100,
+      "member_id": 42,
+      "membership_type_id": 3,
+      "status": "application_approved",
+      "form_template_id": 2,
+      "form_template_version": 1,
+      "expires_at": "2027-09-01T00:00:00Z",
+      "createddate": "2026-09-01T10:00:00Z",
+      "lastmodifieddate": "2026-09-02T09:00:00Z"
+    }
+  ],
+  "pagination": {
+    "total": 1,
+    "offset": 0,
+    "limit": 50
+  }
+}
+```
+</ResponseExample>

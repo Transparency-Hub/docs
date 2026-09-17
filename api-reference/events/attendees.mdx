@@ -1,0 +1,36 @@
+---
+title: "List event attendees / RSVPs"
+openapi: "GET /v1/events/{event_id}/attendees"
+description: "Who is invited to an event, their RSVP (`rsvp_status`, `did_rsvp`) and whether they attended."
+---
+
+Who is invited to an event, their RSVP (`rsvp_status`, `did_rsvp`) and whether they attended. `owner` marks the organiser.
+
+**Required scope:** `events:read`
+
+<ResponseExample>
+```json 200
+{
+  "status": "success",
+  "data": [
+    {
+      "id": 7001,
+      "event_id": 11,
+      "member_id": 42,
+      "role_id": null,
+      "email": "ada@example.org",
+      "owner": false,
+      "did_rsvp": true,
+      "rsvp_status": "yes",
+      "did_attend": true,
+      "createddate": "2026-09-14T08:00:00Z"
+    }
+  ],
+  "pagination": {
+    "total": 1,
+    "offset": 0,
+    "limit": 50
+  }
+}
+```
+</ResponseExample>
