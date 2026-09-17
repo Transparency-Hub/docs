@@ -1,0 +1,40 @@
+---
+title: "List Transactions"
+api: "GET /v1/transactions"
+description: "Retrieve the chapter payments, newest first."
+---
+
+Retrieve the chapter payments, newest first. Filter by `member_id`, `status` (exact match on the gateway status, e.g. `success`) and `from` / `to` on the payment date.
+
+**Required scope:** `payments:read`
+
+<ResponseExample>
+```json 200
+{
+  "status": "success",
+  "data": [
+    {
+      "id": 501,
+      "member_id": 42,
+      "amount": 150.0,
+      "currency": "NGN",
+      "payment_status": "success",
+      "payment_type": "CREDIT",
+      "payment_method": "online",
+      "transactionref": "THN-2026-0001",
+      "description": "Annual dues",
+      "payment_date": "2026-03-01T09:15:00Z",
+      "receipt_url": null,
+      "verification_status": null,
+      "createddate": "2026-03-01T09:15:00Z",
+      "lastmodifieddate": null
+    }
+  ],
+  "pagination": {
+    "total": 1,
+    "offset": 0,
+    "limit": 50
+  }
+}
+```
+</ResponseExample>

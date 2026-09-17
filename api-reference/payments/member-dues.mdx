@@ -1,0 +1,35 @@
+---
+title: "List Member Dues"
+api: "GET /v1/members/{member_id}/dues"
+description: "Retrieve a member's dues obligations (paid and unpaid), newest due date first."
+---
+
+Retrieve a member's dues obligations (paid and unpaid), newest due date first. Returns `404 not_found` if the member is not in the key's chapter.
+
+**Required scope:** `payments:read`
+
+<ResponseExample>
+```json 200
+{
+  "status": "success",
+  "data": [
+    {
+      "id": 77,
+      "member_id": 42,
+      "membership_dues_id": 5,
+      "amount": 150.0,
+      "currency": "NGN",
+      "status": "paid",
+      "due_date": "2026-03-31T00:00:00Z",
+      "transaction_ref": "2c6c0b5e-6c2b-4f4e-9d3f-1c0b3e0b9a11",
+      "createddate": "2026-01-01T00:00:00Z"
+    }
+  ],
+  "pagination": {
+    "total": 1,
+    "offset": 0,
+    "limit": 50
+  }
+}
+```
+</ResponseExample>

@@ -1,0 +1,29 @@
+---
+title: "List Group Members"
+api: "GET /v1/groups/{group_id}/members"
+description: "Retrieve who is in a group and their role in it."
+---
+
+Retrieve who is in a group and their role in it.
+
+**Required scope:** `community:read`
+
+<ResponseExample>
+```json 200
+{
+  "status": "success",
+  "data": [
+    {
+      "member_id": 42,
+      "role": "admin",
+      "joined_at": "2025-11-01T00:00:00Z"
+    }
+  ],
+  "pagination": {
+    "total": 1,
+    "offset": 0,
+    "limit": 50
+  }
+}
+```
+</ResponseExample>

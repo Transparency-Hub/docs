@@ -1,0 +1,27 @@
+---
+title: "Get Group"
+api: "GET /v1/groups/{group_id}"
+description: "Retrieve one group."
+---
+
+Retrieve one group.
+
+**Required scope:** `community:read`
+
+<ResponseExample>
+```json 200
+{
+  "status": "success",
+  "data": {
+    "id": 12,
+    "name": "Class of 96",
+    "description": "Alumni of 1996",
+    "is_private": true,
+    "member_count": 34,
+    "image_url": null,
+    "createddate": "2025-11-01T00:00:00Z",
+    "lastmodifieddate": null
+  }
+}
+```
+</ResponseExample>

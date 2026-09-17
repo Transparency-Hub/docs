@@ -11,7 +11,7 @@ A step-by-step test plan for the **new Public API and the API Keys settings page
 - Each key only has the **permissions** (the app calls them *scopes*) the admin ticked when creating it, e.g. "Read members" but not "Create and update members".
 - A key can be **revoked** at any time; tools using it stop working immediately.
 
-Run the **P0** sections first (1–4). **P1** (5–7) is the deeper pass. **P2** (8) is polish.
+Run the **P0** sections first (1–4). **P1** (5–7) is the deeper pass. **P2** (8) is polish. **Part C** (10–14) covers the second release of the API — payments, community, meetings and creating membership types — and is all P0.
 
 ---
 
@@ -328,6 +328,119 @@ The top-level ("root") chapter is the one that has other chapters under it. Ask 
 ### 8.4 Errors never reveal internals
 **Steps:** Send **GET** `{{api}}/members/abc`, then `{{api}}/members?limit=99999`, then `{{api}}/members?offset=-1`.
 **Expected:** [ ] `abc` → `404` `not_found`; the other two → `400` `validation_error`. No reply ever contains file names, code, or database text.
+
+---
+
+## Part C — Payments, community and meetings (Phase 2)
+
+Phase 2 adds **read-only** information: payments and dues, the community feed and groups, and in-app meetings with their recordings and minutes. It also lets a key **create a membership type**. Nothing here can take money, post to the feed or change a meeting.
+
+### Set-up for Part C
+
+- [ ] In the app, create a key named `QA phase 2` and tick **every** box in the Create dialog. There are three new permissions: **Read payments and dues**, **Read posts, comments and groups**, **Read meetings, recordings and minutes**. Put this key in the Postman `key` variable.
+- [ ] Also create a key named `QA no phase 2` ticking only **Read members**. You will use it once, in test 10.5.
+- [ ] The chapter should have at least one **payment**, one **post with a comment**, one **group with members**, one **in-app meeting that has taken place** (so it has a recording) and one set of **minutes**. If any are missing, ask for a chapter that has them or create them in the app first.
+
+---
+
+## 10. Payments and dues (P0)
+
+### 10.1 List payments
+**Steps:** **GET** `{{api}}/transactions?limit=5`.
+**Expected:**
+- [ ] `200`; each item shows `amount`, `currency`, `payment_status`, `payment_method`, `transactionref`, `payment_date` and `member_id`.
+- [ ] The most recent payment is first.
+- [ ] Search the reply (Ctrl+F) for `settings_id` and `linked_due` — neither appears.
+
+### 10.2 Filters
+**Steps:** Add `&member_id=<a member id from 2.1>`; then instead `&status=success`; then `&from=2030-01-01T00:00:00Z`.
+**Expected:** [ ] Only that member's payments / only successful ones / an empty list for the future date. `&member_id=abc` gives `400`.
+
+### 10.3 One payment
+**Steps:** **GET** `{{api}}/transactions/<an id from 10.1>`, then `{{api}}/transactions/999999999`.
+**Expected:** [ ] `200` with that payment; then `404` `not_found`.
+
+### 10.4 A member's dues
+**Steps:** **GET** `{{api}}/members/<a member id>/dues`.
+**Expected:**
+- [ ] `200`; each item shows `amount`, `currency`, `status` (e.g. `paid` / `unpaid`) and `due_date`.
+- [ ] Compare with the app: open that member in **Admin → Members** — the dues and their paid/unpaid state match.
+- [ ] `{{api}}/members/999999999/dues` → `404`.
+
+### 10.5 Fees of a membership type
+**Steps:** **GET** `{{api}}/membership-types/<a type id from 2.5>/dues`.
+**Expected:** [ ] `200`; each fee shows `dues_name`, `amount`, `currency`, `due_frequency`; these match **Admin → Membership Types** for that type.
+**Steps:** Switch the `key` variable to `QA no phase 2` and send **GET** `{{api}}/transactions`.
+**Expected:** [ ] `403` `insufficient_scope`; `"required"` says `payments:read`. Switch back to `QA phase 2`.
+
+---
+
+## 11. Community (P0)
+
+### 11.1 Posts
+**Steps:** **GET** `{{api}}/posts?limit=5`.
+**Expected:** [ ] `200`; newest post first; each shows `content`, `member_id`, `is_edited`, `createddate`. The text matches what you see in the app's community feed.
+
+### 11.2 One post and its comments
+**Steps:** **GET** `{{api}}/posts/<an id>`, then `{{api}}/posts/<that id>/comments`.
+**Expected:**
+- [ ] `200` for both; comments are oldest first and show `content`, `member_id`, and `parent_comment_id` (filled in only for replies).
+- [ ] `{{api}}/posts/999999999/comments` → `404`.
+
+### 11.3 Groups
+**Steps:** **GET** `{{api}}/groups`, then `{{api}}/groups/<an id>/members`.
+**Expected:**
+- [ ] `200`; each group shows `name`, `is_private`, `member_count`; the members list shows `member_id`, `role` (e.g. `admin`, `member`) and `joined_at`.
+- [ ] `member_count` equals the number of members returned (use a group with fewer than 50 members).
+- [ ] Search the groups reply for `thread_id` — it does not appear.
+
+---
+
+## 12. Meetings, recordings and minutes (P0)
+
+### 12.1 Meetings
+**Steps:** **GET** `{{api}}/meetings?limit=5`.
+**Expected:**
+- [ ] `200`; newest first; each shows `title`, `meeting_start`, `valid_from`, `valid_until`, `status`, `event_id`.
+- [ ] **Very important:** search the reply for `room`, `share_handle` and `chat` — **none** of these words appear. (These are the secret join details of the meeting.)
+
+### 12.2 Recordings
+**Steps:** **GET** `{{api}}/meetings/<id of a meeting that took place>/recordings`.
+**Expected:**
+- [ ] `200`; each recording shows `format` (e.g. `mp4`), `duration_seconds`, `file_size`, `processing_status`.
+- [ ] Search the reply for `http` and `transcript` — neither appears (no download links or transcripts through the API).
+- [ ] `{{api}}/meetings/999999999/recordings` → `404`.
+
+### 12.3 Minutes
+**Steps:** **GET** `{{api}}/minutes`, then `{{api}}/minutes/<an id>`, then `{{api}}/minutes?event_id=<an event id>`.
+**Expected:** [ ] `200`; minutes show `title`, `motion`, `minute_text` (the full text), `adopted_by`, `seconded_by`; the `event_id` filter narrows the list; `?event_id=abc` → `400`.
+
+---
+
+## 13. Creating a membership type (P0)
+
+### 13.1 Create
+**Steps:** **POST** `{{api}}/membership-types` with body:
+```
+{ "name": "QA API Type", "category": "Individual", "duration": 12, "description": "Created by QA via API" }
+```
+**Expected:**
+- [ ] `201`; `"data"` shows the new type with `renewal_timeline` `30` and `deactivation_timeline` `60` (the defaults).
+- [ ] In the app, **Admin → Membership Types** lists **QA API Type** with no fees; opening it shows the chapter's **Default** application form and the standard workflow and notification settings switched on.
+- [ ] **GET** `{{api}}/membership-types` now includes it.
+
+### 13.2 Validation
+**Steps:** POST with body `{ "name": "x" }`; then `{ "name": "x", "category": "c", "duration": "twelve" }`.
+**Expected:** [ ] Both `400` `validation_error` (the first lists `category` and `duration` as missing).
+**Steps:** Switch the `key` variable to `QA read only` (from Part A, if still active — otherwise any key without **Update membership types**) and POST again with a valid body.
+**Expected:** [ ] `403` `insufficient_scope`. Nothing was created.
+
+---
+
+## 14. Clean-up for Part C
+
+- [ ] Delete **QA API Type** in **Admin → Membership Types**.
+- [ ] Revoke `QA phase 2` and `QA no phase 2`.
 
 ---
 

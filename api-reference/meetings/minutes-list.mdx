@@ -1,0 +1,35 @@
+---
+title: "List Minutes"
+api: "GET /v1/minutes"
+description: "Retrieve the chapter meeting minutes, newest first."
+---
+
+Retrieve the chapter meeting minutes, newest first. Filter by `event_id`.
+
+**Required scope:** `meetings:read`
+
+<ResponseExample>
+```json 200
+{
+  "status": "success",
+  "data": [
+    {
+      "id": 4,
+      "event_id": 11,
+      "title": "AGM minutes",
+      "motion": "Adopt the 2025 accounts",
+      "minute_text": "The meeting opened at 10:05...",
+      "adopted_by": 42,
+      "seconded_by": 43,
+      "createddate": "2026-10-02T09:00:00Z",
+      "lastmodifieddate": null
+    }
+  ],
+  "pagination": {
+    "total": 1,
+    "offset": 0,
+    "limit": 50
+  }
+}
+```
+</ResponseExample>

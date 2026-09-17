@@ -1,0 +1,35 @@
+---
+title: "List Membership Type Fees"
+api: "GET /v1/membership-types/{type_id}/dues"
+description: "Retrieve the fee definitions attached to a membership type."
+---
+
+Retrieve the fee definitions attached to a membership type.
+
+**Required scope:** `membership_types:read`
+
+<ResponseExample>
+```json 200
+{
+  "status": "success",
+  "data": [
+    {
+      "id": 5,
+      "membership_type_id": 3,
+      "dues_name": "Annual dues",
+      "amount": 150.0,
+      "currency": "NGN",
+      "due_frequency": "yearly",
+      "payment_schedule": "2026-01-01T00:00:00Z",
+      "is_for_onboarding": false,
+      "createddate": "2025-12-01T00:00:00Z"
+    }
+  ],
+  "pagination": {
+    "total": 1,
+    "offset": 0,
+    "limit": 50
+  }
+}
+```
+</ResponseExample>

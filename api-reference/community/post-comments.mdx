@@ -1,0 +1,33 @@
+---
+title: "List Post Comments"
+api: "GET /v1/posts/{post_id}/comments"
+description: "Retrieve the comments on a post, oldest first."
+---
+
+Retrieve the comments on a post, oldest first. `parent_comment_id` is set for replies.
+
+**Required scope:** `community:read`
+
+<ResponseExample>
+```json 200
+{
+  "status": "success",
+  "data": [
+    {
+      "id": 1200,
+      "post_id": 900,
+      "parent_comment_id": null,
+      "member_id": 43,
+      "content": "Thanks!",
+      "createddate": "2026-04-02T12:30:00Z",
+      "lastmodifieddate": null
+    }
+  ],
+  "pagination": {
+    "total": 1,
+    "offset": 0,
+    "limit": 50
+  }
+}
+```
+</ResponseExample>

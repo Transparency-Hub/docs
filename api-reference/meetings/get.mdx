@@ -1,0 +1,28 @@
+---
+title: "Get Meeting"
+api: "GET /v1/meetings/{meeting_id}"
+description: "Retrieve one meeting."
+---
+
+Retrieve one meeting.
+
+**Required scope:** `meetings:read`
+
+<ResponseExample>
+```json 200
+{
+  "status": "success",
+  "data": {
+    "id": 31,
+    "event_id": 11,
+    "title": "Annual General Meeting",
+    "meeting_start": "2026-10-01T10:00:00Z",
+    "valid_from": "2026-10-01T09:45:00Z",
+    "valid_until": "2026-10-01T12:30:00Z",
+    "status": "scheduled",
+    "provisioning_status": "ready",
+    "createddate": "2026-09-14T08:00:00Z"
+  }
+}
+```
+</ResponseExample>
