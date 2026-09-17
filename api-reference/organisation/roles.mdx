@@ -1,0 +1,41 @@
+---
+title: "List roles"
+openapi: "GET /v1/roles"
+description: "Roles defined in the chapter."
+---
+
+Roles defined in the chapter. `permissions` is the same JSON structure the app uses (areas → view/create/edit/delete flags).
+
+**Required scope:** `roles:read`
+
+<ResponseExample>
+```json 200
+{
+  "status": "success",
+  "data": [
+    {
+      "id": 3,
+      "rolename": "Treasurer",
+      "is_super_admin": false,
+      "is_custom": true,
+      "permissions": {
+        "finance_permissions": {
+          "all_permissions": {
+            "view": true,
+            "create": true,
+            "edit": true,
+            "delete": false
+          }
+        }
+      },
+      "createddate": "2025-01-01T00:00:00Z"
+    }
+  ],
+  "pagination": {
+    "total": 1,
+    "offset": 0,
+    "limit": 50
+  }
+}
+```
+</ResponseExample>

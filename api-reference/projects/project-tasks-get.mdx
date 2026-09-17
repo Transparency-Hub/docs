@@ -1,0 +1,39 @@
+---
+title: "Get project task"
+openapi: "GET /v1/project-tasks/{task_id}"
+description: "One card."
+---
+
+One card.
+
+**Required scope:** `projects:read`
+
+<ResponseExample>
+```json 200
+{
+  "status": "success",
+  "data": {
+    "id": 77,
+    "project_id": 4,
+    "column_id": 21,
+    "title": "Book venue",
+    "description": null,
+    "priority": "high",
+    "position": 0,
+    "estimate_minutes": 120,
+    "is_open_for_volunteers": false,
+    "created_by": 7,
+    "assignee_ids": [
+      42
+    ],
+    "label_ids": [
+      6
+    ],
+    "start_date": null,
+    "due_date": "2026-09-20T00:00:00Z",
+    "createddate": "2026-09-02T00:00:00Z",
+    "lastmodifieddate": null
+  }
+}
+```
+</ResponseExample>

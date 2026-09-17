@@ -1,0 +1,42 @@
+---
+title: "List questions with candidates"
+openapi: "GET /v1/elections/{election_id}/questions"
+description: "Questions (positions) with their candidates, in ballot order."
+---
+
+Questions (positions) with their candidates, in ballot order.
+
+**Required scope:** `elections:read`
+
+<ResponseExample>
+```json 200
+{
+  "status": "success",
+  "data": [
+    {
+      "id": 10,
+      "election_id": 3,
+      "order_index": 0,
+      "title": "Chairperson",
+      "description": null,
+      "type": "single",
+      "min_selections": 1,
+      "max_selections": 1,
+      "allow_write_in": false,
+      "allow_abstain": true,
+      "candidates": [
+        {
+          "id": 100,
+          "question_id": 10,
+          "member_id": 42,
+          "display_name": "Ada Lovelace",
+          "is_write_in": false,
+          "is_abstain": false,
+          "order_index": 0
+        }
+      ]
+    }
+  ]
+}
+```
+</ResponseExample>

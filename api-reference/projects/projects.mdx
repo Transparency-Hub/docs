@@ -1,0 +1,36 @@
+---
+title: "List projects"
+openapi: "GET /v1/projects"
+description: "Projects boards in the chapter."
+---
+
+Projects boards in the chapter. Filter by `status` (`active`, `completed`, `archived`).
+
+**Required scope:** `projects:read`
+
+<ResponseExample>
+```json 200
+{
+  "status": "success",
+  "data": [
+    {
+      "id": 4,
+      "name": "AGM 2026",
+      "description": "Everything for the AGM",
+      "status": "active",
+      "owner_member_id": 7,
+      "swimlane_mode": "none",
+      "start_date": "2026-09-01T00:00:00Z",
+      "due_date": "2026-10-01T00:00:00Z",
+      "createddate": "2026-09-01T00:00:00Z",
+      "lastmodifieddate": null
+    }
+  ],
+  "pagination": {
+    "total": 1,
+    "offset": 0,
+    "limit": 50
+  }
+}
+```
+</ResponseExample>

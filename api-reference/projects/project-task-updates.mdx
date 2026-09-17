@@ -1,0 +1,32 @@
+---
+title: "List task updates and comments"
+openapi: "GET /v1/project-tasks/{task_id}/updates"
+description: "Comments and system updates on a card, oldest first."
+---
+
+Comments and system updates on a card, oldest first.
+
+**Required scope:** `projects:read`
+
+<ResponseExample>
+```json 200
+{
+  "status": "success",
+  "data": [
+    {
+      "id": 300,
+      "task_id": 77,
+      "author_member_id": 42,
+      "body": "Called the hall, waiting on quote",
+      "update_type": "comment",
+      "createddate": "2026-09-03T10:00:00Z"
+    }
+  ],
+  "pagination": {
+    "total": 1,
+    "offset": 0,
+    "limit": 50
+  }
+}
+```
+</ResponseExample>

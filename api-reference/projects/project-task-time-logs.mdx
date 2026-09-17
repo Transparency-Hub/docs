@@ -1,0 +1,32 @@
+---
+title: "List task time logs"
+openapi: "GET /v1/project-tasks/{task_id}/time-logs"
+description: "Time logged against a card, newest first."
+---
+
+Time logged against a card, newest first.
+
+**Required scope:** `projects:read`
+
+<ResponseExample>
+```json 200
+{
+  "status": "success",
+  "data": [
+    {
+      "id": 51,
+      "task_id": 77,
+      "member_id": 42,
+      "minutes": 30,
+      "note": "Phone calls",
+      "logged_at": "2026-09-03T10:30:00Z"
+    }
+  ],
+  "pagination": {
+    "total": 1,
+    "offset": 0,
+    "limit": 50
+  }
+}
+```
+</ResponseExample>

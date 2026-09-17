@@ -1,0 +1,37 @@
+---
+title: "Create contact"
+openapi: "POST /v1/contacts"
+description: "Non-member contacts."
+---
+
+Non-member contacts. Filter by `group` (exact group name) or `search` (name, email or phone). Create needs a name and an email or phone; emails are unique per chapter (409 on duplicates).
+
+**Required scope:** `contacts:write`
+
+<RequestExample>
+```json Request
+{
+  "name": "Grace Hopper",
+  "email": "grace@example.org",
+  "group_name": "Prospects"
+}
+```
+</RequestExample>
+
+<ResponseExample>
+```json 201
+{
+  "status": "success",
+  "data": {
+    "id": 301,
+    "name": "Grace Hopper",
+    "email": "grace@example.org",
+    "phone": "+2348000000000",
+    "class_of": "1996",
+    "group_name": "Prospects",
+    "createddate": "2026-09-01T00:00:00Z",
+    "lastmodifieddate": null
+  }
+}
+```
+</ResponseExample>

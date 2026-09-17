@@ -1,0 +1,33 @@
+---
+title: "List campaign payments"
+openapi: "GET /v1/fundraising/campaigns/{campaign_id}/payments"
+description: "Who gave to a campaign."
+---
+
+Who gave to a campaign. Amounts live on the linked transaction (`GET /v1/transactions/{transaction_id}`).
+
+**Required scope:** `fundraising:read`
+
+<ResponseExample>
+```json 200
+{
+  "status": "success",
+  "data": [
+    {
+      "id": 90,
+      "campaign_id": 2,
+      "transaction_id": 501,
+      "member_id": 42,
+      "name": "Ada Lovelace",
+      "email": "ada@example.org",
+      "createddate": "2026-07-01T00:00:00Z"
+    }
+  ],
+  "pagination": {
+    "total": 1,
+    "offset": 0,
+    "limit": 50
+  }
+}
+```
+</ResponseExample>

@@ -1,0 +1,23 @@
+---
+title: "Get the association"
+openapi: "GET /v1/association"
+description: "The association the chapter belongs to."
+---
+
+The association the chapter belongs to.
+
+**Required scope:** `chapters:read`
+
+<ResponseExample>
+```json 200
+{
+  "status": "success",
+  "data": {
+    "id": 5,
+    "name": "MUAA",
+    "association_image": null,
+    "createddate": "2024-12-01T00:00:00Z"
+  }
+}
+```
+</ResponseExample>

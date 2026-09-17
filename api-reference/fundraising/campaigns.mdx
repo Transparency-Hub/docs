@@ -1,0 +1,43 @@
+---
+title: "List fundraising campaigns"
+openapi: "GET /v1/fundraising/campaigns"
+description: "Fundraising campaigns."
+---
+
+Fundraising campaigns. Filter by `status`.
+
+**Required scope:** `fundraising:read`
+
+<ResponseExample>
+```json 200
+{
+  "status": "success",
+  "data": [
+    {
+      "id": 2,
+      "name": "Library fund",
+      "display_name": "Build the Library",
+      "summary": "Help us stock the new library",
+      "status": "active",
+      "image": null,
+      "logo": null,
+      "allowed_amounts": [
+        5000,
+        10000,
+        25000
+      ],
+      "expected_amount": 2000000.0,
+      "start_date": "2026-06-01T00:00:00Z",
+      "end_date": "2026-12-31T00:00:00Z",
+      "createddate": "2026-05-20T00:00:00Z",
+      "lastmodifieddate": null
+    }
+  ],
+  "pagination": {
+    "total": 1,
+    "offset": 0,
+    "limit": 50
+  }
+}
+```
+</ResponseExample>

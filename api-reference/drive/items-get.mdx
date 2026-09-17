@@ -1,0 +1,30 @@
+---
+title: "Get Drive item (metadata)"
+openapi: "GET /v1/drive/items/{item_id}"
+description: "One folder or file's metadata."
+---
+
+One folder or file's metadata.
+
+**Required scope:** `drive:read`
+
+<ResponseExample>
+```json 200
+{
+  "status": "success",
+  "data": {
+    "id": 500,
+    "parent_id": 1,
+    "is_root": false,
+    "item_type": "file",
+    "name": "AGM agenda.pdf",
+    "file_size": 184320,
+    "content_type": "application/pdf",
+    "content_version": 0,
+    "createdby": 7,
+    "createddate": "2026-09-01T00:00:00Z",
+    "lastmodifieddate": null
+  }
+}
+```
+</ResponseExample>

@@ -1,0 +1,28 @@
+---
+title: "Get task"
+openapi: "GET /v1/tasks/{task_id}"
+description: "One task."
+---
+
+One task.
+
+**Required scope:** `tasks:read`
+
+<ResponseExample>
+```json 200
+{
+  "status": "success",
+  "data": {
+    "id": 15,
+    "name": "Book the hall",
+    "description": "Confirm AGM venue",
+    "progress": 40,
+    "member_id": 42,
+    "createdby": 7,
+    "due_date": "2026-10-01T00:00:00Z",
+    "createddate": "2026-09-01T00:00:00Z",
+    "lastmodifieddate": null
+  }
+}
+```
+</ResponseExample>

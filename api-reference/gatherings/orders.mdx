@@ -1,0 +1,35 @@
+---
+title: "List orders"
+openapi: "GET /v1/gatherings/{gathering_id}/orders"
+description: "Orders with buyer and total."
+---
+
+Orders with buyer and total.
+
+**Required scope:** `gatherings:read`
+
+<ResponseExample>
+```json 200
+{
+  "status": "success",
+  "data": [
+    {
+      "id": 210,
+      "gathering_id": 11,
+      "buyer_name": "Ada Lovelace",
+      "buyer_email": "ada@example.org",
+      "member_id": 42,
+      "status": "placed",
+      "currency": "NGN",
+      "total_amount": 50000.0,
+      "order_date": "2026-09-01T12:00:00Z"
+    }
+  ],
+  "pagination": {
+    "total": 1,
+    "offset": 0,
+    "limit": 50
+  }
+}
+```
+</ResponseExample>
