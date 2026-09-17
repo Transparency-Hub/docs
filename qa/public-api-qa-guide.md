@@ -20,7 +20,7 @@ Run the **P0** sections first (1–4). **P1** (5–7) is the deeper pass. **P2**
 Ask the person who set up your test environment to give you / confirm the following. If any are missing, pause and ask.
 
 - [ ] The **website address** to test on (e.g. `https://testapp.transparencyhubnetwork.ai`).
-- [ ] The **API address** for the same environment — the web address the API answers on. On test this is normally `https://testapp.transparencyhubnetwork.ai/api/v1`; confirm it.
+- [ ] The **API address** for the same environment — the web address the API answers on. On test this is normally `https://testapi.transparencyhubnetwork.ai/api/v1`; confirm it.
 - [ ] Confirmation that **the public API is switched on** in this environment (the developers call the switch `PUBLIC_API_ENABLED`). If it is off, every Part B test just says "not found" — ask for it to be enabled before starting.
 - [ ] An **admin login** for a chapter you can experiment in freely (must be able to see **Settings**).
 - [ ] A **second admin login for a different chapter** in the same association (for the "wrong chapter" tests in section 6). If none exists, note it and skip 6.3–6.4.
@@ -102,7 +102,7 @@ The public API has no screens. To test it you send it **requests** — the same 
 1. Install Postman (postman.com/downloads) and open it. You can skip creating an account ("Lightweight API client").
 2. Click **New → Collection**, name it `Public API QA`.
 3. Click the collection → **Variables** tab. Add two rows and fill the *Current value* column:
-   - `api` = the API address from section 0 (e.g. `https://testapp.transparencyhubnetwork.ai/api/v1`)
+   - `api` = the API address from section 0 (e.g. `https://testapi.transparencyhubnetwork.ai/api/v1`)
    - `key` = the key you copied in test 1.2
 4. Click **Save**.
 5. Click the collection → **Authorization** tab → Type **Bearer Token** → Token: `{{key}}` → **Save**. Every request in the collection now sends your key automatically.

@@ -10,7 +10,7 @@
       "url": "https://api.transparencyhubnetwork.ai/api"
     },
     {
-      "url": "https://testapp.transparencyhubnetwork.ai/api",
+      "url": "https://testapi.transparencyhubnetwork.ai/api",
       "description": "Test"
     }
   ],
