@@ -153,5 +153,18 @@
   "footerSocials": {
     "website": "https://transparencyhubnetwork.ai"
   },
-  "openapi": "api-reference/openapi.json"
+  "openapi": "api-reference/openapi.json",
+  "api": {
+    "baseUrl": [
+      "https://api.transparencyhubnetwork.ai/api",
+      "https://testapi.transparencyhubnetwork.ai/api"
+    ],
+    "auth": {
+      "method": "key",
+      "name": "X-API-Key"
+    },
+    "playground": {
+      "mode": "interactive"
+    }
+  }
 }
