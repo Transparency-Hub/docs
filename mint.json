@@ -164,7 +164,13 @@
       "name": "X-API-Key"
     },
     "playground": {
-      "mode": "interactive"
+      "mode": "show"
     }
-  }
+  },
+  "tabs": [
+    {
+      "name": "API Reference",
+      "url": "api-reference"
+    }
+  ]
 }
