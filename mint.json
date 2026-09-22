@@ -199,7 +199,8 @@
         "api-reference/fundraising/campaigns",
         "api-reference/fundraising/campaigns-get",
         "api-reference/fundraising/campaign-payments",
-        "api-reference/fundraising/campaign-recipients"
+        "api-reference/fundraising/campaign-recipients",
+        "api-reference/fundraising/donations"
       ]
     },
     {
