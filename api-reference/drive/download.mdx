@@ -1,0 +1,28 @@
+---
+title: "Download a Drive File"
+openapi: "GET /v1/drive/items/{item_id}/download"
+description: "Get a short-lived link to the file behind a Drive item, a meeting recording or a minutes document."
+---
+
+Returns a short-lived signed link to the file itself. Use it for anything you found through the API:
+
+- a file from **List Drive Items** (`GET /v1/drive/items`) — pass its `id`
+- a **meeting recording** — pass the `drive_item_id` from **List Meeting Recordings** (`GET /v1/meetings/{meeting_id}/recordings`)
+- a **minutes document** — pass the `drive_item_id` from **List Minutes** (`GET /v1/minutes`)
+
+The link expires after a few minutes; fetch a new one when you need it again. The permissions of the admin who created the key apply: a file they cannot see comes back as `404`, and a file shared with them view-only comes back as `403`. Every download is recorded in the chapter's activity log.
+
+**Required scope:** `drive:download` (separate from `drive:read`, so a key can browse names without being able to fetch contents)
+
+<ResponseExample>
+```json 200
+{
+  "status": "success",
+  "data": {
+    "url": "https://transparencyhubstore.blob.core.windows.net/14-407/...&sig=...",
+    "expires_in_minutes": 15,
+    "file_name": "AGM agenda.pdf"
+  }
+}
+```
+</ResponseExample>

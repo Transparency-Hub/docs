@@ -8,6 +8,18 @@ Create an event. By default every chapter member is invited (`all_participant: t
 
 **Required scope:** `events:write`
 
+### In person, Transparency Hub video conference, or Zoom?
+
+`meeting_provider_type` decides how the event is held:
+
+| Value | Meaning |
+|---|---|
+| omitted / `null` | **In person** — put the address in `venue`. |
+| `transparencyhub` | **Transparency Hub video conference** — a room is created for you; members join from the app. Set `record_meeting` to `true` if it should be recorded. |
+| `zoom`, `teams`, `google_meet` | **External meeting** — put the invite address in `meeting_link` (required for these). |
+
+Sending anything else returns `400`, and the reply lists the values it accepts.
+
 <RequestExample>
 ```json Request
 {

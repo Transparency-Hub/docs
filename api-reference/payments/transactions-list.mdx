@@ -1,10 +1,10 @@
 ---
 title: "List Transactions"
 openapi: "GET /v1/transactions"
-description: "Retrieve the chapter payments, newest first."
+description: "Retrieve the chapter payments, newest first. Each payment carries the payer's `member_name` and, when it settles a membership fee, the `member_due_id` it belongs to — pair it with **List Member Dues** (`GET /v1/members/{member_id}/dues`)."
 ---
 
-Retrieve the chapter payments, newest first. Filter by `member_id`, `status` (exact match on the gateway status, e.g. `success`) and `from` / `to` on the payment date.
+Retrieve the chapter payments, newest first. Each payment carries the payer's `member_name` and, when it settles a membership fee, the `member_due_id` it belongs to — pair it with **List Member Dues** (`GET /v1/members/{member_id}/dues`). Filter by `member_id`, `status` (exact match on the gateway status, e.g. `success`) and `from` / `to` on the payment date.
 
 **Required scope:** `payments:read`
 

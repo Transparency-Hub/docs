@@ -8,6 +8,8 @@ Retrieve recording metadata for a meeting. File links and transcripts are not av
 
 **Required scope:** `meetings:read`
 
+Each recording carries a `drive_item_id` — pass it to **Download a Drive File** (`GET /v1/drive/items/{item_id}/download`) to fetch the recording itself.
+
 <ResponseExample>
 ```json 200
 {

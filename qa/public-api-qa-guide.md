@@ -177,7 +177,8 @@ Send.
 **Expected:**
 - [ ] Status `201 Created`; `"data"` shows the new member with an `id`, and `"status": "inactive"` (new members start inactive, just like when an admin adds one in the app). Write the id down.
 - [ ] In the app, **Admin → Members** now lists **Api Tester**.
-- [ ] Send the exact same request again: `400` with `"code": "request_failed"` and a message saying the email already exists for the chapter.
+- [ ] Send the exact same request again: `409` with a message that the email already belongs to this chapter (and `details.member_id` names the person). It must **never** be a `500`.
+- [ ] Take an email that belongs to a member of **another** chapter and send that: `200` (not `201`) — that person is added to your chapter instead of being created twice. **Admin → Members** lists them, inactive, with no role.
 
 ### 3.2 Create — missing details
 **Steps:** POST the same address with body `{ "firstname": "Only" }`.
@@ -215,6 +216,7 @@ Send.
 - [ ] In the app (**Admin → Events**, go to June 2030) the event exists and **everyone in the chapter is invited**.
 - [ ] Because `should_notify` was `false`, **no invitation emails** went out (check the inbox of a member you control).
 - [ ] Send again with the two dates swapped (end before start) → `400` `validation_error`.
+- [ ] **Choosing the kind of event**: send again with `"meeting_provider_type": "transparencyhub"` → `201`, and in the app the event shows a Transparency Hub video conference. Send with `"meeting_provider_type": "zoom"` and **no** `meeting_link` → `400`; add `"meeting_link": "https://zoom.us/j/123"` → `201`. Send with `"meeting_provider_type": "webex"` → `400`, and the reply lists the values it accepts. Leaving the field out altogether creates an in-person event (the `venue` you sent).
 - [ ] Send with body `{ "title": "x" }` → `400`; `"missing"` lists `start_date_time` and `end_date_time`.
 
 ### 3.6 Change an event (invitations must survive)
@@ -529,7 +531,8 @@ The third release opens up the rest of the app for **reading**: the chapter and 
 ### 17.1 Boards
 **Steps:** **GET** `{{api}}/projects`, then for one project id: `{{api}}/projects/<id>/columns`, `{{api}}/projects/<id>/labels`, `{{api}}/projects/<id>/tasks`.
 **Expected:**
-- [ ] `200` for all; columns come in board order with `wip_limit` and `is_done_column`; each card shows `title`, `column_id`, `priority`, `assignee_ids` and `label_ids` that match the board in **Admin → Projects**.
+- [ ] `200` for all — in particular `{{api}}/projects` must not error for projects that have start or due dates.
+- [ ] Columns come in board order with `wip_limit` and `is_done_column`; each card shows `title`, `column_id`, `priority`, `assignee_ids` and `label_ids` that match the board in **Admin → Projects**.
 - [ ] `{{api}}/projects/<id>/tasks?column_id=<a column id>` returns only that column's cards.
 - [ ] `{{api}}/projects/999999999/columns` → `404`.
 
@@ -664,6 +667,35 @@ The fourth release adds more **read-only** information: who is invited to events
 **Expected:** [ ] `200`; each campaign shows `name`, `channels`, `status`, `scheduled_at`, `sent_at` and `stats` (sent/delivered counts). Search for `template` and `credits` — neither appears.
 
 ---
+
+## 24.6 Names next to every member (P0)
+
+**Steps:** Send these and look at each row: **GET** `{{api}}/transactions?limit=3`, `{{api}}/posts?limit=3`, `{{api}}/tasks?limit=3`, `{{api}}/groups/<a group id>/members`, `{{api}}/notifications?limit=3`, `{{api}}/support-requests?limit=3`.
+**Expected:**
+- [ ] Every row that has a `member_id` also has a `member_name` with that person's full name.
+- [ ] The names match the people you see in **Admin → Members**.
+
+## 24.7 Matching a payment to a due (P0)
+
+**Steps:** **GET** `{{api}}/transactions?limit=5` and find a payment that has `member_due_id` filled in. Then **GET** `{{api}}/members/<that payment's member_id>/dues`.
+**Expected:** [ ] One of the dues has the same `id` as the payment's `member_due_id`, and the amounts match.
+
+## 24.8 Downloading a file, a recording or minutes (P0)
+
+**Set-up:** your key needs the new **Download Drive files** permission. If `QA phase 4` was created before this release, make a new key with every box ticked.
+
+**Steps:** **GET** `{{api}}/drive/items?limit=5`, pick an item whose `item_type` is `file`, then **GET** `{{api}}/drive/items/<that id>/download`.
+**Expected:**
+- [ ] `200`; the reply has a long `url`, `expires_in_minutes` and the `file_name`.
+- [ ] Pasting that `url` into a browser downloads the file and it opens correctly.
+- [ ] **Admin → Activity log** shows a "Downloaded ..." entry for that file.
+- [ ] After `expires_in_minutes` has passed, the same link no longer works (it is deliberately short-lived).
+
+**Steps:** **GET** `{{api}}/meetings/<a meeting id>/recordings` and `{{api}}/minutes?limit=3`; take a `drive_item_id` from either and call the download address with it.
+**Expected:** [ ] `200`, and the recording / minutes document downloads.
+
+**Steps:** Use a key **without** the download permission (for example `QA read members only`) on the same address.
+**Expected:** [ ] `403` `insufficient_scope`.
 
 ## 25. Permissions and clean-up (P0)
 

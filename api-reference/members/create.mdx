@@ -8,6 +8,10 @@ Create a member in the chapter. The member starts inactive and goes through the 
 
 **Required scope:** `members:write`
 
+<Note>
+  Email addresses are unique across Transparency Hub. If the address already belongs to somebody — including in another chapter — that person is **added to this chapter** instead of being created again, and the reply is `200` rather than `201`. If they are already in this chapter you get `409` with their `member_id`.
+</Note>
+
 <RequestExample>
 ```json Request
 {
