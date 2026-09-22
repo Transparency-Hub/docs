@@ -4,7 +4,7 @@ openapi: "PATCH /v1/membership-types/{type_id}"
 description: "Update the flat fields of a membership type (name, category, description, durations, timelines, privacy and payment flags)."
 ---
 
-Update the flat fields of a membership type (name, category, description, durations, timelines, privacy and payment flags). Dues, workflows and application forms are managed in the app.
+Update a membership type. Send only the fields you want to change — everything else is left alone. Dues, workflows and application forms are managed in the app or set when the type is created.
 
 **Required scope:** `membership_types:write`
 

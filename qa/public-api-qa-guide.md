@@ -429,6 +429,20 @@ Phase 2 adds **read-only** information: payments and dues, the community feed an
 - [ ] In the app, **Admin → Membership Types** lists **QA API Type** with no fees; opening it shows the chapter's **Default** application form and the standard workflow and notification settings switched on.
 - [ ] **GET** `{{api}}/membership-types` now includes it.
 
+### 13.1b Create a type together with its fee and approval rules
+**Steps:** **POST** `{{api}}/membership-types` with body:
+```
+{ "name": "QA API Type with dues", "category": "Individual", "duration": 12,
+  "dues": [{ "name": "Annual dues", "amount": 150, "currency": "NGN", "frequency": "Annually", "is_for_onboarding": true }],
+  "workflow": { "require_approval_all_apps": false } }
+```
+**Expected:**
+- [ ] `201`.
+- [ ] **GET** `{{api}}/membership-types/<the new id>/dues` shows **Annual dues**, `150`, `NGN`, `Annually`.
+- [ ] In the app the type shows that fee under **Price configuration**, and **Workflow** shows "require approval for all applications" switched **off**.
+- [ ] POST again with `"frequency": "Fortnightly"` → `400` (allowed values are One Time, Weekly, Monthly, Quarterly, Biannually, Annually).
+- [ ] POST again with a due missing its `currency` → `400`, and `"details"` → `"missing"` names it.
+
 ### 13.2 Validation
 **Steps:** POST with body `{ "name": "x" }`; then `{ "name": "x", "category": "c", "duration": "twelve" }`.
 **Expected:** [ ] Both `400` `validation_error` (the first lists `category` and `duration` as missing).
