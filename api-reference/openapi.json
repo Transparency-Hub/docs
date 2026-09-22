@@ -2,7 +2,7 @@
   "openapi": "3.0.3",
   "info": {
     "title": "Transparency Hub Public API",
-    "version": "1.3.0",
+    "version": "1.3.1",
     "description": "Key-authenticated REST API for association and chapter integrations."
   },
   "servers": [
@@ -975,6 +975,80 @@
           "reminder_frequency": {
             "type": "string",
             "default": "monthly"
+          },
+          "dues": {
+            "type": "array",
+            "description": "Optional fee definitions created with the type.",
+            "items": {
+              "type": "object",
+              "required": [
+                "name",
+                "amount",
+                "currency",
+                "frequency"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "amount": {
+                  "type": "number",
+                  "description": "Major currency units, e.g. 150.00"
+                },
+                "currency": {
+                  "type": "string",
+                  "example": "NGN"
+                },
+                "frequency": {
+                  "type": "string",
+                  "enum": [
+                    "One Time",
+                    "Weekly",
+                    "Monthly",
+                    "Quarterly",
+                    "Biannually",
+                    "Annually"
+                  ]
+                },
+                "payment_schedule": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "is_for_onboarding": {
+                  "type": "boolean",
+                  "default": false
+                },
+                "taxes": {
+                  "nullable": true
+                }
+              }
+            }
+          },
+          "workflow": {
+            "type": "object",
+            "description": "Optional approval/payment rules; omitted flags keep the app defaults.",
+            "properties": {
+              "require_approval_all_apps": {
+                "type": "boolean",
+                "default": true
+              },
+              "require_payment_fee_separately": {
+                "type": "boolean",
+                "default": true
+              },
+              "require_approval_after_payment": {
+                "type": "boolean",
+                "default": false
+              },
+              "require_confirmation_renewals": {
+                "type": "boolean",
+                "default": true
+              },
+              "require_approval_renewals": {
+                "type": "boolean",
+                "default": true
+              }
+            }
           }
         }
       },

@@ -1,10 +1,12 @@
 ---
 title: "Create Membership Type"
 openapi: "POST /v1/membership-types"
-description: "Create a membership type with the chapter default workflow, notification settings and application form, and no fees."
+description: "Create a membership type, optionally with its fees and approval rules."
 ---
 
-Create a membership type with the chapter default workflow, notification settings and application form, and no fees. Add fees in the app afterwards.
+Create a membership type. Send `dues` to add its fees in the same call and `workflow` to set the approval and payment rules; anything you leave out keeps the chapter defaults (notification settings and the chapter's Default application form are always attached for you).
+
+`dues[].frequency` must be one of **One Time**, **Weekly**, **Monthly**, **Quarterly**, **Biannually**, **Annually**. Amounts are in major currency units (150 means 150.00).
 
 **Required scope:** `membership_types:write`
 
@@ -16,7 +18,19 @@ Create a membership type with the chapter default workflow, notification setting
   "description": "Full membership",
   "duration": 12,
   "renewal_timeline": 30,
-  "deactivation_timeline": 60
+  "deactivation_timeline": 60,
+  "dues": [
+    {
+      "name": "Annual dues",
+      "amount": 150,
+      "currency": "NGN",
+      "frequency": "Annually",
+      "is_for_onboarding": true
+    }
+  ],
+  "workflow": {
+    "require_approval_all_apps": false
+  }
 }
 ```
 </RequestExample>
@@ -47,3 +61,7 @@ Create a membership type with the chapter default workflow, notification setting
 }
 ```
 </ResponseExample>
+
+<Note>
+  The fees you send appear under [List Membership Type Fees](/api-reference/payments/membership-type-dues) for the new type.
+</Note>
