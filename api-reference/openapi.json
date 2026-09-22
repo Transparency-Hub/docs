@@ -2,7 +2,7 @@
   "openapi": "3.0.3",
   "info": {
     "title": "Transparency Hub Public API",
-    "version": "1.3.1",
+    "version": "1.4.0",
     "description": "Key-authenticated REST API for association and chapter integrations."
   },
   "servers": [
@@ -42,6 +42,7 @@
     "gatherings:read": "Read gatherings, tickets, attendees and orders",
     "elections:read": "Read elections, questions and published results",
     "drive:read": "Read Drive file and folder metadata",
+    "drive:download": "Download Drive files (and meeting recordings/minutes)",
     "contacts:read": "Read contacts",
     "contacts:write": "Create contacts",
     "activity:read": "Read the activity log",
@@ -481,7 +482,15 @@
             "default": true
           },
           "meeting_provider_type": {
-            "type": "string"
+            "type": "string",
+            "nullable": true,
+            "enum": [
+              "transparencyhub",
+              "zoom",
+              "teams",
+              "google_meet"
+            ],
+            "description": "How the event is held. Omit for an in-person event (use `venue`). `transparencyhub` provisions a Transparency Hub video conference. `zoom` / `teams` / `google_meet` need the invite in `meeting_link`."
           },
           "recurrence_end_date_time": {
             "type": "string",
@@ -541,7 +550,15 @@
             "default": true
           },
           "meeting_provider_type": {
-            "type": "string"
+            "type": "string",
+            "nullable": true,
+            "enum": [
+              "transparencyhub",
+              "zoom",
+              "teams",
+              "google_meet"
+            ],
+            "description": "How the event is held. Omit for an in-person event (use `venue`). `transparencyhub` provisions a Transparency Hub video conference. `zoom` / `teams` / `google_meet` need the invite in `meeting_link`."
           },
           "recurrence_end_date_time": {
             "type": "string",
@@ -610,6 +627,16 @@
             "type": "string",
             "format": "date-time",
             "nullable": true
+          },
+          "member_name": {
+            "type": "string",
+            "nullable": true,
+            "description": "Display name of the member."
+          },
+          "member_due_id": {
+            "type": "integer",
+            "nullable": true,
+            "description": "The member due this payment settles, if any \u2014 pair with GET /v1/members/{member_id}/dues."
           }
         }
       },
@@ -648,6 +675,11 @@
             "type": "string",
             "format": "date-time",
             "nullable": true
+          },
+          "member_name": {
+            "type": "string",
+            "nullable": true,
+            "description": "Display name of the member."
           }
         }
       },
@@ -717,6 +749,11 @@
             "type": "string",
             "format": "date-time",
             "nullable": true
+          },
+          "member_name": {
+            "type": "string",
+            "nullable": true,
+            "description": "Display name of the member."
           }
         }
       },
@@ -748,6 +785,11 @@
             "type": "string",
             "format": "date-time",
             "nullable": true
+          },
+          "member_name": {
+            "type": "string",
+            "nullable": true,
+            "description": "Display name of the member."
           }
         }
       },
@@ -799,6 +841,11 @@
             "type": "string",
             "format": "date-time",
             "nullable": true
+          },
+          "member_name": {
+            "type": "string",
+            "nullable": true,
+            "description": "Display name of the member."
           }
         }
       },
@@ -877,6 +924,11 @@
             "type": "string",
             "format": "date-time",
             "nullable": true
+          },
+          "drive_item_id": {
+            "type": "integer",
+            "nullable": true,
+            "description": "Drive item holding the recording file; download it with GET /v1/drive/items/{item_id}/download."
           }
         }
       },
@@ -917,6 +969,11 @@
             "type": "string",
             "format": "date-time",
             "nullable": true
+          },
+          "drive_item_id": {
+            "type": "integer",
+            "nullable": true,
+            "description": "Drive item holding the minutes document; download it with GET /v1/drive/items/{item_id}/download."
           }
         }
       },
@@ -1238,6 +1295,11 @@
             "type": "string",
             "format": "date-time",
             "nullable": true
+          },
+          "member_name": {
+            "type": "string",
+            "nullable": true,
+            "description": "Display name of the member."
           }
         }
       },
@@ -2215,6 +2277,11 @@
             "type": "string",
             "format": "date-time",
             "nullable": true
+          },
+          "member_name": {
+            "type": "string",
+            "nullable": true,
+            "description": "Display name of the member."
           }
         }
       },
@@ -2259,6 +2326,11 @@
             "type": "string",
             "format": "date-time",
             "nullable": true
+          },
+          "member_name": {
+            "type": "string",
+            "nullable": true,
+            "description": "Display name of the member."
           }
         }
       },
@@ -2306,6 +2378,11 @@
           },
           "answers": {
             "nullable": true
+          },
+          "member_name": {
+            "type": "string",
+            "nullable": true,
+            "description": "Display name of the member."
           }
         }
       },
@@ -2452,6 +2529,11 @@
             "type": "string",
             "format": "date-time",
             "nullable": true
+          },
+          "member_name": {
+            "type": "string",
+            "nullable": true,
+            "description": "Display name of the member."
           }
         }
       },
@@ -2538,6 +2620,11 @@
             "type": "string",
             "format": "date-time",
             "nullable": true
+          },
+          "member_name": {
+            "type": "string",
+            "nullable": true,
+            "description": "Display name of the member."
           }
         }
       },
@@ -2682,6 +2769,11 @@
             "type": "string",
             "format": "date-time",
             "nullable": true
+          },
+          "member_name": {
+            "type": "string",
+            "nullable": true,
+            "description": "Display name of the member."
           }
         }
       },
@@ -2729,6 +2821,11 @@
             "type": "string",
             "format": "date-time",
             "nullable": true
+          },
+          "member_name": {
+            "type": "string",
+            "nullable": true,
+            "description": "Display name of the member."
           }
         }
       },
@@ -2788,6 +2885,21 @@
             "type": "string",
             "format": "date-time",
             "nullable": true
+          }
+        }
+      },
+      "DownloadLink": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "description": "Short-lived signed URL."
+          },
+          "expires_in_minutes": {
+            "type": "integer"
+          },
+          "file_name": {
+            "type": "string"
           }
         }
       }
@@ -8036,6 +8148,61 @@
             "$ref": "#/components/parameters/chapterId"
           }
         ]
+      }
+    },
+    "/v1/drive/items/{item_id}/download": {
+      "get": {
+        "summary": "Download a Drive file",
+        "x-scope": "drive:download",
+        "description": "Returns a short-lived signed link to the file. Requires scope `drive:download`. The key owner's Drive permissions apply: a file they cannot see is `404`, and a view-only grant is `403`. Every download is written to the activity log. Meeting recordings and minutes expose a `drive_item_id` you can pass here.",
+        "parameters": [
+          {
+            "name": "item_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/chapterId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/DownloadLink"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          }
+        }
       }
     }
   }

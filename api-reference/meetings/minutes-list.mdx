@@ -8,6 +8,8 @@ Retrieve the chapter meeting minutes, newest first. Filter by `event_id`.
 
 **Required scope:** `meetings:read`
 
+When minutes have a document attached, `drive_item_id` points at it — pass it to **Download a Drive File** (`GET /v1/drive/items/{item_id}/download`).
+
 <ResponseExample>
 ```json 200
 {
