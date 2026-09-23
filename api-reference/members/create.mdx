@@ -28,8 +28,12 @@ Leave `membership_type_id` out and you get the older behaviour: the person and t
   Answers to your chapter's application form, as `{ "question": "answer" }`. Defaults to your chapter's form with empty values. Only used together with `membership_type_id`.
 </ParamField>
 
+<Warning>
+  If your chapter's application form has **required questions**, `answers` must include them — otherwise the call returns `400` naming the ones that are missing. Call `GET /v1/application-forms` first (see **Applications → List application form templates**) to see what your form asks for.
+</Warning>
+
 <Note>
-  Email addresses are unique across Transparency Hub. If the address already belongs to somebody — including in another chapter — that person is **added to this chapter** instead of being created again, and the reply is `200` rather than `201`. If they are already in this chapter you get `409` with their `member_id`.
+  Email addresses are unique across Transparency Hub. If the address already belongs to somebody — including in another chapter — that person is **added to this chapter** instead of being created again, and the reply is `200` rather than `201`. If they are already in this chapter you get `409` with their `member_id`. In that case they are simply linked to the chapter and **no application is raised**, even if you sent `membership_type_id` — raise it for them through the app.
 </Note>
 
 <RequestExample>
