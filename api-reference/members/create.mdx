@@ -4,9 +4,29 @@ openapi: "POST /v1/members"
 description: "Create a member in the chapter."
 ---
 
-Create a member in the chapter. The member starts inactive and goes through the chapter's normal onboarding; if `password` is omitted a random one is generated. Executive notifications fire as if the key's owner had created the member in the app.
+Create a member in the chapter. If `password` is omitted a random one is generated. Executive notifications fire as if the key's owner had created the member in the app.
 
 **Required scope:** `members:write`
+
+## Put them through the chapter's onboarding
+
+Send `membership_type_id` and the new member goes through your chapter's normal joining process, exactly as if an administrator had added them in the app:
+
+- an **application** is raised and sits in **Admin → Workflow**, waiting for payment or for approval (whichever your membership type is set up to do),
+- any **onboarding dues** are created against the member,
+- and your **chapter administrators are notified** of the new application.
+
+The member stays inactive until the application is approved and paid — so this is the call to use when you want the person to show up in the places your admins actually look.
+
+Leave `membership_type_id` out and you get the older behaviour: the person and their chapter link are created, with no application and no dues.
+
+<ParamField body="membership_type_id" type="integer">
+  The membership type they are joining. Must belong to the key's chapter. Supplying it raises the application.
+</ParamField>
+
+<ParamField body="answers" type="object">
+  Answers to your chapter's application form, as `{ "question": "answer" }`. Defaults to your chapter's form with empty values. Only used together with `membership_type_id`.
+</ParamField>
 
 <Note>
   Email addresses are unique across Transparency Hub. If the address already belongs to somebody — including in another chapter — that person is **added to this chapter** instead of being created again, and the reply is `200` rather than `201`. If they are already in this chapter you get `409` with their `member_id`.
@@ -19,7 +39,12 @@ Create a member in the chapter. The member starts inactive and goes through the 
   "lastname": "Lovelace",
   "email": "ada@example.org",
   "title": "Mr",
-  "country": "NG"
+  "country": "NG",
+  "membership_type_id": 3,
+  "answers": {
+    "profession": "Engineer",
+    "graduation_year": "2010"
+  }
 }
 ```
 </RequestExample>
@@ -39,11 +64,15 @@ Create a member in the chapter. The member starts inactive and goes through the 
     "chapter_id": 9,
     "role_id": null,
     "membership_type_id": 3,
-    "status": "active",
-    "is_new_user": false,
+    "status": "inactive",
+    "is_new_user": true,
     "createddate": "2026-01-15T10:00:00Z",
     "lastmodifieddate": null
   }
 }
 ```
 </ResponseExample>
+
+<Tip>
+  To follow the application afterwards, call `GET /v1/applications?member_id=42` (see **Applications → List applications**).
+</Tip>
