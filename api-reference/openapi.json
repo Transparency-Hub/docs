@@ -39,6 +39,7 @@
     "projects:read": "Read projects and project tasks",
     "projects:write": "Create project tasks",
     "fundraising:read": "Read fundraising campaigns and payments",
+    "fundraising:write": "Start donations (hosted checkout links)",
     "gatherings:read": "Read gatherings, tickets, attendees and orders",
     "elections:read": "Read elections, questions and published results",
     "drive:read": "Read Drive file and folder metadata",
@@ -2945,6 +2946,83 @@
           },
           "file_name": {
             "type": "string"
+          }
+        }
+      },
+      "DonationCreate": {
+        "type": "object",
+        "required": [
+          "amount",
+          "donor_name",
+          "donor_email"
+        ],
+        "properties": {
+          "chapter_id": {
+            "type": "integer"
+          },
+          "amount": {
+            "type": "number",
+            "minimum": 1,
+            "description": "Major currency units, e.g. 150 means 150.00."
+          },
+          "donor_name": {
+            "type": "string"
+          },
+          "donor_email": {
+            "type": "string"
+          },
+          "currency": {
+            "type": "string",
+            "nullable": true,
+            "description": "Defaults to the campaign's currency."
+          },
+          "cover_fees": {
+            "type": "boolean",
+            "default": false,
+            "description": "Add the gateway fee on top so the campaign receives the full amount."
+          },
+          "is_anonymous": {
+            "type": "boolean",
+            "default": false
+          },
+          "redirect_url": {
+            "type": "string",
+            "nullable": true,
+            "description": "Where the gateway sends the donor after paying."
+          },
+          "payment_gateway_id": {
+            "type": "integer",
+            "nullable": true,
+            "description": "Use a specific configured gateway; defaults to the chapter's."
+          }
+        }
+      },
+      "DonationStarted": {
+        "type": "object",
+        "properties": {
+          "checkout_url": {
+            "type": "string",
+            "description": "Send the donor here to pay."
+          },
+          "transaction_id": {
+            "type": "integer"
+          },
+          "transaction_ref": {
+            "type": "string"
+          },
+          "amount": {
+            "type": "number"
+          },
+          "currency": {
+            "type": "string",
+            "nullable": true
+          },
+          "payment_status": {
+            "type": "string",
+            "description": "pending until the gateway confirms."
+          },
+          "campaign_id": {
+            "type": "integer"
           }
         }
       }
@@ -8243,6 +8321,78 @@
           },
           "404": {
             "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          }
+        }
+      }
+    },
+    "/v1/fundraising/campaigns/{campaign_id}/donations": {
+      "post": {
+        "summary": "Start a donation (hosted checkout)",
+        "x-scope": "fundraising:write",
+        "description": "Creates a pending donation and returns the payment gateway's hosted checkout link. No card details pass through this API - the donor pays on the gateway's own page and the existing webhook marks the transaction paid. Requires scope `fundraising:write`.",
+        "parameters": [
+          {
+            "name": "campaign_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DonationCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/DonationStarted"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "409": {
+            "description": "The chapter has no gateway set up, or it cannot issue hosted checkout links",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "429": {
             "$ref": "#/components/responses/RateLimited"

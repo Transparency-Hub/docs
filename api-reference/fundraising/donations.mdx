@@ -1,0 +1,54 @@
+---
+title: "Start a Donation"
+openapi: "POST /v1/fundraising/campaigns/{campaign_id}/donations"
+description: "Create a donation and get the payment link to send the donor."
+---
+
+Starts a donation against a campaign and returns the **checkout link** for the donor. Send them to that address; they pay on the payment provider's own page (Paystack, Stripe or Flutterwave, whichever the chapter has set up) and the payment is confirmed automatically a moment later.
+
+Card details never pass through this API, and you never handle them.
+
+**Required scope:** `fundraising:write`
+
+### What happens after you call it
+
+1. You get back a `checkout_url` and a `transaction_id`. The donation is recorded as **pending**.
+2. The donor opens the link and pays. If you sent a `redirect_url`, they land back there afterwards.
+3. The payment provider confirms the payment to Transparency Hub, the donation turns **paid**, and it shows up in the campaign in the app.
+4. Check on it any time with `GET /v1/transactions/{transaction_id}`, or list a campaign's giving with **List Campaign Payments** (`GET /v1/fundraising/campaigns/{campaign_id}/payments`).
+
+### Things worth knowing
+
+- `amount` is in normal money units — `150` means 150.00 — and must be at least 1. The currency defaults to the campaign's.
+- `cover_fees: true` adds the provider's fee on top, so the campaign receives the full amount.
+- The chapter must have finished setting up a payment method; if it has not, you get `409` with a message saying so.
+- `payment_gateway_id` is only needed when a chapter has more than one method set up and you want a particular one.
+
+<RequestExample>
+```json Request
+{
+  "amount": 150,
+  "donor_name": "Ada Lovelace",
+  "donor_email": "ada@example.org",
+  "cover_fees": true,
+  "redirect_url": "https://alumni.example.org/thank-you"
+}
+```
+</RequestExample>
+
+<ResponseExample>
+```json 201
+{
+  "status": "success",
+  "data": {
+    "checkout_url": "https://checkout.paystack.com/abc123",
+    "transaction_id": 501,
+    "transaction_ref": "THN-2026-0001",
+    "amount": 150.0,
+    "currency": "NGN",
+    "payment_status": "pending",
+    "campaign_id": 2
+  }
+}
+```
+</ResponseExample>

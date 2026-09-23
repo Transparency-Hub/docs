@@ -718,7 +718,29 @@ The fourth release adds more **read-only** information: who is invited to events
 **Steps:** Use a key **without** the download permission (for example `QA read members only`) on the same address.
 **Expected:** [ ] `403` `insufficient_scope`.
 
-## 24.9 How much a campaign has raised (P0)
+## 24.9 Taking a donation (P0)
+
+The API never takes card details. It creates the donation and hands back a **payment link** for the donor.
+
+**Set-up:** your key needs the new **Start donations** permission. Use a chapter that has a payment method set up (**Admin → Settings → Payments** shows it as connected) and at least one active fundraising campaign.
+
+**Steps:** **GET** `{{api}}/fundraising/campaigns` and note a campaign `id`. Then **POST** `{{api}}/fundraising/campaigns/<that id>/donations` with body:
+```
+{ "amount": 150, "donor_name": "QA Donor", "donor_email": "qa.donor@example.com", "cover_fees": true }
+```
+**Expected:**
+- [ ] `201`; the reply has a `checkout_url`, a `transaction_id`, the `amount`, and `payment_status` `"pending"`.
+- [ ] Opening `checkout_url` in a browser shows the payment provider's own page with the right amount and campaign.
+- [ ] In the app, **Admin → Fundraising → (the campaign)** shows the donation as pending.
+- [ ] If you complete the payment with the provider's test card, the donation turns paid in the app within a minute, and **GET** `{{api}}/transactions/<the transaction_id>` shows the new status.
+
+**Validation**
+- [ ] `"amount": 0.5` → `400`; `"amount": "150"` (in quotes) → `400`; a missing `donor_email` → `400`.
+- [ ] A campaign id from another chapter → `404`.
+- [ ] Using a key **without** the Start donations permission → `403` `insufficient_scope`.
+- [ ] If the chapter has no payment method connected → `409` with a message saying so (ask for a chapter without one if you want to see this).
+
+## 24.10 How much a campaign has raised (P0)
 
 **Steps:** **GET** `{{api}}/fundraising/campaigns?limit=5`, then **GET** `{{api}}/fundraising/campaigns/<one of those ids>`.
 **Expected:**
