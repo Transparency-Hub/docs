@@ -2,7 +2,7 @@
   "openapi": "3.0.3",
   "info": {
     "title": "Transparency Hub Public API",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "description": "Key-authenticated REST API for association and chapter integrations."
   },
   "servers": [
@@ -219,6 +219,17 @@
             "type": "string"
           },
           "password": {
+            "type": "string"
+          },
+          "membership_type_id": {
+            "type": "integer",
+            "description": "Put the member through the chapter's onboarding for this membership type: an application is raised (awaiting payment or approval, per the workflow), any onboarding dues are created and the chapter admins are notified. Leave it out to create the person without an application."
+          },
+          "answers": {
+            "type": "object",
+            "description": "Answers to the chapter's application form. Defaults to the chapter's form with empty values. Only used with membership_type_id."
+          },
+          "profilepic": {
             "type": "string"
           }
         }
@@ -1648,6 +1659,14 @@
             "type": "string",
             "format": "date-time",
             "nullable": true
+          },
+          "total_raised": {
+            "type": "number",
+            "description": "Sum of completed donations."
+          },
+          "donation_count": {
+            "type": "integer",
+            "description": "Number of completed donations."
           }
         }
       },
@@ -1681,6 +1700,32 @@
           "createddate": {
             "type": "string",
             "format": "date-time",
+            "nullable": true
+          },
+          "amount": {
+            "type": "number",
+            "nullable": true,
+            "description": "The donation amount, from the linked transaction."
+          },
+          "currency": {
+            "type": "string",
+            "nullable": true
+          },
+          "payment_status": {
+            "type": "string",
+            "nullable": true
+          },
+          "payment_method": {
+            "type": "string",
+            "nullable": true
+          },
+          "payment_date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "member_name": {
+            "type": "string",
             "nullable": true
           }
         }

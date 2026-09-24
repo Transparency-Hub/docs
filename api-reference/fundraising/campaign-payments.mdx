@@ -1,10 +1,12 @@
 ---
 title: "List campaign payments"
 openapi: "GET /v1/fundraising/campaigns/{campaign_id}/payments"
-description: "Who gave to a campaign."
+description: "The donations made to a campaign."
 ---
 
-Who gave to a campaign. Amounts live on the linked transaction (`GET /v1/transactions/{transaction_id}`).
+The donations made to a campaign — who gave, how much, and whether the money has arrived.
+
+`payment_status` is `completed` once the payment gateway has confirmed it; only completed donations count towards the campaign's `total_raised`. `member_name` is filled in when the donation is linked to a member. For the full payment record, follow `transaction_id` to `GET /v1/transactions/{transaction_id}`.
 
 **Required scope:** `fundraising:read`
 
@@ -18,8 +20,14 @@ Who gave to a campaign. Amounts live on the linked transaction (`GET /v1/transac
       "campaign_id": 2,
       "transaction_id": 501,
       "member_id": 42,
+      "member_name": "Ada Lovelace",
       "name": "Ada Lovelace",
       "email": "ada@example.org",
+      "amount": 150.0,
+      "currency": "NGN",
+      "payment_status": "completed",
+      "payment_method": "online",
+      "payment_date": "2026-07-01T09:14:00Z",
       "createddate": "2026-07-01T00:00:00Z"
     }
   ],

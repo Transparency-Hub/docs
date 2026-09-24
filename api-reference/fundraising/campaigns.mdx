@@ -6,6 +6,8 @@ description: "Fundraising campaigns."
 
 Fundraising campaigns. Filter by `status`.
 
+Each campaign carries how it is doing: **`total_raised`** is the sum of its completed donations and **`donation_count`** is how many there have been. Donations that are still pending or that failed are not counted, so these match the totals on the campaign page in the app.
+
 **Required scope:** `fundraising:read`
 
 <ResponseExample>
@@ -27,6 +29,8 @@ Fundraising campaigns. Filter by `status`.
         25000
       ],
       "expected_amount": 2000000.0,
+      "total_raised": 150.0,
+      "donation_count": 3,
       "start_date": "2026-06-01T00:00:00Z",
       "end_date": "2026-12-31T00:00:00Z",
       "createddate": "2026-05-20T00:00:00Z",

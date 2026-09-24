@@ -180,6 +180,27 @@ Send.
 - [ ] Send the exact same request again: `409` with a message that the email already belongs to this chapter (and `details.member_id` names the person). It must **never** be a `500`.
 - [ ] Take an email that belongs to a member of **another** chapter and send that: `200` (not `201`) — that person is added to your chapter instead of being created twice. **Admin → Members** lists them, inactive, with no role.
 
+### 3.1b Create a member who goes through the joining process (P0)
+
+This is the version to use when the new member should appear in **Admin → Workflow** like anybody else who joins.
+
+**Steps:** First **GET** `{{api}}/membership-types` and note the `id` of one of them. Then **POST** `{{api}}/members` with a brand-new email address and that id:
+```
+{ "firstname": "Flow", "lastname": "Tester", "email": "flow.tester.23sep@example.com",
+  "membership_type_id": <the id you noted>,
+  "answers": { "profession": "Engineer" } }
+```
+**Expected:**
+- [ ] `201 Created`; the member comes back with that `membership_type_id` and `"status": "inactive"`. Write the `id` down.
+- [ ] In the app, **Admin → Workflow** (membership applications) now shows **Flow Tester**, waiting for approval or for payment — whichever your membership type is set up to do.
+- [ ] Your chapter administrators receive the usual "New membership application" notification.
+- [ ] If the membership type has a joining fee, the member's fees are there: **GET** `{{api}}/members/<the id>/dues` lists it.
+- [ ] **GET** `{{api}}/applications?member_id=<the id>` returns the application, with the answer you sent.
+- [ ] Approving (and paying, if required) the application in the app activates the member exactly as normal — nothing about the review process changes because it came from the API.
+
+**Steps:** Send the same request again but with `"membership_type_id": 999999`.
+**Expected:** [ ] `400` `validation_error` saying that is not a membership type of this chapter. Also try `"membership_type_id": "3"` (in quotes) → `400`, and `"answers": "text"` → `400`.
+
 ### 3.2 Create — missing details
 **Steps:** POST the same address with body `{ "firstname": "Only" }`.
 **Expected:** [ ] `400` `validation_error`; inside `"details"` → `"missing"` lists `lastname` and `email`.
@@ -718,6 +739,20 @@ The API never takes card details. It creates the donation and hands back a **pay
 - [ ] A campaign id from another chapter → `404`.
 - [ ] Using a key **without** the Start donations permission → `403` `insufficient_scope`.
 - [ ] If the chapter has no payment method connected → `409` with a message saying so (ask for a chapter without one if you want to see this).
+
+## 24.10 How much a campaign has raised (P0)
+
+**Steps:** **GET** `{{api}}/fundraising/campaigns?limit=5`, then **GET** `{{api}}/fundraising/campaigns/<one of those ids>`.
+**Expected:**
+- [ ] Each campaign carries `total_raised` and `donation_count`.
+- [ ] Both match what the campaign shows in the app under **Admin → Fundraising** — donations that are still pending or that failed must **not** be counted.
+- [ ] A campaign nobody has given to yet reads `total_raised: 0` and `donation_count: 0` (not empty, not missing).
+
+**Steps:** **GET** `{{api}}/fundraising/campaigns/<that id>/payments`.
+**Expected:**
+- [ ] Each donation now shows the donation itself: `amount`, `currency`, `payment_status`, `payment_method` and `payment_date` — you no longer have to look up the transaction separately.
+- [ ] `member_name` shows the giver's name when the donation is linked to a member.
+- [ ] Adding up the `amount` of the ones whose `payment_status` is `completed` gives the campaign's `total_raised`.
 
 ## 25. Permissions and clean-up (P0)
 
