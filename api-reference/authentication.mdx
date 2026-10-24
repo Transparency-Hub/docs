@@ -51,6 +51,7 @@ imply read scopes — pick both if you need both.
 | `gatherings:read` | Read gatherings, tickets, attendees and orders |
 | `elections:read` | Read elections, questions and published results |
 | `drive:read` | Read Drive file and folder metadata |
+| `drive:write` | Create Drive documents and upload files |
 | `drive:download` | Download Drive files (and meeting recordings/minutes) |
 | `contacts:read` | Read contacts |
 | `contacts:write` | Create contacts |
@@ -62,6 +63,11 @@ imply read scopes — pick both if you need both.
 
 A request with a key that lacks a required scope returns
 `403 insufficient_scope` with `details.required` listing what is needed.
+
+Drive creation and uploads require `drive:write` and the key owner's Drive permissions.
+Existing read/download keys do not gain write access automatically. See
+[Create a Drive Document](/api-reference/drive/create-document) for content creation
+and [Start a Drive Upload](/api-reference/drive/upload-session) for prepared files.
 
 ## Chapter scope
 

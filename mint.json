@@ -227,7 +227,10 @@
       "pages": [
         "api-reference/drive/items",
         "api-reference/drive/items-get",
-        "api-reference/drive/download"
+        "api-reference/drive/download",
+        "api-reference/drive/create-document",
+        "api-reference/drive/upload-session",
+        "api-reference/drive/commit-upload"
       ]
     },
     {

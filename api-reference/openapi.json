@@ -2,7 +2,7 @@
   "openapi": "3.0.3",
   "info": {
     "title": "Transparency Hub Public API",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "description": "Key-authenticated REST API for association and chapter integrations."
   },
   "servers": [
@@ -50,7 +50,8 @@
     "applications:read": "Read membership applications and form templates",
     "notifications:read": "Read member notifications",
     "support:read": "Read support requests",
-    "campaigns:read": "Read communication campaigns and delivery stats"
+    "campaigns:read": "Read communication campaigns and delivery stats",
+    "drive:write": "Create Drive documents and upload files"
   },
   "components": {
     "securitySchemes": {
@@ -3023,6 +3024,143 @@
           },
           "campaign_id": {
             "type": "integer"
+          }
+        }
+      },
+      "CreateDriveDocument": {
+        "type": "object",
+        "required": [
+          "file_name",
+          "content_type"
+        ],
+        "properties": {
+          "chapter_id": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Required for association-wide keys; otherwise the key chapter is used."
+          },
+          "parent_id": {
+            "type": "integer",
+            "minimum": 1,
+            "nullable": true,
+            "description": "Omit or use null for the Drive root."
+          },
+          "file_name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 255
+          },
+          "content_type": {
+            "type": "string",
+            "description": "A supported Drive MIME type matching file_name."
+          },
+          "content": {
+            "type": "string",
+            "minLength": 1,
+            "description": "UTF-8 content for text/plain, text/markdown, or text/csv."
+          },
+          "content_base64": {
+            "type": "string",
+            "format": "byte",
+            "minLength": 1,
+            "description": "Strict base64-encoded file bytes, without a data URL prefix."
+          }
+        },
+        "oneOf": [
+          {
+            "required": [
+              "content"
+            ],
+            "not": {
+              "required": [
+                "content_base64"
+              ]
+            }
+          },
+          {
+            "required": [
+              "content_base64"
+            ],
+            "not": {
+              "required": [
+                "content"
+              ]
+            }
+          }
+        ]
+      },
+      "CreateDriveUploadSession": {
+        "type": "object",
+        "required": [
+          "file_name",
+          "content_type",
+          "declared_size"
+        ],
+        "properties": {
+          "chapter_id": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Required for association-wide keys; otherwise the key chapter is used."
+          },
+          "parent_id": {
+            "type": "integer",
+            "minimum": 1,
+            "nullable": true,
+            "description": "Omit or use null for the Drive root."
+          },
+          "file_name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 255
+          },
+          "content_type": {
+            "type": "string",
+            "description": "A supported Drive MIME type matching file_name."
+          },
+          "declared_size": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Exact file size in bytes."
+          }
+        }
+      },
+      "CommitDriveUpload": {
+        "type": "object",
+        "required": [
+          "upload_session_id"
+        ],
+        "properties": {
+          "chapter_id": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Required for association-wide keys; otherwise the key chapter is used."
+          },
+          "upload_session_id": {
+            "type": "integer",
+            "minimum": 1
+          }
+        }
+      },
+      "DriveUploadSession": {
+        "type": "object",
+        "required": [
+          "upload_session_id",
+          "upload_url",
+          "expires_at"
+        ],
+        "properties": {
+          "upload_session_id": {
+            "type": "integer"
+          },
+          "upload_url": {
+            "type": "string",
+            "format": "uri",
+            "description": "Temporary secret SAS URL. PUT the raw bytes with x-ms-blob-type: BlockBlob."
+          },
+          "expires_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Session commit deadline. The upload URL lasts 30 minutes; the commit deadline includes 10 minutes of grace."
           }
         }
       }
@@ -8396,6 +8534,391 @@
           },
           "429": {
             "$ref": "#/components/responses/RateLimited"
+          }
+        }
+      }
+    },
+    "/v1/drive/documents": {
+      "post": {
+        "summary": "Create a Drive document",
+        "x-scope": "drive:write",
+        "description": "Requires drive:write and the key owner's Drive permissions. Creates a file from exactly one of content (UTF-8 text, Markdown, CSV) or content_base64 (prepared file bytes, including PDF and Office formats). Uses the app upload validation, quota, inherited permissions, and audit logging. Does not convert text into Word/PDF. For larger files use upload-session and commit. A repeated successful request does not overwrite a file; a duplicate name returns 409.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/chapterId"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateDriveDocument"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "success"
+                      ]
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/DriveItem"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input, unsupported file type, invalid file signature, size mismatch, or quota exceeded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Missing drive:write scope, forbidden chapter, or insufficient Drive permissions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Parent folder or upload session not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "File name conflict or upload session already finalized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit exceeded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Drive is disabled",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/drive/files/upload-session": {
+      "post": {
+        "summary": "Start a Drive file upload",
+        "x-scope": "drive:write",
+        "description": "Requires drive:write and the key owner's Drive permissions. PUT the raw file bytes to upload_url with x-ms-blob-type: BlockBlob within 30 minutes, then POST /v1/drive/files/commit. Do not forward your API key to blob storage. The file is visible in Drive only after commit. Treat upload_url as a temporary secret.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/chapterId"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateDriveUploadSession"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "success"
+                      ]
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/DriveUploadSession"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input, unsupported file type, invalid file signature, size mismatch, or quota exceeded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Missing drive:write scope, forbidden chapter, or insufficient Drive permissions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Parent folder or upload session not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "File name conflict or upload session already finalized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit exceeded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Drive is disabled",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/drive/files/commit": {
+      "post": {
+        "summary": "Commit a Drive file upload",
+        "x-scope": "drive:write",
+        "description": "Requires drive:write. The session must belong to the key owner and the resolved chapter. Rechecks current Drive permissions, file size/signature and storage quota; inserts the item and upload audit atomically. A session can only be committed once.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/chapterId"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CommitDriveUpload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "success"
+                      ]
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/DriveItem"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input, unsupported file type, invalid file signature, size mismatch, or quota exceeded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Missing drive:write scope, forbidden chapter, or insufficient Drive permissions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Parent folder or upload session not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "File name conflict or upload session already finalized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit exceeded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Drive is disabled",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "410": {
+            "description": "Upload session expired",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         }
       }

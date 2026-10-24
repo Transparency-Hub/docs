@@ -1,0 +1,59 @@
+---
+title: "Commit a Drive Upload"
+openapi: "POST /v1/drive/files/commit"
+description: "Validate an uploaded file and make it available in Drive."
+---
+
+After [starting an upload](/api-reference/drive/upload-session) and putting the bytes at its temporary URL, commit the session to create the Drive file.
+
+**Required scope:** `drive:write`
+
+<Note>
+  This endpoint requires the Drive document creation API to be deployed to the selected environment, with Drive enabled.
+</Note>
+
+Use the original API key. The session must belong to the key owner and the resolved chapter. Association-wide keys must specify the original `chapter_id` again.
+
+The API rechecks current folder permissions, the file's exact size, its signature and available storage quota. On success, it creates the file with inherited permissions and records the upload in the chapter's activity log.
+
+<RequestExample>
+```json Request
+{
+  "upload_session_id": 123
+}
+```
+</RequestExample>
+
+<ResponseExample>
+```json 201
+{
+  "status": "success",
+  "data": {
+    "id": 502,
+    "parent_id": 22,
+    "is_root": false,
+    "item_type": "file",
+    "name": "Annual report.pdf",
+    "file_size": 12345,
+    "content_type": "application/pdf",
+    "content_version": 0,
+    "createdby": 7,
+    "createddate": "2026-10-24T10:05:00Z",
+    "lastmodifieddate": null
+  }
+}
+```
+</ResponseExample>
+
+The file now appears in Drive. The response includes metadata; use its `id` with [Download a Drive File](/api-reference/drive/download) to fetch it with `drive:download`.
+
+| Status | Meaning |
+| --- | --- |
+| `400` | Missing uploaded bytes, size mismatch, invalid signature or quota exceeded |
+| `403` | Missing scope, forbidden chapter or insufficient current Drive permissions |
+| `404` | Session unavailable, including one owned by someone else or in another chapter |
+| `409` | Session already finalized, or a file with this name already exists |
+| `410` | Session expired; start a new upload |
+| `503` | Drive is disabled |
+
+A session can be committed once. After an uncertain response, check [List Drive Items](/api-reference/drive/items) before starting another upload; listing requires `drive:read`.
