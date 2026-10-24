@@ -1,0 +1,64 @@
+---
+title: "Start a Drive Upload"
+openapi: "POST /v1/drive/files/upload-session"
+description: "Get a temporary URL for uploading a prepared file directly to storage."
+---
+
+Use this flow for large files or to avoid base64 encoding. The file appears in Drive after you upload its bytes and [commit the upload](/api-reference/drive/commit-upload).
+
+**Required scope:** `drive:write`
+
+<Note>
+  This endpoint requires the Drive document creation API to be deployed to the selected environment, with Drive enabled.
+</Note>
+
+## 1. Start the upload
+
+Send the file name, matching MIME type and exact byte size in `declared_size`. Omit `parent_id` or use `null` for the Drive root. Association-wide keys must also specify `chapter_id`.
+
+The key owner's current Drive permissions and the chapter's storage quota apply.
+
+<RequestExample>
+```json Request
+{
+  "file_name": "Annual report.pdf",
+  "content_type": "application/pdf",
+  "declared_size": 12345,
+  "parent_id": 22
+}
+```
+</RequestExample>
+
+<ResponseExample>
+```json 201
+{
+  "status": "success",
+  "data": {
+    "upload_session_id": 123,
+    "upload_url": "https://example.blob.core.windows.net/drive-5-9/staging/report.pdf?REPLACE_WITH_RETURNED_SAS",
+    "expires_at": "2026-10-24T10:40:00+00:00"
+  }
+}
+```
+</ResponseExample>
+
+## 2. Upload the bytes
+
+`PUT` the raw file bytes to the returned `upload_url`, adding the `x-ms-blob-type: BlockBlob` header:
+
+```bash
+curl --request PUT "$UPLOAD_URL" \
+  --header "x-ms-blob-type: BlockBlob" \
+  --header "Content-Type: application/pdf" \
+  --data-binary "@Annual report.pdf"
+```
+
+Set `UPLOAD_URL` to the exact URL returned by the API. Treat it as a temporary secret, and do not send your Transparency Hub API key to storage.
+
+The upload URL lasts 30 minutes. The session's `expires_at` is the commit deadline, with a further 10 minutes of grace; it does not extend the upload URL's lifetime.
+
+## 3. Commit the upload
+
+Call [Commit a Drive Upload](/api-reference/drive/commit-upload) using `upload_session_id` and the original API key. Association-wide keys must specify the same chapter again. Until commit succeeds, the uploaded bytes are not a Drive item.
+
+For small documents, [Create a Drive Document](/api-reference/drive/create-document) completes these steps in one request.

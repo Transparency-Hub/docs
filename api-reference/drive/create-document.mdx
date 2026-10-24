@@ -1,0 +1,84 @@
+---
+title: "Create a Drive Document"
+openapi: "POST /v1/drive/documents"
+description: "Create a document from text, Markdown, CSV or a prepared file."
+---
+
+Create a file in Drive in one request. Supply `content` for text, Markdown or CSV, or `content_base64` for a prepared file such as a PDF or Word document. Supply exactly one of these fields.
+
+**Required scope:** `drive:write`
+
+<Note>
+  These endpoints require the Drive document creation API to be deployed to the selected environment. Existing read or download keys do not gain write access automatically; create a key with `drive:write` when it is available.
+</Note>
+
+## Choose a format
+
+| File extension | `content_type` | Content field |
+| --- | --- | --- |
+| `.txt` | `text/plain` | `content` |
+| `.md` | `text/markdown` | `content` |
+| `.csv` | `text/csv` | `content` |
+| `.pdf` | `application/pdf` | `content_base64` |
+| `.docx` | `application/vnd.openxmlformats-officedocument.wordprocessingml.document` | `content_base64` |
+
+`content` is stored as UTF-8. `content_base64` must contain strict base64-encoded file bytes without a data URL prefix. Other supported Drive file formats can also use `content_base64`, with a matching extension and MIME type. This endpoint stores the supplied format; it does not convert text into Word or PDF.
+
+Omit `parent_id` or set it to `null` for the Drive root. Otherwise, supply the destination folder's ID. Association-wide keys must also specify `chapter_id`; chapter-bound keys may omit it.
+
+The key owner must have Drive view permission and permission to create at the root or contribute to the selected folder. File type, signature, size and storage quota checks apply. Successful creation is recorded in the chapter's activity log.
+
+<RequestExample>
+```json Markdown document
+{
+  "file_name": "Committee minutes.md",
+  "content_type": "text/markdown",
+  "content": "# Committee minutes\n\nThe meeting opened at 10:00."
+}
+```
+
+```json Prepared text file as base64
+{
+  "file_name": "Welcome.txt",
+  "content_type": "text/plain",
+  "content_base64": "SGVsbG8h"
+}
+```
+</RequestExample>
+
+<ResponseExample>
+```json 201
+{
+  "status": "success",
+  "data": {
+    "id": 501,
+    "parent_id": 1,
+    "is_root": false,
+    "item_type": "file",
+    "name": "Welcome.txt",
+    "file_size": 6,
+    "content_type": "text/plain",
+    "content_version": 0,
+    "createdby": 7,
+    "createddate": "2026-10-24T10:00:00Z",
+    "lastmodifieddate": null
+  }
+}
+```
+</ResponseExample>
+
+The response contains file metadata. Use its `id` with [Download a Drive File](/api-reference/drive/download) when you need the bytes; downloads require the separate `drive:download` scope.
+
+## Size limits and retries
+
+The configured Drive upload limit applies to decoded bytes (100 MiB by default). Base64 adds request overhead, and HTTP request limits may be lower. Use [Start a Drive Upload](/api-reference/drive/upload-session) for larger files.
+
+An existing file with the same name in the selected folder causes `409`; it is never overwritten. Requests are not idempotent. After an uncertain response, check [List Drive Items](/api-reference/drive/items) before retrying (requires `drive:read`).
+
+| Status | Meaning |
+| --- | --- |
+| `400` | Invalid content, unsupported format, invalid file signature or quota exceeded |
+| `403` | Missing scope, forbidden chapter or insufficient Drive permissions |
+| `404` | Destination folder is unavailable to the key owner |
+| `409` | A file with this name already exists in the folder |
+| `503` | Drive is disabled |
