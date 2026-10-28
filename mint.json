@@ -62,7 +62,12 @@
         "admin/tasks",
         "admin/gatherings",
         "admin/contacts",
-        "admin/elections"
+        "admin/elections",
+        "platform/create-meeting",
+        "platform/record-external-meeting",
+        "platform/edit-cancel-meeting",
+        "platform/upload-minutes",
+        "platform/review-generated-minutes"
       ]
     },
     {
